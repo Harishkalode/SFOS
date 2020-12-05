@@ -1,0 +1,69 @@
+{% extends "layout.html" %}
+{% block content%}
+
+<div class="content-i">
+    <div class="content-box">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="element-wrapper">
+                    <div class="element-box">
+                        <form method="POST" action="">
+                            {{ form.hidden_tag() }}
+                            <h5 class="form-header">Add Subject</h5>
+                            <div class="form-group">
+                                {{form.subject.label(class="form-control-label")}}
+                                {% if form.subject.errors %}
+                                    {{ form.subject(class="form-control is-invalid") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.subject.errors %}
+                                            <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.subject(class="form-control") }}
+                                {% endif %}
+                            </div>
+                            <div class="form-group">
+                                {{form.standard.label(class="form-control-label")}}
+                                {% if form.standard.errors %}
+                                    {{ form.standard(class="form-control is-invalid") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.standard.errors %}
+                                            <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.standard(class="form-control") }}
+                                {% endif %}
+                            </div>
+                            <div class="form-group">
+                                {{form.institute_subject.label(class="form-control-label")}}
+                                <div class="col-sm-8">
+                                    <div class="form-check">
+                                        {% if form.institute_subject.errors %}
+                                            {{ form.institute_subject(class="form-check-input is-invalid") }}
+                                            <div class="invalid-feedback">
+                                                {% for error in form.institute_subject.errors %}
+                                                    <span>{{ error }}</span>
+                                                {% endfor %}
+                                            </div>
+                                        {% else %}
+                                            {{ form.institute_subject(class="form-check-input",required="") }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div><br>
+                            <div class="form-buttons-w">
+                                {{form.submit(class="btn btn-primary")}}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include "history.html"%}
+
+</div>
+
+{% endblock %}

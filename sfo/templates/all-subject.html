@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+{% block content%}
+
+<div class="content-i">
+    <div class="content-box">
+        <div class="element-wrapper">
+            <h6 class="element-header">All Subjects</h6>
+            <div class="element-box">
+                <div class="table-responsive">
+                    <table id="dataTable1" width="100%" class="table table-striped table-lightfont">
+                        <thead>
+                            <tr>
+                                <th>Subject</th>
+                                <th>Passing Marks</th>
+                                <th>Total Marks</th>
+                                <th>Standard</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>Subject</th>
+                                <th>Passing Marks</th>
+                                <th>Total Marks</th>
+                                <th>Standard</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                        {% for subject in subjects %}
+                            <tr>
+                                <td><a href="{{url_for('subject_details', subject_id=subject.id)}}">{{subject.subject}}</a></td>
+                                <td>{{subject.min_marks}}</td>
+                                <td>{{subject.max_marks}}</td>
+                                <td>{{subject.standard}}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

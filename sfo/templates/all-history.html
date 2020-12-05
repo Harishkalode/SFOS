@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+{% block content%}
+
+<div class="content-i">
+    <div class="content-box">
+        <div class="element-wrapper">
+            <h6 class="element-header">All Students</h6>
+            <div class="element-box">
+                <div class="table-responsive">
+                    <table id="dataTable1" width="100%" class="table table-striped table-lightfont">
+                        <thead>
+                            <tr>
+                                <th>Event</th>
+                                <th>Activity</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>Event</th>
+                                <th>Activity</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Status</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                        {% for history in historys %}
+                            <tr>
+                                <td>{{history.name_of_module}}</td>
+                                <td>{{history.activity}}</td>
+                                <td>{{ history.date_created.strftime('%Y-%m-%d') }}</td>
+                                <td>{{ history.date_created.strftime('%H-%M-%S-%p') }}</td>
+                                <td class="text-center">
+                                    <div class="status-pill green" data-title="Complete" data-toggle="tooltip" data-original-title="" title=""></div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

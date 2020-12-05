@@ -1,0 +1,784 @@
+{% extends "layout.html" %}
+{% block content%}
+<style>
+    .user-profile .up-main-info .user-avatar-w .user-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 40px;
+    border: 3px solid #fff;
+    overflow: hidden;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.4);
+}
+</style>
+<div class="content-i">
+    <div class="content-box">
+        <div class="element-wrapper">
+            <div class="user-profile">
+                <div class="up-head-w" style="background-image: url({{url_for('static', filename='profile_pics/' + current_user.institution_logo)}})">
+                    <div class="up-social">
+                        {% if a %}
+                        <a href="{{current_user.facebook_link}}"><i class="os-icon picons-social-icon-facebook"></i></a>
+                        <a href="{{current_user.instagram_link}}"><i class="os-icon os-icon-instagram"></i></a>
+                        <a href="{{current_user.linkedin_link}}"><i class="os-icon picons-social-icon-linkedin"></i></a>
+                        <a href="{{current_user.institution_website_link}}"><i class="os-icon os-icon-globe"></i></a>
+                        {% endif%}
+                    </div>
+                    <div class="up-main-info">
+                        <div class="user-avatar-w">
+                            <div class="user-avatar">
+                                {% if a %}
+                                <img alt="" src="{{url_for('static', filename='profile_pics/' + current_user.profile_img)}}" />
+                                {% else %}
+                                <img alt="" src="{{url_for('static', filename='profile_pics/' + student.profile_img)}}" />
+                                {%endif%}
+                            </div>
+                        </div>
+                        {%if a%}
+                        <h1 class="up-header">{{current_user.fname}} {{current_user.lname}}</h1>
+                        <h5 class="up-sub-header">{{current_user.status}}</h5>
+                        {%else%}
+                        <h1 class="up-header">{{student.fname}} {{student.lname}}</h1>
+                        <h5 class="up-sub-header">Student | {{student.standard}} Standard</h5>
+                        {%endif%}
+
+                    </div>
+                    <svg class="decor" width="842px" height="219px" viewBox="0 0 842 219"
+                        preserveAspectRatio="xMaxYMax meet" version="1.1"
+                        xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <g transform="translate(-381.000000, -362.000000)" fill="#FFFFFF">
+                            <path class="decor-path"
+                                d="M1223,362 L1223,581 L381,581 C868.912802,575.666667 1149.57947,502.666667 1223,362 Z">
+                            </path>
+                        </g>
+                    </svg>
+                </div>
+                <div class="up-controls">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            {%if a %}
+                            <div class="value-pair">
+                                <div class="label">Status:</div>
+                                <div class="value badge badge-pill badge-success">
+                                    Online
+                                </div>
+                            </div>
+                            {%endif%}
+                            {% if a %}
+                            <div class="value-pair">
+                                <div class="label">Member Since:</div>
+                                <div class="value">{{current_user.date_created.strftime('%Y-%m-%d')}}</div>
+                            </div>
+                            {%else%}
+                            <div class="value-pair">
+                                <div class="label">Added On:</div>
+                                <div class="value">{{student.date_created.strftime('%Y-%m-%d')}}</div>
+                            </div>
+                            {%endif%}
+
+                        </div>
+                        <div class="col-lg-6 text-right">
+                            {% if a %}
+                            <a class="btn btn-primary btn-sm" href="{{url_for('account_update')}}"><i
+                                    class="os-icon os-icon-link-3"></i><span>Update Account</span></a>
+                            {%else%}
+                            <a class="btn btn-success btn-sm" href="{{url_for('exam_view', student_id=student.id)}}"><i
+                                    class="os-icon os-icon-edit-32"></i><span>All Exams view</span></a>
+                            <a class="btn btn-primary btn-sm" href="{{url_for('student_update', student_id=student.id)}}"><i
+                                    class="os-icon os-icon-link-3"></i><span>Update Student</span></a>
+                            {%endif%}
+                        </div>
+                    </div>
+                </div>
+                <div class="up-contents">
+                    <h5 class="element-header">Profile Information</h5>
+                    <div class="os-tabs-w">
+
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tab_overview">
+                                {% if a %}
+                                <div class="timed-activities padded">
+                                    <div class="timed-activity">
+                                        <div class="ta-date">
+                                            <span>Name</span>
+                                        </div>
+                                        <div class="ta-record-w">
+                                            <div class="ta-record">
+                                                <div class="ta">
+                                                    <strong>First Name :</strong>
+                                                </div>
+                                                <div class="ta-activity">
+                                                    &nbsp;{{current_user.fname}}
+                                                </div>
+                                            </div>
+                                            <div class="ta-record">
+                                                <div class="ta">
+                                                    <strong>Middle Name :</strong>
+                                                </div>
+                                                <div class="ta-activity">
+                                                    &nbsp;{{current_user.mname}}
+                                                </div>
+                                            </div>
+                                            <div class="ta-record">
+                                                <div class="ta">
+                                                    <strong>Last Name : </strong>
+                                                </div>
+                                                <div class="ta-activity">
+                                                     &nbsp;{{current_user.lname}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="timed-activity">
+                                        <div class="ta-date">
+                                            <span>Personal</span>
+                                        </div>
+                                        <div class="ta-record-w">
+                                            <div class="ta-record">
+                                                <div class="ta">
+                                                    <strong>Email :</strong>
+                                                </div>
+                                                <div class="ta-activity">
+                                                    &nbsp;{{current_user.email}}
+                                                </div>
+                                            </div>
+                                            <div class="ta-record">
+                                                <div class="ta">
+                                                    <strong>Phone NO. :</strong>
+                                                </div>
+                                                <div class="ta-activity">
+                                                    &nbsp;{{current_user.phone_no}}
+                                                </div>
+                                            </div>
+                                            <div class="ta-record">
+                                                <div class="ta">
+                                                    <strong>Date Of Birth : </strong>
+                                                </div>
+                                                <div class="ta-activity">
+                                                     &nbsp;{{current_user.dob}}
+                                                </div>
+                                            </div>
+                                            <div class="ta-record">
+                                                <div class="ta">
+                                                    <strong>Position : </strong>
+                                                </div>
+                                                <div class="ta-activity">
+                                                     &nbsp;{{current_user.status}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="timed-activity">
+                                        <div class="ta-date">
+                                            <span>Institution</span>
+                                        </div>
+                                        <div class="ta-record-w">
+                                            <div class="ta-record">
+                                                <div class="ta">
+                                                    <strong>Institution Name :</strong>
+                                                </div>
+                                                <div class="ta-activity">
+                                                    &nbsp;{{current_user.institution_name}}
+                                                </div>
+                                            </div>
+                                            <div class="ta-record">
+                                                <div class="ta">
+                                                    <strong>Institution Email :</strong>
+                                                </div>
+                                                <div class="ta-activity">
+                                                    &nbsp;{{current_user.institution_email}}
+                                                </div>
+                                            </div>
+                                            <div class="ta-record">
+                                                <div class="ta">
+                                                    <strong>Institution Address : </strong><br>
+                                                </div>
+                                                <div class="ta-activity">
+                                                     &nbsp;{{current_user.institution_address}}
+                                                </div>
+                                            </div>
+                                            <div class="ta-record">
+                                                <div class="ta">
+                                                    <strong>Institution Website Link : </strong>
+                                                </div>
+                                                <div class="ta-activity">
+                                                     &nbsp;<a href="{{current_user.institution_website_link}}">{{current_user.institution_website_link}}</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="timed-activity">
+                                        <div class="ta-date">
+                                            <span>Social</span>
+                                        </div>
+                                        <div class="ta-record-w">
+                                            <div class="ta-record">
+                                                <div class="ta">
+                                                    <strong>Linkedin Link :</strong>
+                                                </div>
+                                                <div class="ta-activity">
+                                                    &nbsp;<a href="{{current_user.linkedin_link}}">{{current_user.linkedin_link}}</a>
+                                                </div>
+                                            </div>
+                                            <div class="ta-record">
+                                                <div class="ta">
+                                                    <strong>Facebook Link :</strong>
+                                                </div>
+                                                <div class="ta-activity">
+                                                    &nbsp;<a href="{{current_user.facebook_link}}">{{current_user.facebook_link}}</a>
+                                                </div>
+                                            </div>
+                                            <div class="ta-record">
+                                                <div class="ta">
+                                                    <strong>Instagram Link : </strong>
+                                                </div>
+                                                <div class="ta-activity">
+                                                    &nbsp;<a href="{{current_user.instagram_link}}">{{current_user.instagram_link}}</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {%else%}
+                                <div class="timed-activities padded">
+                                    <div class="timed-activity">
+                                        <div class="ta-date">
+                                            <span>Name</span>
+                                        </div>
+                                        <div class="ta-record-w">
+                                            <div class="ta-record">
+                                                <div class="ta">
+                                                    <strong>First Name :</strong>
+                                                </div>
+                                                <div class="ta-activity">
+                                                    &nbsp;{{student.fname}}
+                                                </div>
+                                            </div>
+                                            <div class="ta-record">
+                                                <div class="ta">
+                                                    <strong>Middle Name :</strong>
+                                                </div>
+                                                <div class="ta-activity">
+                                                    &nbsp;{{student.father_name}}
+                                                </div>
+                                            </div>
+                                            <div class="ta-record">
+                                                <div class="ta">
+                                                    <strong>Last Name : </strong>
+                                                </div>
+                                                <div class="ta-activity">
+                                                     &nbsp;{{student.lname}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="timed-activity">
+                                        <div class="ta-date">
+                                            <span>Personal</span>
+                                        </div>
+                                        <div class="ta-record-w">
+                                            <div class="ta-record">
+                                                <div class="ta">
+                                                    <strong>Email :</strong>
+                                                </div>
+                                                <div class="ta-activity">
+                                                    &nbsp;{{student.email}}
+                                                </div>
+                                            </div>
+                                            <div class="ta-record">
+                                                <div class="ta">
+                                                    <strong>Phone NO. :</strong>
+                                                </div>
+                                                <div class="ta-activity">
+                                                    &nbsp;{{student.phone_no}}
+                                                </div>
+                                            </div>
+                                            <div class="ta-record">
+                                                <div class="ta">
+                                                    <strong>Date Of Birth : </strong>
+                                                </div>
+                                                <div class="ta-activity">
+                                                     &nbsp;{{student.dob}}
+                                                </div>
+                                            </div>
+                                            <div class="ta-record">
+                                                <div class="ta">
+                                                    <strong>Roll No. : </strong>
+                                                </div>
+                                                <div class="ta-activity">
+                                                     &nbsp;{{student.roll_no}}
+                                                </div>
+                                            </div>
+                                            <div class="ta-record">
+                                                <div class="ta">
+                                                    <strong>Local Address : </strong>
+                                                </div>
+                                                <div class="ta-activity">
+                                                     &nbsp;{{student.l_address}}
+                                                </div>
+                                            </div>
+                                            <div class="ta-record">
+                                                <div class="ta">
+                                                    <strong>Postal Address : </strong>
+                                                </div>
+                                                <div class="ta-activity">
+                                                     &nbsp;{{student.p_address}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="timed-activity">
+                                        <div class="ta-date">
+                                            <span>Father Info</span>
+                                        </div>
+                                        <div class="ta-record-w">
+                                            <div class="ta-record">
+                                                <div class="ta">
+                                                    <strong>Father Name :</strong>
+                                                </div>
+                                                <div class="ta-activity">
+                                                    &nbsp;{{student.father_name}}
+                                                </div>
+                                            </div>
+                                            <div class="ta-record">
+                                                <div class="ta">
+                                                    <strong>Father Occupation :</strong>
+                                                </div>
+                                                <div class="ta-activity">
+                                                    &nbsp;{{student.father_occupation}}
+                                                </div>
+                                            </div>
+                                            <div class="ta-record">
+                                                <div class="ta">
+                                                    <strong>Father Income : </strong><br>
+                                                </div>
+                                                <div class="ta-activity">
+                                                     &nbsp;{{student.father_income}}
+                                                </div>
+                                            </div>
+                                            <div class="ta-record">
+                                                <div class="ta">
+                                                    <strong>Father Phone No : </strong>
+                                                </div>
+                                                <div class="ta-activity">
+                                                     &nbsp;{{student.father_phone_no}}</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="timed-activity">
+                                        <div class="ta-date">
+                                            <span>Mother Info</span>
+                                        </div>
+                                        <div class="ta-record-w">
+                                            <div class="ta-record">
+                                                <div class="ta">
+                                                    <strong>Mother Name :</strong>
+                                                </div>
+                                                <div class="ta-activity">
+                                                    &nbsp;{{student.mother_name}}
+                                                </div>
+                                            </div>
+                                            <div class="ta-record">
+                                                <div class="ta">
+                                                    <strong>Mother Occupation :</strong>
+                                                </div>
+                                                <div class="ta-activity">
+                                                    &nbsp;{{student.mother_occupation}}
+                                                </div>
+                                            </div>
+                                            <div class="ta-record">
+                                                <div class="ta">
+                                                    <strong>Mother Income : </strong><br>
+                                                </div>
+                                                <div class="ta-activity">
+                                                     &nbsp;{{student.mother_income}}
+                                                </div>
+                                            </div>
+                                            <div class="ta-record">
+                                                <div class="ta">
+                                                    <strong>Mother Phone No : </strong>
+                                                </div>
+                                                <div class="ta-activity">
+                                                     &nbsp;{{student.mother_phone_no}}</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="timed-activity">
+                                        <div class="ta-date">
+                                            <span>Other</span>
+                                        </div>
+                                        <div class="ta-record-w">
+                                            <div class="ta-record">
+                                                <div class="ta">
+                                                    <strong>Religion :</strong>
+                                                </div>
+                                                <div class="ta-activity">
+                                                    &nbsp;{{student.religion}}
+                                                </div>
+                                            </div>
+                                            <div class="ta-record">
+                                                <div class="ta">
+                                                    <strong>Caste :</strong>
+                                                </div>
+                                                <div class="ta-activity">
+                                                    &nbsp;{{student.caste}}
+                                                </div>
+                                            </div>
+                                            <div class="ta-record">
+                                                <div class="ta">
+                                                    <strong>Gender : </strong>
+                                                </div>
+                                                <div class="ta-activity">
+                                                     &nbsp;{{student.gender}}
+                                                </div>
+                                            </div>
+                                            <div class="ta-record">
+                                                <div class="ta">
+                                                    <strong>Blood Group : </strong>
+                                                </div>
+                                                <div class="ta-activity">
+                                                     &nbsp;{{student.blood_group}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {%endif%}
+                            </div>
+<!--                            <div class="tab-pane" id="tab_sales">-->
+<!--                                <div class="el-tablo">-->
+<!--                                    <div class="label">Unique Visitors</div>-->
+<!--                                    <div class="value">12,537</div>-->
+<!--                                </div>-->
+<!--                                <div class="el-chart-w">-->
+<!--                                    <canvas height="150px" id="lineChart" width="600px"></canvas>-->
+<!--                                </div>-->
+<!--                            </div>-->
+                            <div class="tab-pane" id="tab_conversion"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    {% if a %}
+    {% include "history.html"%}
+    {%else%}
+<div class="content-panel compact color-scheme-dark">
+        <div class="content-panel-close"><i class="os-icon os-icon-close"></i></div>
+        <div class="element-wrapper">
+            <div class="element-actions actions-only"><a class="element-action element-action-fold"
+                    href="#"><i class="os-icon os-icon-minus-circle"></i></a></div>
+            <h6 class="element-header">Quick Conversion</h6>
+            <div class="element-box-tp">
+                <form action="{{url_for('student_details', student_id=student.id)}}" method="POST">
+                    {{ form.hidden_tag() }}
+                    <div class="form-group">
+                        <div class="form-group">
+                            {{form.subject.label(class="form-control-label")}}
+                            {% if form.subject.errors %}
+                                {{ form.subject(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.subject.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.subject(class="form-control") }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="form-group">
+                                {{form.marks_opt.label(class="form-control-label")}}
+                                {% if form.marks_opt.errors %}
+                                    {{ form.marks_opt(class="form-control is-invalid") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.marks_opt.errors %}
+                                            <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.marks_opt(class="form-control") }}
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                {{form.min_marks.label(class="form-control-label")}}
+                                {% if form.min_marks.errors %}
+                                    {{ form.min_marks(class="form-control is-invalid") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.min_marks.errors %}
+                                            <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.min_marks(class="form-control") }}
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                {{form.max_marks.label(class="form-control-label")}}<br><br>
+                                {% if form.max_marks.errors %}
+                                    {{ form.max_marks(class="form-control is-invalid") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.max_marks.errors %}
+                                            <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.max_marks(class="form-control") }}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{form.institution_name.label(class="form-control-label")}}
+                        {% if form.institution_name.errors %}
+                            {{ form.institution_name(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.institution_name.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.institution_name(class="form-control") }}
+                        {% endif %}
+                    </div>
+                    <div>
+                    {{form.submit(class="btn btn-primary btn-block btn-lg")}}
+                    </div><hr>
+                </form>
+                <div>
+                        <button class="btn btn-danger btn-block btn-lg" data-target="#onboardingWideSlideModal"
+                                    data-toggle="modal"><i
+                                            class="os-icon os-icon-refresh-ccw"></i><span>Promote Student</span></button>
+                    </div>
+                    <div aria-hidden="true" class="onboarding-modal modal fade animated"
+                        id="onboardingWideSlideModal" role="dialog" tabindex="-1">
+                        <div class="modal-dialog modal-lg modal-centered" role="document">
+                            <div class="modal-content text-center"><button aria-label="Close" class="close"
+                                    data-dismiss="modal" type="button"><span class="close-label">Skip
+                                        Intro</span><span class="os-icon os-icon-close"></span></button>
+                                <div class="onboarding-slider-w">
+                                    <div class="onboarding-slide">
+                                        <div class="onboarding-side-by-side">
+                                            <div class="onboarding-media"><img alt="" src="{{url_for('static', filename='profile_pics/' + student.profile_img)}}"
+                                                    width="200px"></div>
+                                            <div class="onboarding-content with-gradient">
+                                                <h4 class="onboarding-title">Example Request Information
+                                                </h4>
+                                                <div class="onboarding-text">In this example you can see a
+                                                    form where you can request some additional information
+                                                    from the customer when they land on the app page.</div>
+                                                <form>
+                                                    <div class="row">
+                                                        <div class="col-sm-6">
+                                                            <div class="form-group"><label for="">Your Full
+                                                                    Name</label><input class="form-control"
+                                                                    placeholder="Enter your full name..."
+                                                                    value=""></div>
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <div class="form-group"><label for="">Your
+                                                                    Role</label><select
+                                                                    class="form-control">
+                                                                    <option>Web Developer</option>
+                                                                    <option>Business Owner</option>
+                                                                    <option>Other</option>
+                                                                </select></div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="onboarding-slide">
+                                        <div class="onboarding-side-by-side">
+                                            <div class="onboarding-media"><img alt="" src="img/bigicon6.png"
+                                                    width="200px"></div>
+                                            <div class="onboarding-content with-gradient">
+                                                <h4 class="onboarding-title">Showcase App Features</h4>
+                                                <div class="onboarding-text">In this example you can
+                                                    showcase some of the features of your application, it is
+                                                    very handy to make new users aware of your hidden
+                                                    features. You can use boostrap columns to split them up.
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <ul class="features-list">
+                                                            <li>Fully Responsive design</li>
+                                                            <li>Pre-built app layouts</li>
+                                                            <li>Incredible Flexibility</li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <ul class="features-list">
+                                                            <li>Boxed & Full Layouts</li>
+                                                            <li>Based on Bootstrap 4</li>
+                                                            <li>Developer Friendly </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="onboarding-slide">
+                                        <div class="onboarding-side-by-side">
+                                            <div class="onboarding-media"><img alt="" src="img/bigicon2.png"
+                                                    width="200px"></div>
+                                            <div class="onboarding-content with-gradient">
+                                                <h4 class="onboarding-title">Example of onboarding screen!
+                                                </h4>
+                                                <div class="onboarding-text">This is an example of a
+                                                    multistep onboarding screen, you can use it to introduce
+                                                    your customers to your app, or collect additional
+                                                    information from them before they start using your app.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+        <div class="element-wrapper compact">
+            <div class="element-actions actions-only"><a class="element-action element-action-fold"
+                    href="#"><i class="os-icon os-icon-minus-circle"></i></a></div>
+            <h6 class="element-header">Order History</h6>
+            <div class="element-box-tp">
+                <table class="table table-compact smaller text-faded mb-0">
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th class="text-center">Date</th>
+                            <th class="text-right">Amount</th>
+                            <th class="text-right">Fee</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span>BTC</span><i
+                                    class="os-icon os-icon-repeat icon-separator"></i><span>USD</span>
+                            </td>
+                            <td class="text-center">01.08</td>
+                            <td class="text-right text-bright">$25.38</td>
+                            <td class="text-right text-danger">-$1.23</td>
+                        </tr>
+                        <tr>
+                            <td><span>RPX</span><i
+                                    class="os-icon os-icon-repeat icon-separator"></i><span>ETH</span>
+                            </td>
+                            <td class="text-center">01.07</td>
+                            <td class="text-right text-bright">$15.21</td>
+                            <td class="text-right text-danger">-$1.13</td>
+                        </tr>
+                        <tr>
+                            <td><span>LTC</span><i
+                                    class="os-icon os-icon-repeat icon-separator"></i><span>BTC</span>
+                            </td>
+                            <td class="text-center">01.05</td>
+                            <td class="text-right text-bright">$17.43</td>
+                            <td class="text-right text-danger">-$2.14</td>
+                        </tr>
+                        <tr>
+                            <td><span>PRX</span><i
+                                    class="os-icon os-icon-repeat icon-separator"></i><span>LTC</span>
+                            </td>
+                            <td class="text-center">01.05</td>
+                            <td class="text-right text-bright">$23.18</td>
+                            <td class="text-right text-danger">-$3.17</td>
+                        </tr>
+                        <tr>
+                            <td><span>ETH</span><i
+                                    class="os-icon os-icon-repeat icon-separator"></i><span>USD</span>
+                            </td>
+                            <td class="text-center">01.04</td>
+                            <td class="text-right text-bright">$35.42</td>
+                            <td class="text-right text-danger">-$3.12</td>
+                        </tr>
+                        <tr>
+                            <td><span>BTC</span><i
+                                    class="os-icon os-icon-repeat icon-separator"></i><span>ETH</span>
+                            </td>
+                            <td class="text-center">01.02</td>
+                            <td class="text-right text-bright">$72.62</td>
+                            <td class="text-right text-danger">-$4.15</td>
+                        </tr>
+                        <tr>
+                            <td><span>RPX</span><i
+                                    class="os-icon os-icon-repeat icon-separator"></i><span>USD</span>
+                            </td>
+                            <td class="text-center">12.29</td>
+                            <td class="text-right text-bright">$25.38</td>
+                            <td class="text-right text-danger">-$1.23</td>
+                        </tr>
+                        <tr>
+                            <td><span>ETH</span><i
+                                    class="os-icon os-icon-repeat icon-separator"></i><span>BTC</span>
+                            </td>
+                            <td class="text-center">12.28</td>
+                            <td class="text-right text-bright">$52.11</td>
+                            <td class="text-right text-danger">-$4.72</td>
+                        </tr>
+                    </tbody>
+                </table><a class="centered-load-more-link smaller" href="#"><span>Load More
+                        Transactions</span></a>
+            </div>
+        </div>
+        <div class="element-wrapper compact">
+            <div class="element-actions actions-only"><a class="element-action element-action-fold"
+                    href="#"><i class="os-icon os-icon-minus-circle"></i></a></div>
+            <h6 class="element-header">Profile Completion</h6>
+            <div class="element-box-tp">
+                <div class="fancy-progress-with-label">
+                    <div class="fpl-label">65%</div>
+                    <div class="fpl-progress-w">
+                        <div class="fpl-progress-i" style="width: 65%;"></div>
+                    </div>
+                </div>
+                <div class="todo-list"><a class="todo-item complete" href="#">
+                        <div class="ti-info">
+                            <div class="ti-header">Connect Bank Account</div>
+                            <div class="ti-sub-header">You have connected 2 accounts</div>
+                        </div>
+                        <div class="ti-icon"><i class="os-icon os-icon-check"></i></div>
+                    </a><a class="todo-item complete" href="#">
+                        <div class="ti-info">
+                            <div class="ti-header">Upload Tax Documents</div>
+                            <div class="ti-sub-header">You uploaded W-2 and 1099</div>
+                        </div>
+                        <div class="ti-icon"><i class="os-icon os-icon-check"></i></div>
+                    </a><a class="todo-item" href="#">
+                        <div class="ti-info">
+                            <div class="ti-header">Deposit Money</div>
+                            <div class="ti-sub-header">You can deposit from your bank</div>
+                        </div>
+                        <div class="ti-icon"><i class="os-icon os-icon-arrow-right7"></i></div>
+                    </a></div>
+            </div>
+        </div>
+        <div class="d-xxl-none">
+            <div class="cta-w orange text-center">
+                <div class="cta-content extra-padded">
+                    <div class="highlight-header">Bonus</div>
+                    <h5 class="cta-header">Invite your friends and make money with referrals</h5>
+                    <form action="#">
+                        <div class="newsletter-field-w"><input placeholder="Email address..."><button
+                                class="btn btn-sm btn-primary">Send</button></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {%endif%}
+</div>
+
+{% endblock %}

@@ -1,0 +1,136 @@
+{% extends "layout.html" %}
+{% block content%}
+<style>
+    .user-profile .up-main-info .user-avatar-w .user-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 40px;
+    border: 3px solid #fff;
+    overflow: hidden;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.4);
+}
+</style>
+<div class="content-i">
+    <div class="content-box">
+        <div class="element-wrapper">
+            <div class="user-profile">
+                <div class="up-head-w" style="background-image: url({{url_for('static', filename='profile_pics/' + current_user.institution_logo)}})">
+                    <div class="up-social">
+                        <a href="{{current_user.facebook_link}}"><i class="os-icon picons-social-icon-facebook"></i></a>
+                        <a href="{{current_user.instagram_link}}"><i class="os-icon os-icon-instagram"></i></a>
+                        <a href="{{current_user.linkedin_link}}"><i class="os-icon picons-social-icon-linkedin"></i></a>
+                        <a href="{{current_user.institution_website_link}}"><i class="os-icon os-icon-globe"></i></a>
+                    </div>
+                    <div class="up-main-info">
+                        <div class="user-avatar-w">
+                            <div class="user-avatar">
+                                <img alt="" src="{{url_for('static', filename='profile_pics/' + current_user.profile_img)}}" />
+                            </div>
+                        </div>
+                        <h1 class="up-header">{{current_user.fname}} {{current_user.lname}}</h1>
+                        <h5 class="up-sub-header">{{current_user.status}}</h5>
+                    </div>
+                    <svg class="decor" width="842px" height="219px" viewBox="0 0 842 219"
+                        preserveAspectRatio="xMaxYMax meet" version="1.1"
+                        xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <g transform="translate(-381.000000, -362.000000)" fill="#FFFFFF">
+                            <path class="decor-path"
+                                d="M1223,362 L1223,581 L381,581 C868.912802,575.666667 1149.57947,502.666667 1223,362 Z">
+                            </path>
+                        </g>
+                    </svg>
+                </div>
+                <div class="up-controls">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="value-pair">
+                                <div class="label">Status:</div>
+                                <div class="value badge badge-pill badge-success">
+                                    Online
+                                </div>
+                            </div>
+                            <div class="value-pair">
+                                <div class="label">Member Since:</div>
+                                <div class="value">{{current_user.date_created.strftime('%Y-%m-%d')}}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 text-right">
+                            <a class="btn btn-primary btn-sm" href="{{url_for('subject_update', subject_id=subject.id)}}"><i
+                                    class="os-icon os-icon-edit-1"></i><span>Update Subject</span></a>
+                            <a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal" href="{{url_for('subject_update', subject_id=subject.id)}}"><i
+                                    class="os-icon os-icon-trash-2"></i><span>Delete Subject</span></a>
+<!-- Modal -->
+  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteModalLabel">Delete Subject?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <form method="post" action="{{ url_for('delete_subject', subject_id=subject.id) }}">
+            <input type="submit" class="btn btn-danger" value="Delete">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="up-contents">
+                    <h5 class="element-header">Subject Information</h5>
+                    <div class="os-tabs-w">
+
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tab_overview">
+                                <div class="timed-activities padded">
+                                    <div class="timed-activity">
+                                        <div class="ta-date">
+                                            <span>Subject</span>
+                                        </div>
+                                        <div class="ta-record-w">
+                                            <div class="ta-record">
+                                                <div class="ta">
+                                                    <strong>Subject Name :</strong>
+                                                </div>
+                                                <div class="ta-activity">
+                                                    &nbsp;{{subject.subject}}
+                                                </div>
+                                            </div>
+                                            <div class="ta-record">
+                                                <div class="ta">
+                                                    <strong>Class Name :</strong>
+                                                </div>
+                                                <div class="ta-activity">
+                                                    &nbsp;{{subject.standard}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+<!--                            <div class="tab-pane" id="tab_sales">-->
+<!--                                <div class="el-tablo">-->
+<!--                                    <div class="label">Unique Visitors</div>-->
+<!--                                    <div class="value">12,537</div>-->
+<!--                                </div>-->
+<!--                                <div class="el-chart-w">-->
+<!--                                    <canvas height="150px" id="lineChart" width="600px"></canvas>-->
+<!--                                </div>-->
+<!--                            </div>-->
+                            <div class="tab-pane" id="tab_conversion"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        {% include "history.html"%}
+
+</div>
+
+{% endblock %}

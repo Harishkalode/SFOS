@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+{% block content%}
+
+<div class="content-i">
+    <div class="content-box">
+        <div class="element-wrapper">
+            <h6 class="element-header">All Students</h6>
+            <div class="element-box">
+                <div class="table-responsive">
+                    <table id="dataTable1" width="100%" class="table table-striped table-lightfont">
+                        <thead>
+                            <tr>
+                                <th>Profile</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Roll No.</th>
+                                <th>Phone No.</th>
+                                <th>Gender</th>
+                                <th>Father Name</th>
+                                <th>Mother Name</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>Profile</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Roll No.</th>
+                                <th>Phone No.</th>
+                                <th>Gender</th>
+                                <th>Father Name</th>
+                                <th>Mother Name</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                        {% for student in students %}
+                            <tr>
+                                <td>
+                                    <div class="avatar-w">
+                                        <img alt="" width="50px" src="{{url_for('static', filename='profile_pics/' + student.profile_img)}}">
+                                    </div>
+                                </td>
+                                <td><a href="{{url_for('student_details', student_id=student.id)}}">{{student.fname}} {{student.lname}}</a></td>
+                                <td>{{student.email}}</td>
+                                <td>{{student.roll_no}}</td>
+                                <td>{{student.phone_no}}</td>
+                                <td>{{student.gender}}</td>
+                                <td>{{student.father_name}}</td>
+                                <td>{{student.mother_name}}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

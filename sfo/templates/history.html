@@ -1,0 +1,119 @@
+<div class="content-panel">
+    <div class="content-panel-close"><i class="os-icon os-icon-close"></i></div>
+    <div class="element-wrapper">
+        <h6 class="element-header">Quick Links</h6>
+        <div class="element-box-tp">
+            <div class="el-buttons-list full-width">
+                <a class="btn btn-white btn-sm" href="{{url_for('add_student')}}">
+                    <i class="os-icon os-icon-delivery-box-2"></i>
+                    <span>Add New Student</span>
+                </a>
+                <a class="btn btn-white btn-sm" href="{{url_for('add_subject')}}">
+                    <i class="os-icon os-icon-window-content"></i>
+                    <span>Add New Subject</span>
+                </a>
+                <a class="btn btn-white btn-sm" href="{{url_for('account_update')}}">
+                    <i class="os-icon os-icon-wallet-loaded"></i>
+                    <span>Profile Settings</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="element-wrapper">
+        <h6 class="element-header">Recent Activity</h6>
+        <div class="element-box-tp">
+            {% for history in historys.items %}
+            <div class="profile-tile">
+                <a class="profile-tile-box" href="">
+                {% if history.name_of_module == 'Registration' %}
+                    <div class="pt-avatar-w"><img alt="" src="{{url_for('static', filename='profile_pics/' + current_user.profile_img)}}"></div>
+                {%elif history.name_of_module == '2 step Registration'%}
+                    <div class="pt-avatar-w"><img alt="" src="{{url_for('static', filename='profile_pics/' + current_user.profile_img)}}"></div>
+                {%elif history.name_of_module == 'Login'%}
+                    <div class="pt-avatar-w"><img alt="" src="{{url_for('static', filename='profile_pics/' + current_user.profile_img)}}"></div>
+                {%elif history.name_of_module == 'Logout'%}
+                    <div class="pt-avatar-w"><img alt="" src="{{url_for('static', filename='profile_pics/' + current_user.profile_img)}}"></div>
+                {%elif history.name_of_module == 'Account Update'%}
+                    <div class="pt-avatar-w"><img alt="" src="{{url_for('static', filename='profile_pics/' + current_user.profile_img)}}"></div>
+                {%elif history.name_of_module == 'Reset Password Request'%}
+                    <div class="pt-avatar-w"><img alt="" src="{{url_for('static', filename='profile_pics/' + current_user.profile_img)}}"></div>
+                {%elif history.name_of_module == 'Password Updated'%}
+                    <div class="pt-avatar-w"><img alt="" src="{{url_for('static', filename='profile_pics/' + current_user.profile_img)}}"></div>
+                {% else %}
+                    <div class="pt-avatar-w"><img alt="" src="{{ url_for('static', filename='profile_pics/' + current_user.institution_logo) }}"></div>
+                {% endif%}
+                    <div class="pt-user-name">{{history.name_of_module}}</div>
+                </a>
+                <div class="profile-tile-meta">
+                    {% if history.activity == 'add' %}
+                    <ul>
+                        <li>Activity:<strong style="text-transform: uppercase;">{{history.activity}}</strong></li>
+                        <li>Date:<strong>{{ history.date_created.strftime('%Y-%m-%d') }}</strong></li>
+                        <li>Time:<strong>{{ history.date_created.strftime('%H-%M-%S-%p') }}</strong></li>
+                    </ul>
+                    <div class="pt-btn"><a class="btn btn-success btn-sm"
+                            href="#">{{history.name_of_module}}</a></div>
+                    {%endif%}
+                    {% if history.activity == 'update' %}
+                    <ul>
+                        <li>Activity:<strong style="text-transform: uppercase;">{{history.activity}}</strong></li>
+                        <li>Date:<strong>{{ history.date_created.strftime('%Y-%m-%d') }}</strong></li>
+                        <li>Time:<strong>{{ history.date_created.strftime('%H-%M-%S-%p') }}</strong></li>
+                    </ul>
+                    <div class="pt-btn"><a class="btn btn-secondary btn-sm"
+                            href="#">{{history.name_of_module}}</a></div>
+                    {%endif%}
+                    {% if history.activity == 'delete' %}
+                    <ul>
+                        <li>Activity:<strong style="text-transform: uppercase;">{{history.activity}}</strong></li>
+                        <li>Date:<strong>{{ history.date_created.strftime('%Y-%m-%d') }}</strong></li>
+                        <li>Time:<strong>{{ history.date_created.strftime('%H-%M-%S-%p') }}</strong></li>
+                    </ul>
+                    <div class="pt-btn"><a class="btn btn-danger btn-sm"
+                            href="#">{{history.name_of_module}}</a></div>
+                    {%endif%}
+                    {% if history.activity == 'reset' %}
+                    <ul>
+                        <li>Activity:<strong style="text-transform: uppercase;">{{history.activity}}</strong></li>
+                        <li>Date:<strong>{{ history.date_created.strftime('%Y-%m-%d') }}</strong></li>
+                        <li>Time:<strong>{{ history.date_created.strftime('%H-%M-%S-%p') }}</strong></li>
+                    </ul>
+                    <div class="pt-btn"><a class="btn btn-warning btn-sm"
+                            href="#">{{history.name_of_module}}</a></div>
+                    {%endif%}
+                    {% if history.activity == 'login' %}
+                    <ul>
+                        <li>Activity:<strong style="text-transform: uppercase;">{{history.activity}}</strong></li>
+                        <li>Date:<strong>{{ history.date_created.strftime('%Y-%m-%d') }}</strong></li>
+                        <li>Time:<strong>{{ history.date_created.strftime('%H-%M-%S-%p') }}</strong></li>
+                    </ul>
+                    <div class="pt-btn"><a class="btn btn-info btn-sm"
+                            href="#">{{history.name_of_module}}</a></div>
+                    {%endif%}
+                    {% if history.activity == 'logout' %}
+                    <ul>
+                        <li>Activity:<strong style="text-transform: uppercase;">{{history.activity}}</strong></li>
+                        <li>Date:<strong>{{ history.date_created.strftime('%Y-%m-%d') }}</strong></li>
+                        <li>Time:<strong>{{ history.date_created.strftime('%H-%M-%S-%p') }}</strong></li>
+                    </ul>
+                    <div class="pt-btn"><a class="btn btn-info btn-sm"
+                            href="#">{{history.name_of_module}}</a></div>
+                    {%endif%}
+                    {% if history.activity == 'register' %}
+                    <ul>
+                        <li>Activity:<strong style="text-transform: uppercase;">{{history.activity}}</strong></li>
+                        <li>Date:<strong>{{ history.date_created.strftime('%Y-%m-%d') }}</strong></li>
+                        <li>Time:<strong>{{ history.date_created.strftime('%H-%M-%S-%p') }}</strong></li>
+                    </ul>
+                    <div class="pt-btn"><a class="btn btn-primary btn-sm"
+                            href="#">{{history.name_of_module}}</a></div>
+                    {%endif%}
+
+
+                </div>
+            </div>
+            {%endfor%}
+        </div>
+        <a class="btn btn-dark" href="{{url_for('all_history')}}">All activity...</a>
+    </div>
+</div>

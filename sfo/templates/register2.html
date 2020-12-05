@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% if title %}
+        <title>S F O S | {{title}}</title>
+    {% else %}
+        <title>S F O S</title>
+    {% endif%}
+    <meta charset="utf-8">
+    <link href="{{url_for('static', filename='favicon.png')}}" rel="shortcut icon">
+    <link href="{{url_for('static', filename='apple-touch-icon.png')}}" rel="apple-touch-icon">
+    <link href="{{url_for('static', filename='bower_components/select2/dist/css/select2.min.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='bower_components/bootstrap-daterangepicker/daterangepicker.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='bower_components/dropzone/dist/dropzone.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='bower_components/fullcalendar/dist/fullcalendar.min.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='bower_components/perfect-scrollbar/css/perfect-scrollbar.min.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='bower_components/slick-carousel/slick/slick.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='css/main5739.css')}}" rel="stylesheet">
+    <style>
+        .content-box {
+        padding: 4rem 10rem 0rem 10rem;
+        }
+    </style>
+</head>
+
+<body class="menu-position-side menu-side-left full-screen with-content-panel">
+<div class="content-i">
+    <div class="content-box">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="element-wrapper">
+                    <div class="element-box">
+                        <form method="POST" action="">
+                            {{ form.hidden_tag() }}
+                            <legend><span>Personal Information</span></legend>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        {{form.fname.label(class="form-control-label")}}
+                                        {% if form.fname.errors %}
+                                            {{ form.fname(class="form-control is-invalid") }}
+                                            <div class="invalid-feedback">
+                                                {% for error in form.fname.errors %}
+                                                    <span>{{ error }}</span>
+                                                {% endfor %}
+                                            </div>
+                                        {% else %}
+                                            {{ form.fname(class="form-control") }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        {{form.mname.label(class="form-control-label")}}
+                                        {% if form.mname.errors %}
+                                            {{ form.mname(class="form-control is-invalid") }}
+                                            <div class="invalid-feedback">
+                                                {% for error in form.mname.errors %}
+                                                    <span>{{ error }}</span>
+                                                {% endfor %}
+                                            </div>
+                                        {% else %}
+                                            {{ form.mname(class="form-control") }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        {{form.lname.label(class="form-control-label")}}
+                                        {% if form.lname.errors %}
+                                            {{ form.lname(class="form-control is-invalid") }}
+                                            <div class="invalid-feedback">
+                                                {% for error in form.lname.errors %}
+                                                    <span>{{ error }}</span>
+                                                {% endfor %}
+                                            </div>
+                                        {% else %}
+                                            {{ form.lname(class="form-control") }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        {{form.dob.label(class="form-control-label")}}
+                                        {% if form.dob.errors %}
+                                            {{ form.dob(class="form-control is-invalid", type="date") }}
+                                            <div class="invalid-feedback">
+                                                {% for error in form.dob.errors %}
+                                                    <span>{{ error }}</span>
+                                                {% endfor %}
+                                            </div>
+                                        {% else %}
+                                            {{ form.dob(class="form-control", type="date") }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    {{form.phone_no.label(class="form-control-label")}}
+                                        {% if form.phone_no.errors %}
+                                            {{ form.phone_no(class="form-control is-invalid") }}
+                                            <div class="invalid-feedback">
+                                                {% for error in form.phone_no.errors %}
+                                                    <span>{{ error }}</span>
+                                                {% endfor %}
+                                            </div>
+                                        {% else %}
+                                            {{ form.phone_no(class="form-control") }}
+                                        {% endif %}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        {{form.linkedin_link.label(class="form-control-label")}}
+                                        {% if form.linkedin_link.errors %}
+                                            {{ form.linkedin_link(class="form-control is-invalid") }}
+                                            <div class="invalid-feedback">
+                                                {% for error in form.linkedin_link.errors %}
+                                                    <span>{{ error }}</span>
+                                                {% endfor %}
+                                            </div>
+                                        {% else %}
+                                            {{ form.linkedin_link(class="form-control") }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        {{form.instagram_link.label(class="form-control-label")}}
+                                        {% if form.instagram_link.errors %}
+                                            {{ form.instagram_link(class="form-control is-invalid") }}
+                                            <div class="invalid-feedback">
+                                                {% for error in form.instagram_link.errors %}
+                                                    <span>{{ error }}</span>
+                                                {% endfor %}
+                                            </div>
+                                        {% else %}
+                                            {{ form.instagram_link(class="form-control") }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        {{form.facebook_link.label(class="form-control-label")}}
+                                        {% if form.facebook_link.errors %}
+                                            {{ form.facebook_link(class="form-control is-invalid") }}
+                                            <div class="invalid-feedback">
+                                                {% for error in form.facebook_link.errors %}
+                                                    <span>{{ error }}</span>
+                                                {% endfor %}
+                                            </div>
+                                        {% else %}
+                                            {{ form.facebook_link(class="form-control") }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <legend class="mt-5"><span>Institution Information</span></legend>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        {{form.institution_name.label(class="form-control-label")}}
+                                        {% if form.institution_name.errors %}
+                                            {{ form.institution_name(class="form-control is-invalid") }}
+                                            <div class="invalid-feedback">
+                                                {% for error in form.college_name.errors %}
+                                                    <span>{{ error }}</span>
+                                                {% endfor %}
+                                            </div>
+                                        {% else %}
+                                            {{ form.institution_name(class="form-control") }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        {{form.institution_email.label(class="form-control-label")}}
+                                        {% if form.institution_email.errors %}
+                                            {{ form.institution_email(class="form-control is-invalid") }}
+                                            <div class="invalid-feedback">
+                                                {% for error in form.institution_email.errors %}
+                                                    <span>{{ error }}</span>
+                                                {% endfor %}
+                                            </div>
+                                        {% else %}
+                                            {{ form.institution_email(class="form-control") }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        {{form.institution_address.label(class="form-control-label")}}
+                                        {% if form.institution_address.errors %}
+                                            {{ form.institution_address(class="form-control is-invalid") }}
+                                            <div class="invalid-feedback">
+                                                {% for error in form.institution_address.errors %}
+                                                    <span>{{ error }}</span>
+                                                {% endfor %}
+                                            </div>
+                                        {% else %}
+                                            {{ form.institution_address(class="form-control") }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        {{form.institution_website_link.label(class="form-control-label")}}
+                                        {% if form.institution_website_link.errors %}
+                                            {{ form.institution_website_link(class="form-control is-invalid") }}
+                                            <div class="invalid-feedback">
+                                                {% for error in form.institution_website_link.errors %}
+                                                    <span>{{ error }}</span>
+                                                {% endfor %}
+                                            </div>
+                                        {% else %}
+                                            {{ form.institution_website_link(class="form-control") }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="form-buttons-w">{{form.submit(class="btn btn-primary")}}</div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <script src="{{url_for('static', filename='bower_components/jquery/dist/jquery.min.js')}}"></script>
+    <script src="{{url_for('static', filename='bower_components/popper.js/dist/umd/popper.min.js')}}"></script>
+    <script src="{{url_for('static', filename='bower_components/moment/moment.js')}}"></script>
+    <script src="{{url_for('static', filename='bower_components/chart.js/dist/Chart.min.js')}}"></script>
+    <script src="{{url_for('static', filename='bower_components/select2/dist/js/select2.full.min.js')}}"></script>
+    <script src="{{url_for('static', filename='bower_components/jquery-bar-rating/dist/jquery.barrating.min.js')}}"></script>
+    <script src="{{url_for('static', filename='bower_components/ckeditor/ckeditor.js')}}"></script>
+    <script src="{{url_for('static', filename='bower_components/bootstrap-validator/dist/validator.min.js')}}"></script>
+    <script src="{{url_for('static', filename='bower_components/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
+    <script src="{{url_for('static', filename='bower_components/ion.rangeSlider/js/ion.rangeSlider.min.js')}}"></script>
+    <script src="{{url_for('static', filename='bower_components/dropzone/dist/dropzone.js')}}"></script>
+    <script src="{{url_for('static', filename='bower_components/editable-table/mindmup-editabletable.js')}}"></script>
+    <script src="{{url_for('static', filename='bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
+    <script src="{{url_for('static', filename='bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
+    <script src="{{url_for('static', filename='bower_components/fullcalendar/dist/fullcalendar.min.js')}}"></script>
+    <script src="{{url_for('static', filename='bower_components/perfect-scrollbar/js/perfect-scrollbar.jquery.min.js')}}"></script>
+    <script src="{{url_for('static', filename='bower_components/tether/dist/js/tether.min.js')}}"></script>
+    <script src="{{url_for('static', filename='bower_components/slick-carousel/slick/slick.min.js')}}"></script>
+    <script src="{{url_for('static', filename='bower_components/bootstrap/js/dist/util.js')}}"></script>
+    <script src="{{url_for('static', filename='bower_components/bootstrap/js/dist/alert.js')}}"></script>
+    <script src="{{url_for('static', filename='bower_components/bootstrap/js/dist/button.js')}}"></script>
+    <script src="{{url_for('static', filename='bower_components/bootstrap/js/dist/carousel.js')}}"></script>
+    <script src="{{url_for('static', filename='bower_components/bootstrap/js/dist/collapse.js')}}"></script>
+    <script src="{{url_for('static', filename='bower_components/bootstrap/js/dist/dropdown.js')}}"></script>
+    <script src="{{url_for('static', filename='bower_components/bootstrap/js/dist/modal.js')}}"></script>
+    <script src="{{url_for('static', filename='bower_components/bootstrap/js/dist/tab.js')}}"></script>
+    <script src="{{url_for('static', filename='bower_components/bootstrap/js/dist/tooltip.js')}}"></script>
+    <script src="{{url_for('static', filename='bower_components/bootstrap/js/dist/popover.js')}}"></script>
+    <script src="{{url_for('static', filename='js/demo_customizer5739.js')}}"></script>
+    <script src="{{url_for('static', filename='js/main5739.js')}}"></script>
+</body>
+</html>
