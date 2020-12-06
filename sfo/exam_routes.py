@@ -9,7 +9,8 @@ from flask_login import current_user, login_required
 @login_required
 def exam_view(student_id):
     student = Student.query.get_or_404(student_id)
-    exams = Exam.query.filter_by(student=student).all()
+    exams = Exam.query.filter_by(student=student,standard = student.standard)
+
     if student.admin != current_user:
         flash("Sorry you can't view this student",'danger')
         return redirect(url_for('all_students'))

@@ -7,14 +7,15 @@
             <div class="col-sm-12">
                 <div class="element-wrapper">
                     <div class="element-actions">
-                        <form class="form-inline justify-content-sm-end"><select
-                                class="form-control form-control-sm rounded">
+                        <form class="form-inline justify-content-sm-end">
+                            <select class="form-control form-control-sm rounded">
                                 <option value="Pending">Today</option>
                                 <option value="Active">Last Week </option>
                                 <option value="Cancelled">Last 30 Days</option>
-                            </select></form>
+                            </select>
+                        </form>
                     </div>
-                    <h6 class="element-header">Support Service Dashboard</h6>
+                    <h6 class="element-header">Current Semester Exam Details</h6>
                     <div class="element-content">
                         <div class="tablo-with-chart">
                             <div class="row">
@@ -24,8 +25,8 @@
                                             <div class="col-sm-6"><a
                                                     class="element-box el-tablo centered trend-in-corner padded bold-label"
                                                     href="apps_support_index.html">
-                                                    <div class="value">24</div>
-                                                    <div class="label">New Tickets</div>
+                                                    <div class="value">{{exams.count()}}</div>
+                                                    <div class="label">Total Subjects</div>
                                                     <div class="trending trending-up-basic">
                                                         <span>12%</span><i
                                                             class="os-icon os-icon-arrow-up2"></i></div>
@@ -34,7 +35,7 @@
                                                     class="element-box el-tablo centered trend-in-corner padded bold-label"
                                                     href="apps_support_index.html">
                                                     <div class="value">12</div>
-                                                    <div class="label">Closed Today</div>
+                                                    <div class="label">Passed Subject</div>
                                                     <div class="trending trending-down-basic">
                                                         <span>12%</span><i
                                                             class="os-icon os-icon-arrow-down"></i>
@@ -46,21 +47,21 @@
                                             <div class="col-sm-6"><a
                                                     class="element-box el-tablo centered trend-in-corner padded bold-label"
                                                     href="apps_support_index.html">
-                                                    <div class="value">52</div>
-                                                    <div class="label">Agent Replies</div>
-                                                    <div class="trending trending-up-basic">
-                                                        <span>12%</span><i
-                                                            class="os-icon os-icon-arrow-up2"></i></div>
-                                                </a></div>
-                                            <div class="col-sm-6"><a
-                                                    class="element-box el-tablo centered trend-in-corner padded bold-label"
-                                                    href="apps_support_index.html">
                                                     <div class="value">7</div>
-                                                    <div class="label">New Replies</div>
+                                                    <div class="label">Failed Subject</div>
                                                     <div class="trending trending-down-basic">
                                                         <span>12%</span><i
                                                             class="os-icon os-icon-arrow-down"></i>
                                                     </div>
+                                                </a></div>
+                                            <div class="col-sm-6"><a
+                                                    class="element-box el-tablo centered trend-in-corner padded bold-label"
+                                                    href="apps_support_index.html">
+                                                    <div class="value">52</div>
+                                                    <div class="label">Total Marks</div>
+                                                    <div class="trending trending-up-basic">
+                                                        <span>12%</span><i
+                                                            class="os-icon os-icon-arrow-up2"></i></div>
                                                 </a></div>
                                         </div>
                                     </div>
@@ -69,7 +70,7 @@
                                     <div class="element-box pl-xxl-5 pr-xxl-5">
                                         <div class="el-tablo bigger highlight bold-label">
                                             <div class="value">12,537</div>
-                                            <div class="label">Unique Visitors</div>
+                                            <div class="label">Total Marks</div>
                                         </div>
                                         <div class="el-chart-w"><canvas height="170px" id="lineChart"
                                                 width="600px"></canvas></div>
@@ -175,6 +176,12 @@
                     </div>
                     <h6 class="element-header">Questions per Product</h6>
                     <div class="element-box">
+                        <div class="mb">
+                            <span class="status-pill smaller bar-level-1"></span>&nbsp;  Total Marks
+                            <span class="status-pill smaller " style="background-color: #65affd;"></span>&nbsp; Minimum Marks
+                            <span class="status-pill smaller " style="background-color: #0362c6;"></span>&nbsp; Marks Obtain
+                        </div>
+                        <hr>
                         <div class="os-progress-bar primary">
                             <div class="bar-labels">
                                 <div class="bar-label-left"><span class="bigger">MailGun</span></div>
