@@ -27,19 +27,19 @@
                                                     href="apps_support_index.html">
                                                     <div class="value">{{exams.count()}}</div>
                                                     <div class="label">Total Subjects</div>
-                                                    <div class="trending trending-up-basic">
-                                                        <span>12%</span><i
-                                                            class="os-icon os-icon-arrow-up2"></i></div>
+<!--                                                    <div class="trending trending-up-basic">-->
+<!--                                                        <span>12%</span><i-->
+<!--                                                            class="os-icon os-icon-arrow-up2"></i></div>-->
                                                 </a></div>
                                             <div class="col-sm-6"><a
                                                     class="element-box el-tablo centered trend-in-corner padded bold-label"
                                                     href="apps_support_index.html">
                                                     <div class="value">{{a}}</div>
                                                     <div class="label">Passed Subject</div>
-                                                    <div class="trending trending-down-basic">
-                                                        <span>12%</span><i
-                                                            class="os-icon os-icon-arrow-down"></i>
-                                                    </div>
+<!--                                                    <div class="trending trending-down-basic">-->
+<!--                                                        <span>12%</span><i-->
+<!--                                                            class="os-icon os-icon-arrow-down"></i>-->
+<!--                                                    </div>-->
                                                 </a>
                                             </div>
                                         </div>
@@ -47,21 +47,28 @@
                                             <div class="col-sm-6"><a
                                                     class="element-box el-tablo centered trend-in-corner padded bold-label"
                                                     href="apps_support_index.html">
-                                                    <div class="value">7</div>
+                                                    <div class="value">{{exams.count() - a}}</div>
                                                     <div class="label">Failed Subject</div>
-                                                    <div class="trending trending-down-basic">
-                                                        <span>12%</span><i
-                                                            class="os-icon os-icon-arrow-down"></i>
-                                                    </div>
+<!--                                                    <div class="trending trending-down-basic">-->
+<!--                                                        <span>12%</span><i-->
+<!--                                                            class="os-icon os-icon-arrow-down"></i>-->
+<!--                                                    </div>-->
                                                 </a></div>
                                             <div class="col-sm-6"><a
                                                     class="element-box el-tablo centered trend-in-corner padded bold-label"
                                                     href="apps_support_index.html">
-                                                    <div class="value">52</div>
+                                                    <div class="value">{{t}}</div>
                                                     <div class="label">Total Marks</div>
-                                                    <div class="trending trending-up-basic">
-                                                        <span>12%</span><i
-                                                            class="os-icon os-icon-arrow-up2"></i></div>
+<!--                                                    <div class="trending trending-up-basic">-->
+<!--                                                        <span>12%</span><i-->
+<!--                                                            class="os-icon os-icon-arrow-up2"></i></div>-->
+                                                </a></div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12"><a
+                                                    class="element-box el-tablo centered trend-in-corner bold-label">
+                                                    <div class="label">Total Marks {%if exams.count() -a == 0%}<h2 style="color: #24b314;">Pass : {{perc}}%</h2>{%else%}<h2 style="color: #e65252;">Fail</h2>{%endif%}
+                                                    </div>
                                                 </a></div>
                                         </div>
                                     </div>
@@ -69,7 +76,7 @@
                                 <div class="col-sm-7 col-xxl-8">
                                     <div class="element-box pl-xxl-5 pr-xxl-5">
                                         <div class="el-tablo bigger highlight bold-label">
-                                            <div class="value">12,537</div>
+                                            <div class="value">{{t}}/{{mm}}</div>
                                             <div class="label">Total Marks</div>
                                         </div>
                                         <div class="el-chart-w"><canvas height="170px" id="lineChart"

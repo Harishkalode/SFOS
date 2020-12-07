@@ -15,8 +15,18 @@ def exam_view(student_id):
         if exam.marks_opt >= exam.subject.min_marks:
             passed.append(exam.marks_opt)
     a = len(passed)
-
+    total = []
+    for exam in exams:
+        total.append(int(exam.marks_opt))
+    t = sum(total)
+    marks=[]
+    for exam in exams:
+        marks.append(int(exam.subject.max_marks))
+    mm = sum(marks)
     if student.admin != current_user:
         flash("Sorry you can't view this student",'danger')
         return redirect(url_for('all_students'))
-    return render_template('exam.html',exams=exams,student=student,a=a)
+    percentage = (t/mm)*100.00
+    perc = "{:.2f}".format(percentage)
+    return render_template('exam.html',exams=exams,student=student,a=a,t=t,mm=mm,perc=perc,title=f'{student.fname} {student.lname} Exam',
+                           st1=f'{student.fname} {student.lname}', st2=f'{student.standard} Exam')
