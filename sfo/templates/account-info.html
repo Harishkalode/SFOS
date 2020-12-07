@@ -491,7 +491,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-4">
+                        <div class="col-12">
                             <div class="form-group">
                                 {{form.marks_opt.label(class="form-control-label")}}
                                 {% if form.marks_opt.errors %}
@@ -503,36 +503,6 @@
                                     </div>
                                 {% else %}
                                     {{ form.marks_opt(class="form-control") }}
-                                {% endif %}
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="form-group">
-                                {{form.min_marks.label(class="form-control-label")}}
-                                {% if form.min_marks.errors %}
-                                    {{ form.min_marks(class="form-control is-invalid") }}
-                                    <div class="invalid-feedback">
-                                        {% for error in form.min_marks.errors %}
-                                            <span>{{ error }}</span>
-                                        {% endfor %}
-                                    </div>
-                                {% else %}
-                                    {{ form.min_marks(class="form-control") }}
-                                {% endif %}
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="form-group">
-                                {{form.max_marks.label(class="form-control-label")}}<br><br>
-                                {% if form.max_marks.errors %}
-                                    {{ form.max_marks(class="form-control is-invalid") }}
-                                    <div class="invalid-feedback">
-                                        {% for error in form.max_marks.errors %}
-                                            <span>{{ error }}</span>
-                                        {% endfor %}
-                                    </div>
-                                {% else %}
-                                    {{ form.max_marks(class="form-control") }}
                                 {% endif %}
                             </div>
                         </div>

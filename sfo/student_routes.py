@@ -64,16 +64,15 @@ def student_details(student_id):
     form = AddExamForm()
     form.subject.choices = [(subject.id,f'{subject.subject}({subject.standard})') for subject in subjects
                             if subject.standard == student.standard]
+    a = form.subject.choices
     if student.admin != current_user:
         flash("Sorry you can't view this student",'danger')
         return redirect(url_for('all_students'))
     if form.validate_on_submit():
         sub = Subject.query.get(form.subject.data)
-        exam = Exam(subject=form.subject.data,
+        exam = Exam(subject=sub,
                     exam_name=f'{student.standard} Exam',
                     marks_opt=form.marks_opt.data,
-                    min_marks=form.min_marks.data,
-                    max_marks=form.max_marks.data,
                     standard=f'{student.standard}',
                     institution_name=form.institution_name.data,
                     subjects=[sub],

@@ -203,8 +203,6 @@ class UpdateSubjectForm(FlaskForm):
 class AddExamForm(FlaskForm):
     subject = SelectField("Subject", choices=[], validators=[DataRequired()])
     marks_opt = StringField('Marks Obtain', validators=[DataRequired()])
-    min_marks = StringField("Passing Marks", validators=[DataRequired()])
-    max_marks = StringField("Total Marks", validators=[DataRequired()])
     institution_name = StringField('Institution Name', validators=[DataRequired()])
     submit = SubmitField('Continue')
 
