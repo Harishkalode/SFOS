@@ -37,6 +37,32 @@
                                 {% endif %}
                             </div>
                             <div class="form-group">
+                                {{form.min_marks.label(class="form-control-label")}}
+                                {% if form.min_marks.errors %}
+                                    {{ form.min_marks(class="form-control is-invalid") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.min_marks.errors %}
+                                            <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.min_marks(class="form-control") }}
+                                {% endif %}
+                            </div>
+                            <div class="form-group">
+                                {{form.max_marks.label(class="form-control-label")}}
+                                {% if form.max_marks.errors %}
+                                    {{ form.max_marks(class="form-control is-invalid") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.max_marks.errors %}
+                                            <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.max_marks(class="form-control") }}
+                                {% endif %}
+                            </div>
+                            <div class="form-group">
                                 {{form.institute_subject.label(class="form-control-label")}}
                                 <div class="col-sm-8">
                                     <div class="form-check">

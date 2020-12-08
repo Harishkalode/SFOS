@@ -164,6 +164,8 @@ class LoginForm(FlaskForm):
 
 class AddSubjectForm(FlaskForm):
     subject = StringField("Subject", validators=[DataRequired()])
+    min_marks = StringField('Passing Marks', validators=[DataRequired()])
+    max_marks = StringField('Maximum marks', validators=[DataRequired()])
     standard = SelectField("Standard", choices=[('1st', '1st'),
                                                 ('2nd', '2nd'), ('3rd', '3rd'), ('4th', '4th'), ('5th', '5th'),
                                                 ('6th', '6th'),
@@ -183,6 +185,8 @@ class AddSubjectForm(FlaskForm):
 
 class UpdateSubjectForm(FlaskForm):
     subject = StringField("Subject", validators=[DataRequired()])
+    min_marks = StringField('Passing Marks', validators=[DataRequired()])
+    max_marks = StringField('Maximum marks', validators=[DataRequired()])
     standard = SelectField("Standard", choices=[('1st', '1st'),
                                                 ('2nd', '2nd'), ('3rd', '3rd'), ('4th', '4th'), ('5th', '5th'),
                                                 ('6th', '6th'),

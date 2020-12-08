@@ -16,6 +16,8 @@ def add_subject():
     if form.validate_on_submit():
         subject = Subject(subject=form.subject.data,
                           standard=form.standard.data,
+                          min_marks=form.min_marks.data,
+                          max_marks=form.max_marks.data,
                           institute_subject=form.institute_subject.data,
                           admin=current_user)
         history = History(name_of_module=f'Added Subject {form.subject.data}', activity='add',
@@ -70,6 +72,8 @@ def subject_update(subject_id):
     if form.validate_on_submit():
         subject.subject = form.subject.data
         subject.standard = form.standard.data
+        subject.min_marks = form.min_marks.data
+        subject.max_marks = form.max_marks.data
         subject.institute_subject = form.institute_subject.data
         db.session.commit()
         history = History(name_of_module=f'Updated Subject {form.subject.data}', activity='update',
@@ -81,6 +85,8 @@ def subject_update(subject_id):
     elif request.method == 'GET':
         form.subject.data = subject.subject
         form.standard.data = subject.standard
+        form.max_marks.data = subject.max_marks
+        form.min_marks.data = subject.min_marks
         form.institute_subject.data = subject.institute_subject
     return render_template('subject-update.html', title='Subject Update',
                            st1='Subject', st2='Subject Update', form=form,subject=subject,historys=historys)
