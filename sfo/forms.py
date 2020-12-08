@@ -177,7 +177,7 @@ class AddSubjectForm(FlaskForm):
                                                 ('Degree 5th year', 'Degree 5th year')],
                            validators=[DataRequired()])
     institute_subject = RadioField("Does this Subject Belongs to your Institute",
-                                   choices=[('ON', 'ON'), ('YES', 'YES')], validators=[DataRequired()])
+                                   choices=[('NO', 'NO'), ('YES', 'YES')], validators=[DataRequired()])
     submit = SubmitField('Add Subject')
 
 
@@ -196,7 +196,7 @@ class UpdateSubjectForm(FlaskForm):
                                                 ('Degree 5th year', 'Degree 5th year')],
                            validators=[DataRequired()])
     institute_subject = RadioField("Does this Subject Belongs to your Institute",
-                                   choices=[('ON', 'ON'), ('YES', 'YES')], validators=[DataRequired()])
+                                   choices=[('NO', 'NO'), ('YES', 'YES')], validators=[DataRequired()])
     submit = SubmitField('Update Subject')
 
 

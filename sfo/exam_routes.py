@@ -11,17 +11,17 @@ def exam_view(student_id):
     student = Student.query.get_or_404(student_id)
     exams = Exam.query.filter_by(student=student,standard=student.standard)
     passed = []
-    for exam in exams:
-        if exam.marks_opt >= exam.subject.min_marks:
-            passed.append(exam.marks_opt)
+    for pas in exams:
+        if pas.marks_opt >= pas.subject.min_marks or pas.marks_opt == pas.subject.max_marks:
+            passed.append(pas.marks_opt)
     a = len(passed)
     total = []
-    for exam in exams:
-        total.append(int(exam.marks_opt))
+    for tot in exams:
+        total.append(int(tot.marks_opt))
     t = sum(total)
     marks=[]
-    for exam in exams:
-        marks.append(int(exam.subject.max_marks))
+    for mark in exams:
+        marks.append(int(mark.subject.max_marks))
     mm = sum(marks)
     if student.admin != current_user:
         flash("Sorry you can't view this student",'danger')

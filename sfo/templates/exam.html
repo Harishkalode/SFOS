@@ -271,7 +271,7 @@
                                         {% if exam.marks_opt == exam.subject.min_marks %}
                                         <td class="text-center"><a class="badge badge-warning"
                                                 href="#">{{exam.marks_opt}}</a></td>
-                                        {%elif exam.marks_opt > exam.subject.min_marks%}
+                                        {%elif exam.marks_opt > exam.subject.min_marks or exam.marks_opt == exam.subject.max_marks%}
                                         <td class="text-center"><a class="badge badge-success"
                                                 href="#">{{exam.marks_opt}}</a></td>
                                         {%else%}
