@@ -23,8 +23,7 @@
                                     <div class="tablos">
                                         <div class="row mb-xl-2 mb-xxl-3">
                                             <div class="col-sm-6"><a
-                                                    class="element-box el-tablo centered trend-in-corner padded bold-label"
-                                                    href="apps_support_index.html">
+                                                    class="element-box el-tablo centered trend-in-corner padded bold-label">
                                                     <div class="value">{{exams.count()}}</div>
                                                     <div class="label">Total Subjects</div>
 <!--                                                    <div class="trending trending-up-basic">-->
@@ -32,8 +31,7 @@
 <!--                                                            class="os-icon os-icon-arrow-up2"></i></div>-->
                                                 </a></div>
                                             <div class="col-sm-6"><a
-                                                    class="element-box el-tablo centered trend-in-corner padded bold-label"
-                                                    href="apps_support_index.html">
+                                                    class="element-box el-tablo centered trend-in-corner padded bold-label">
                                                     <div class="value">{{a}}</div>
                                                     <div class="label">Passed Subject</div>
 <!--                                                    <div class="trending trending-down-basic">-->
@@ -45,8 +43,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-sm-6"><a
-                                                    class="element-box el-tablo centered trend-in-corner padded bold-label"
-                                                    href="apps_support_index.html">
+                                                    class="element-box el-tablo centered trend-in-corner padded bold-label">
                                                     <div class="value">{{exams.count() - a}}</div>
                                                     <div class="label">Failed Subject</div>
 <!--                                                    <div class="trending trending-down-basic">-->
@@ -55,8 +52,7 @@
 <!--                                                    </div>-->
                                                 </a></div>
                                             <div class="col-sm-6"><a
-                                                    class="element-box el-tablo centered trend-in-corner padded bold-label"
-                                                    href="apps_support_index.html">
+                                                    class="element-box el-tablo centered trend-in-corner padded bold-label">
                                                     <div class="value">{{t}}</div>
                                                     <div class="label">Total Marks</div>
 <!--                                                    <div class="trending trending-up-basic">-->
@@ -79,8 +75,7 @@
                                             <div class="value">{{t}}/{{mm}}</div>
                                             <div class="label">Total Marks</div>
                                         </div>
-                                        <div class="el-chart-w"><canvas height="170px" id="lineChart"
-                                                width="600px"></canvas></div>
+                                            <div class="el-chart-w">{% include "graph.html"%}</div>
                                     </div>
                                 </div>
                             </div>
@@ -89,158 +84,158 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-sm-7 col-xxl-6">
-                <div class="element-wrapper">
-                    <div class="element-actions">
-                        <form class="form-inline justify-content-sm-end"><select
-                                class="form-control form-control-sm rounded">
-                                <option value="Pending">Today</option>
-                                <option value="Active">Last Week </option>
-                                <option value="Cancelled">Last 30 Days</option>
-                            </select></form>
-                    </div>
-                    <h6 class="element-header">Customers with most tickets</h6>
-                    <div class="element-box">
-                        <div class="table-responsive">
-                            <table class="table table-lightborder">
-                                <thead>
-                                    <tr>
-                                        <th>Customer Name</th>
-                                        <th>Tickets</th>
-                                        <th>Location</th>
-                                        <th class="text-center">Status</th>
-                                        <th class="text-right">Last Reply</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <div class="user-with-avatar"><img alt=""
-                                                    src="img/avatar1.jpg"><span
-                                                    class="d-none d-xl-inline-block">John Mayers</span>
-                                            </div>
-                                        </td>
-                                        <td class="text-center"> 15</td>
-                                        <td class="text-center"><img alt="" src="img/flags-icons/us.png"
-                                                width="25px"></td>
-                                        <td class="text-center">
-                                            <div class="status-pill green" data-title="Complete"
-                                                data-toggle="tooltip"></div>
-                                        </td>
-                                        <td class="text-right"><span>Today </span><span
-                                                class="smaller lighter">1:52pm</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="user-with-avatar"><img alt=""
-                                                    src="img/avatar2.jpg"><span
-                                                    class="d-none d-xl-inline-block">Kelly Brans</span>
-                                            </div>
-                                        </td>
-                                        <td class="text-center"> 12</td>
-                                        <td class="text-center"><img alt="" src="img/flags-icons/ca.png"
-                                                width="25px"></td>
-                                        <td class="text-center">
-                                            <div class="status-pill red" data-title="Cancelled"
-                                                data-toggle="tooltip"></div>
-                                        </td>
-                                        <td class="text-right"><span>Yesterday </span><span
-                                                class="smaller lighter">5:34pm</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="user-with-avatar"><img alt=""
-                                                    src="img/avatar3.jpg"><span
-                                                    class="d-none d-xl-inline-block">Tim Howard</span>
-                                            </div>
-                                        </td>
-                                        <td class="text-center"> 8</td>
-                                        <td class="text-center"><img alt="" src="img/flags-icons/uk.png"
-                                                width="25px"></td>
-                                        <td class="text-center">
-                                            <div class="status-pill green" data-title="Complete"
-                                                data-toggle="tooltip"></div>
-                                        </td>
-                                        <td class="text-right"><span>Jan 15th </span><span
-                                                class="smaller lighter">3:14pm</span></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-5 col-xxl-6">
-                <div class="element-wrapper">
-                    <div class="element-actions">
-                        <form class="form-inline justify-content-sm-end"><select
-                                class="form-control form-control-sm rounded">
-                                <option value="Pending">Today</option>
-                                <option value="Active">Last Week </option>
-                                <option value="Cancelled">Last 30 Days</option>
-                            </select></form>
-                    </div>
-                    <h6 class="element-header">Questions per Product</h6>
-                    <div class="element-box">
-                        <div class="mb">
-                            <span class="status-pill smaller bar-level-1"></span>&nbsp;  Total Marks
-                            <span class="status-pill smaller " style="background-color: #65affd;"></span>&nbsp; Minimum Marks
-                            <span class="status-pill smaller " style="background-color: #0362c6;"></span>&nbsp; Marks Obtain
-                        </div>
-                        <hr>
-                        <div class="os-progress-bar primary">
-                            <div class="bar-labels">
-                                <div class="bar-label-left"><span class="bigger">MailGun</span></div>
-                                <div class="bar-label-right"><span class="info">25 Tickets / 10
-                                        Pending</span></div>
-                            </div>
-                            <div class="bar-level-1" style="width: 100%">
-                                <div class="bar-level-2" style="width: 70%">
-                                    <div class="bar-level-3" style="width: 40%"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="os-progress-bar primary">
-                            <div class="bar-labels">
-                                <div class="bar-label-left"><span class="bigger">PhotoBook</span></div>
-                                <div class="bar-label-right"><span class="info">18 Tickets / 7
-                                        Pending</span></div>
-                            </div>
-                            <div class="bar-level-1" style="width: 100%">
-                                <div class="bar-level-2" style="width: 40%">
-                                    <div class="bar-level-3" style="width: 20%"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="os-progress-bar primary">
-                            <div class="bar-labels">
-                                <div class="bar-label-left"><span class="bigger">Transferra</span></div>
-                                <div class="bar-label-right"><span class="info">15 Tickets / 12
-                                        Pending</span></div>
-                            </div>
-                            <div class="bar-level-1" style="width: 100%">
-                                <div class="bar-level-2" style="width: 60%">
-                                    <div class="bar-level-3" style="width: 30%"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="os-progress-bar primary">
-                            <div class="bar-labels">
-                                <div class="bar-label-left"><span class="bigger">Versioner</span></div>
-                                <div class="bar-label-right"><span class="info">12 Tickets / 4
-                                        Pending</span></div>
-                            </div>
-                            <div class="bar-level-1" style="width: 100%">
-                                <div class="bar-level-2" style="width: 40%">
-                                    <div class="bar-level-3" style="width: 20%"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<!--        <div class="row">-->
+<!--            <div class="col-sm-7 col-xxl-6">-->
+<!--                <div class="element-wrapper">-->
+<!--                    <div class="element-actions">-->
+<!--                        <form class="form-inline justify-content-sm-end"><select-->
+<!--                                class="form-control form-control-sm rounded">-->
+<!--                                <option value="Pending">Today</option>-->
+<!--                                <option value="Active">Last Week </option>-->
+<!--                                <option value="Cancelled">Last 30 Days</option>-->
+<!--                            </select></form>-->
+<!--                    </div>-->
+<!--                    <h6 class="element-header">Customers with most tickets</h6>-->
+<!--                    <div class="element-box">-->
+<!--                        <div class="table-responsive">-->
+<!--                            <table class="table table-lightborder">-->
+<!--                                <thead>-->
+<!--                                    <tr>-->
+<!--                                        <th>Customer Name</th>-->
+<!--                                        <th>Tickets</th>-->
+<!--                                        <th>Location</th>-->
+<!--                                        <th class="text-center">Status</th>-->
+<!--                                        <th class="text-right">Last Reply</th>-->
+<!--                                    </tr>-->
+<!--                                </thead>-->
+<!--                                <tbody>-->
+<!--                                    <tr>-->
+<!--                                        <td>-->
+<!--                                            <div class="user-with-avatar"><img alt=""-->
+<!--                                                    src="img/avatar1.jpg"><span-->
+<!--                                                    class="d-none d-xl-inline-block">John Mayers</span>-->
+<!--                                            </div>-->
+<!--                                        </td>-->
+<!--                                        <td class="text-center"> 15</td>-->
+<!--                                        <td class="text-center"><img alt="" src="img/flags-icons/us.png"-->
+<!--                                                width="25px"></td>-->
+<!--                                        <td class="text-center">-->
+<!--                                            <div class="status-pill green" data-title="Complete"-->
+<!--                                                data-toggle="tooltip"></div>-->
+<!--                                        </td>-->
+<!--                                        <td class="text-right"><span>Today </span><span-->
+<!--                                                class="smaller lighter">1:52pm</span></td>-->
+<!--                                    </tr>-->
+<!--                                    <tr>-->
+<!--                                        <td>-->
+<!--                                            <div class="user-with-avatar"><img alt=""-->
+<!--                                                    src="img/avatar2.jpg"><span-->
+<!--                                                    class="d-none d-xl-inline-block">Kelly Brans</span>-->
+<!--                                            </div>-->
+<!--                                        </td>-->
+<!--                                        <td class="text-center"> 12</td>-->
+<!--                                        <td class="text-center"><img alt="" src="img/flags-icons/ca.png"-->
+<!--                                                width="25px"></td>-->
+<!--                                        <td class="text-center">-->
+<!--                                            <div class="status-pill red" data-title="Cancelled"-->
+<!--                                                data-toggle="tooltip"></div>-->
+<!--                                        </td>-->
+<!--                                        <td class="text-right"><span>Yesterday </span><span-->
+<!--                                                class="smaller lighter">5:34pm</span></td>-->
+<!--                                    </tr>-->
+<!--                                    <tr>-->
+<!--                                        <td>-->
+<!--                                            <div class="user-with-avatar"><img alt=""-->
+<!--                                                    src="img/avatar3.jpg"><span-->
+<!--                                                    class="d-none d-xl-inline-block">Tim Howard</span>-->
+<!--                                            </div>-->
+<!--                                        </td>-->
+<!--                                        <td class="text-center"> 8</td>-->
+<!--                                        <td class="text-center"><img alt="" src="img/flags-icons/uk.png"-->
+<!--                                                width="25px"></td>-->
+<!--                                        <td class="text-center">-->
+<!--                                            <div class="status-pill green" data-title="Complete"-->
+<!--                                                data-toggle="tooltip"></div>-->
+<!--                                        </td>-->
+<!--                                        <td class="text-right"><span>Jan 15th </span><span-->
+<!--                                                class="smaller lighter">3:14pm</span></td>-->
+<!--                                    </tr>-->
+<!--                                </tbody>-->
+<!--                            </table>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="col-sm-5 col-xxl-6">-->
+<!--                <div class="element-wrapper">-->
+<!--                    <div class="element-actions">-->
+<!--                        <form class="form-inline justify-content-sm-end"><select-->
+<!--                                class="form-control form-control-sm rounded">-->
+<!--                                <option value="Pending">Today</option>-->
+<!--                                <option value="Active">Last Week </option>-->
+<!--                                <option value="Cancelled">Last 30 Days</option>-->
+<!--                            </select></form>-->
+<!--                    </div>-->
+<!--                    <h6 class="element-header">Questions per Product</h6>-->
+<!--                    <div class="element-box">-->
+<!--                        <div class="mb">-->
+<!--                            <span class="status-pill smaller bar-level-1"></span>&nbsp;  Total Marks-->
+<!--                            <span class="status-pill smaller " style="background-color: #65affd;"></span>&nbsp; Minimum Marks-->
+<!--                            <span class="status-pill smaller " style="background-color: #0362c6;"></span>&nbsp; Marks Obtain-->
+<!--                        </div>-->
+<!--                        <hr>-->
+<!--                        <div class="os-progress-bar primary">-->
+<!--                            <div class="bar-labels">-->
+<!--                                <div class="bar-label-left"><span class="bigger">MailGun</span></div>-->
+<!--                                <div class="bar-label-right"><span class="info">25 Tickets / 10-->
+<!--                                        Pending</span></div>-->
+<!--                            </div>-->
+<!--                            <div class="bar-level-1" style="width: 100%">-->
+<!--                                <div class="bar-level-2" style="width: 70%">-->
+<!--                                    <div class="bar-level-3" style="width: 40%"></div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="os-progress-bar primary">-->
+<!--                            <div class="bar-labels">-->
+<!--                                <div class="bar-label-left"><span class="bigger">PhotoBook</span></div>-->
+<!--                                <div class="bar-label-right"><span class="info">18 Tickets / 7-->
+<!--                                        Pending</span></div>-->
+<!--                            </div>-->
+<!--                            <div class="bar-level-1" style="width: 100%">-->
+<!--                                <div class="bar-level-2" style="width: 40%">-->
+<!--                                    <div class="bar-level-3" style="width: 20%"></div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="os-progress-bar primary">-->
+<!--                            <div class="bar-labels">-->
+<!--                                <div class="bar-label-left"><span class="bigger">Transferra</span></div>-->
+<!--                                <div class="bar-label-right"><span class="info">15 Tickets / 12-->
+<!--                                        Pending</span></div>-->
+<!--                            </div>-->
+<!--                            <div class="bar-level-1" style="width: 100%">-->
+<!--                                <div class="bar-level-2" style="width: 60%">-->
+<!--                                    <div class="bar-level-3" style="width: 30%"></div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="os-progress-bar primary">-->
+<!--                            <div class="bar-labels">-->
+<!--                                <div class="bar-label-left"><span class="bigger">Versioner</span></div>-->
+<!--                                <div class="bar-label-right"><span class="info">12 Tickets / 4-->
+<!--                                        Pending</span></div>-->
+<!--                            </div>-->
+<!--                            <div class="bar-level-1" style="width: 100%">-->
+<!--                                <div class="bar-level-2" style="width: 40%">-->
+<!--                                    <div class="bar-level-3" style="width: 20%"></div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
         <div class="row pt-4">
             <div class="col-sm-12">
                 {{student.fname}} {{student.lname}}

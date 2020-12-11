@@ -57,6 +57,14 @@ def all_subjects():
                            st1='Subject', st2='All Subject',subjects=subjects)
 
 
+@app.route("/inst-subjects")
+@login_required
+def inst_subjects():
+    admin = Admin.query.filter_by(id=current_user.id).first_or_404()
+    subjects = Subject.query.filter_by(admin=admin,institute_subject='YES')
+    return render_template('inst-subject.html', title='Institution Subjects',
+                           st1='Subject', st2='Institution Subject',subjects=subjects)
+
 @app.route("/subject/<int:subject_id>/update", methods=['GET', 'POST'])
 @login_required
 def subject_update(subject_id):

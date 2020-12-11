@@ -2,11 +2,13 @@ import secrets
 import os
 from flask import render_template, url_for, flash, redirect, request
 from sfo import app, db, bcrypt, mail
-from sfo.forms import RegistrationForm, LoginForm, RegistrationForm2, AccountUpdateForm, RequestResetForm, ResetPasswordForm
+from sfo.forms import RegistrationForm, LoginForm, RegistrationForm2, AccountUpdateForm, RequestResetForm,\
+    ResetPasswordForm
 from sfo.models import Admin, Student, Subject, History
 from flask_login import login_user, current_user, logout_user, login_required
 from PIL import Image
 from flask_mail import Message
+
 
 
 @app.route("/")
@@ -109,7 +111,6 @@ def account_info():
                                                                                                    per_page=5)
     return render_template('account-info.html', title=f'{current_user.fname} {current_user.lname} account',
                            st1='Account', st2='Account Info', a="a",historys=historys)
-
 
 
 def save_picture(from_picture):

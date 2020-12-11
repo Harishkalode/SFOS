@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_mail import Mail
-
+import dash
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'harish7634ydgwid78r3re48ryf78wrc7e8rcdc'
@@ -22,6 +22,8 @@ app.config['MAIL_USE_SSL'] = True
 app.config['MAIL_USERNAME'] = os.environ.get('EMAIL_USER')
 app.config['MAIL_PASSWORD'] = os.environ.get('EMAIL_PASS')
 mail = Mail(app)
+
+graph = dash.Dash()
 
 from sfo import routes
 from sfo import student_routes
