@@ -102,7 +102,7 @@ class AddStudentForm(FlaskForm):
     dob = StringField('Date of Birth', validators=[DataRequired()])
     religion = StringField('Religion', validators=[DataRequired()])
     caste = StringField('Caste', validators=[DataRequired()])
-    gender = StringField('Gender', validators=[DataRequired()])
+    gender = SelectField('Gender',choices=[('Male', 'Male'),('Female', 'Female'),('Other', 'Other')], validators=[DataRequired()])
     blood_group = StringField('Blood Group', validators=[DataRequired()])
     profile_img = FileField('Student Profile', validators=[DataRequired(), FileAllowed(['jpg', 'jpeg', 'png'])])
     submit = SubmitField('Add Student')
@@ -137,7 +137,8 @@ class UpdateStudentForm(FlaskForm):
     dob = StringField('Date of Birth', validators=[DataRequired()])
     religion = StringField('Religion', validators=[DataRequired()])
     caste = StringField('Caste', validators=[DataRequired()])
-    gender = StringField('Gender', validators=[DataRequired()])
+    gender = SelectField('Gender',choices=[('Male', 'Male'),('Female', 'Female'),('Other', 'Other')],
+                         validators=[DataRequired()])
     blood_group = StringField('Blood Group', validators=[DataRequired()])
     profile_img = FileField('Student Profile', validators=[FileAllowed(['jpg', 'jpeg', 'png'])])
     submit = SubmitField('Update Student')
@@ -225,3 +226,12 @@ class ResetPasswordForm(FlaskForm):
     password = PasswordField("Password", validators=[DataRequired()])
     confirm_password = PasswordField("Confirm Password", validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Reset Password')
+
+
+class PromoteStudent(FlaskForm):
+    submit = SubmitField('Promote Student')
+
+
+class StudentExamView(FlaskForm):
+    standard = SelectField("Standard", choices=[], validators=[DataRequired()])
+    submit = SubmitField('View')

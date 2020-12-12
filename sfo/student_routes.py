@@ -1,6 +1,6 @@
 from flask import render_template, url_for, flash, redirect, request
 from sfo import app, db
-from sfo.forms import AddStudentForm, UpdateStudentForm, AddExamForm
+from sfo.forms import AddStudentForm, UpdateStudentForm, AddExamForm, PromoteStudent
 from sfo.models import Admin, Student, History, Subject, Exam
 from flask_login import current_user, login_required
 from sfo.routes import save_picture
@@ -62,6 +62,16 @@ def student_details(student_id):
     admin = Admin.query.filter_by(id=current_user.id).first_or_404()
     exams = Exam.query.filter_by(student=student, standard=student.standard)
     subjects = Subject.query.filter_by(admin=admin).all()
+    subjects1 = Subject.query.filter_by(admin=admin, standard=student.standard).all()
+    e = []
+    for exam in exams:
+        e.append(exam.subject.subject)
+    e.sort()
+    s = []
+    for subject2 in subjects1:
+        s.append(subject2.subject)
+    s.sort()
+
     form = AddExamForm()
     form.subject.choices = [(subject.id, f'{subject.subject}({subject.standard})') for subject in subjects
                             if subject.standard == student.standard]
@@ -73,7 +83,8 @@ def student_details(student_id):
         sub = Subject.query.get(form.subject.data)
         subj = Exam.query.filter_by(student=student, standard=student.standard, subject=sub).first()
         if subj:
-            flash("Sorry Student already have this subject", 'warning')
+            flash("Sorry Student already have this subject, If You need to add new marks delete The subject and retry",
+                  'warning')
         else:
             exam = Exam(subject=sub,
                         exam_name=f'{student.standard} Exam',
@@ -91,9 +102,37 @@ def student_details(student_id):
             db.session.commit()
             flash('Student Exam added successfully', 'success')
             return redirect(url_for('exam_view', student_id=student.id))
+    promote = PromoteStudent()
+    if promote.validate_on_submit():
+        if student.standard == '1st':
+            student.standard = '2nd'
+        elif student.standard == '2nd':
+            student.standard = '3rd'
+        elif student.standard == '3rd':
+            student.standard = '4th'
+        elif student.standard == '4th':
+            student.standard = '5th'
+        elif student.standard == '5th':
+            student.standard = '6th'
+        elif student.standard == '6th':
+            student.standard = '7th'
+        elif student.standard == '7th':
+            student.standard = '8th'
+        elif student.standard == '8th':
+            student.standard = '9th'
+        elif student.standard == '9th':
+            student.standard = '10th'
+        db.session.commit()
+        history = History(name_of_module=f'{student.fname} {student.lname} student promoted', activity='update',
+                          admin=current_user)
+        db.session.add(history)
+        db.session.commit()
+
+        flash('Student Exam added successfully', 'success')
+        return redirect(url_for('student_details', student_id=student.id))
     return render_template('account-info.html', title='account',
                            st1='Account', st2='Student Account Info', student=student, form=form,
-                           subjects=subjects, exams=exams)
+                           subjects=subjects, exams=exams,e=e,s=s,promote=promote)
 
 
 @app.route("/student/<int:student_id>/update", methods=['GET', 'POST'])

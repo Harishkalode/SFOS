@@ -7,12 +7,20 @@
             <div class="col-sm-12">
                 <div class="element-wrapper">
                     <div class="element-actions">
-                        <form class="form-inline justify-content-sm-end">
-                            <select class="form-control form-control-sm rounded">
-                                <option value="Pending">Today</option>
-                                <option value="Active">Last Week </option>
-                                <option value="Cancelled">Last 30 Days</option>
-                            </select>
+                        <form class="form-inline justify-content-sm-end" method="POST" action="">
+                            {{form.standard.label(class="form-control-label")}}
+                            {% if form.standard.errors %}
+                                {{ form.standard(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.standard.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.standard(class="form-control") }}
+                            {% endif %}
+                            &nbsp; &nbsp;
+                            {{form.submit(class="btn btn-primary btn-sm", style="border-radius:15px" )}}
                         </form>
                     </div>
                     <h6 class="element-header">Current Semester Exam Details</h6>
@@ -264,10 +272,10 @@
                                         <td class="text-center"><input class="form-control"
                                                 type="checkbox"></td>
                                         <td><span>{{exam.subject.subject}}</span></td>
-                                        {% if exam.marks_opt == exam.subject.min_marks %}
+                                        {% if exam.marks_opt | int  == exam.subject.min_marks | int %}
                                         <td class="text-center"><a class="badge badge-warning"
                                                 href="#">{{exam.marks_opt}}</a></td>
-                                        {%elif exam.marks_opt > exam.subject.min_marks or exam.marks_opt == exam.subject.max_marks%}
+                                        {%elif exam.marks_opt | int > exam.subject.min_marks | int or exam.marks_opt | int == exam.subject.max_marks | int %}
                                         <td class="text-center"><a class="badge badge-success"
                                                 href="#">{{exam.marks_opt}}</a></td>
                                         {%else%}
@@ -278,11 +286,34 @@
                                         <td class="text-center">{{exam.subject.max_marks}}</td>
                                         <td class="text-center">{{exam.standard}}</td>
                                         <td class="text-center">{{exam.institution_name}}</td>
-                                        <td class="nowrap"><span
-                                                class="status-pill smaller green"></span><span>Active</span>
+                                        <td class="row-actions">
+                                            <a class="danger" href="#" data-target="#onboardingTextModal{{exam.id}}"
+                                        data-toggle="modal"><i class="os-icon os-icon-ui-15"></i></a>
                                         </td>
 
                                     </tr>
+                                <div aria-hidden="true" class="onboarding-modal modal fade animated"
+                                    id="onboardingTextModal{{exam.id}}" role="dialog" tabindex="-1">
+                                    <div class="modal-dialog modal-centered" role="document">
+                                        <div class="modal-content text-center"><button aria-label="Close"
+                                                class="close" data-dismiss="modal" type="button"><span
+                                                    class="close-label">Skip</span><span
+                                                    class="os-icon os-icon-close"></span></button>
+                                            <div class="onboarding-media"><img alt="" src="img/bigicon2.png"
+                                                    width="200px"></div>
+                                            <div class="onboarding-content with-gradient">
+                                                <h4 class="onboarding-title">Delete {{exam.standard}} Standard Exam For<br> {{student.fname}} {{student.lname}}</h4>
+                                                <h5>Subject : {{exam.subject.subject}}</h5>
+                                                <h5>Marks obtain : {{exam.marks_opt}}</h5>
+                                                <h5>Maximum Marks : {{exam.subject.max_marks}}</h5>{{exam.id}}
+                                                <div>
+                                                    <a class="btn btn-danger btn-block btn-lg pb-3" href="{{url_for('delete_exam',exam_id=exam.id)}}" style="color:#fff"><i
+                                                                        class="os-icon os-icon-ui-15" style="font-size: 25px;"></i><span>Delete Student</span></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 {%endfor%}
     <!--                                <tr>-->
     <!--                                    <td class="text-center"><input class="form-control"-->

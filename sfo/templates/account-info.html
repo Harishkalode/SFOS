@@ -530,94 +530,113 @@
                     </div><hr>
                 </form>
                 <div>
-                        <button class="btn btn-danger btn-block btn-lg" data-target="#onboardingWideSlideModal"
+                    {%if exams.count() != 0%}
+                    <button class="btn btn-danger btn-block btn-lg" data-target="#onboardingWideSlideModal"
                                     data-toggle="modal"><i
                                             class="os-icon os-icon-refresh-ccw"></i><span>Promote Student</span></button>
+                    {%else%}
+                    <button class="btn btn-danger btn-block btn-lg" data-placement="left" data-toggle="tooltip" data-original-title="Add Exam For Student First"><i
+                                            class="os-icon os-icon-refresh-ccw"></i><span>Promote Student</span></button>
+                    {%endif%}
                     </div>
                     <div aria-hidden="true" class="onboarding-modal modal fade animated"
                         id="onboardingWideSlideModal" role="dialog" tabindex="-1">
                         <div class="modal-dialog modal-lg modal-centered" role="document">
                             <div class="modal-content text-center"><button aria-label="Close" class="close"
                                     data-dismiss="modal" type="button"><span class="close-label">Skip
-                                        Intro</span><span class="os-icon os-icon-close"></span></button>
+                                        </span><span class="os-icon os-icon-close"></span></button>
                                 <div class="onboarding-slider-w">
                                     <div class="onboarding-slide">
                                         <div class="onboarding-side-by-side">
                                             <div class="onboarding-media"><img alt="" src="{{url_for('static', filename='profile_pics/' + student.profile_img)}}"
-                                                    width="200px"></div>
+                                                    width="200px">
+                                                <div><h5 class="mt-4">{{student.fname}} {{student.lname}}</h5></div>
+                                            </div>
                                             <div class="onboarding-content with-gradient">
-                                                <h4 class="onboarding-title">Example Request Information
+                                                <h4 class="onboarding-title">Request Student Promotion
                                                 </h4>
-                                                <div class="onboarding-text">In this example you can see a
-                                                    form where you can request some additional information
-                                                    from the customer when they land on the app page.</div>
+                                                <div class="onboarding-text">If you think this student need to be promoted into next class, You must fill all the subject of {{student.standard}} standard or else the student wil be considered <b style="color:red">Fail</b> and the student should not have previous class backlog too.</div>
                                                 <form>
                                                     <div class="row">
                                                         <div class="col-sm-6">
-                                                            <div class="form-group"><label for="">Your Full
-                                                                    Name</label><input class="form-control"
-                                                                    placeholder="Enter your full name..."
-                                                                    value=""></div>
+                                                            <div class="form-group"><label for="">Current Standard</label><input class="form-control"
+                                                                    placeholder="{{student.standard}}"
+                                                                    value="" disabled></div>
                                                         </div>
                                                         <div class="col-sm-6">
-                                                            <div class="form-group"><label for="">Your
-                                                                    Role</label><select
-                                                                    class="form-control">
-                                                                    <option>Web Developer</option>
-                                                                    <option>Business Owner</option>
-                                                                    <option>Other</option>
-                                                                </select></div>
+                                                            <div class="form-group"><label for="">Promote too</label>
+                                                                {%if student.standard == '1st' %}
+                                                                    <input class="form-control" placeholder="2nd Standard" value="" disabled>
+                                                                {%elif student.standard == '2nd' %}
+                                                                    <input class="form-control" placeholder="3rd Standard" value="" disabled>
+                                                                {%elif student.standard == '3rd' %}
+                                                                    <input class="form-control" placeholder="4th Standard" value="" disabled>
+                                                                {%elif student.standard == '4th' %}
+                                                                    <input class="form-control" placeholder="5th Standard" value="" disabled>
+                                                                {%elif student.standard == '5th' %}
+                                                                    <input class="form-control" placeholder="6th Standard" value="" disabled>
+                                                                {%elif student.standard == '6th' %}
+                                                                    <input class="form-control" placeholder="7th Standard" value="" disabled>
+                                                                {%elif student.standard == '7th' %}
+                                                                    <input class="form-control" placeholder="8th Standard" value="" disabled>
+                                                                {%elif student.standard == '8th' %}
+                                                                    <input class="form-control" placeholder="9th Standard" value="" disabled>
+                                                                {%elif student.standard == '9th' %}
+                                                                    <input class="form-control" placeholder="10th Standard" value="" disabled>
+                                                                {%endif%}
+
+                                                            </div>
+
                                                         </div>
                                                     </div>
                                                 </form>
                                             </div>
                                         </div>
                                     </div>
+<!--                                    <div class="onboarding-slide">-->
+<!--                                        <div class="onboarding-side-by-side">-->
+<!--                                            <div class="onboarding-media"><img alt="" src="{{url_for('static', filename='profile_pics/' + current_user.institution_logo)}}"-->
+<!--                                                    width="200px"></div>-->
+<!--                                            <div class="onboarding-content with-gradient">-->
+<!--                                                <h4 class="onboarding-title">Showcase App Features</h4>-->
+<!--                                                <div class="onboarding-text">In this example you can-->
+<!--                                                    showcase some of the features of your application, it is-->
+<!--                                                    very handy to make new users aware of your hidden-->
+<!--                                                    features. You can use boostrap columns to split them up.-->
+<!--                                                </div>-->
+<!--                                                <div class="row">-->
+<!--                                                    <div class="col-sm-6">-->
+<!--                                                        <ul class="features-list">-->
+<!--                                                            <li>Fully Responsive design</li>-->
+<!--                                                            <li>Pre-built app layouts</li>-->
+<!--                                                            <li>Incredible Flexibility</li>-->
+<!--                                                        </ul>-->
+<!--                                                    </div>-->
+<!--                                                    <div class="col-sm-6">-->
+<!--                                                        <ul class="features-list">-->
+<!--                                                            <li>Boxed & Full Layouts</li>-->
+<!--                                                            <li>Based on Bootstrap 4</li>-->
+<!--                                                            <li>Developer Friendly </li>-->
+<!--                                                        </ul>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
                                     <div class="onboarding-slide">
                                         <div class="onboarding-side-by-side">
                                             <div class="onboarding-media"><img alt="" src="{{url_for('static', filename='profile_pics/' + current_user.institution_logo)}}"
                                                     width="200px"></div>
                                             <div class="onboarding-content with-gradient">
-                                                <h4 class="onboarding-title">Showcase App Features</h4>
-                                                <div class="onboarding-text">In this example you can
-                                                    showcase some of the features of your application, it is
-                                                    very handy to make new users aware of your hidden
-                                                    features. You can use boostrap columns to split them up.
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-sm-6">
-                                                        <ul class="features-list">
-                                                            <li>Fully Responsive design</li>
-                                                            <li>Pre-built app layouts</li>
-                                                            <li>Incredible Flexibility</li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <ul class="features-list">
-                                                            <li>Boxed & Full Layouts</li>
-                                                            <li>Based on Bootstrap 4</li>
-                                                            <li>Developer Friendly </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="onboarding-slide">
-                                        <div class="onboarding-side-by-side">
-                                            <div class="onboarding-media"><img alt="" src="img/bigicon2.png"
-                                                    width="200px"></div>
-                                            <div class="onboarding-content with-gradient">
-                                                <h4 class="onboarding-title">Example of onboarding screen!
+                                                <h4 class="onboarding-title">Request Student Promotion
                                                 </h4>
-                                                <div class="onboarding-text">This is an example of a
-                                                    multistep onboarding screen, you can use it to introduce
-                                                    your customers to your app, or collect additional
-                                                    information from them before they start using your app.
+                                                <div class="onboarding-text">If you think everything is good to go then click on <b style="color:#fff">Promote Student</b> else click on <b style="color:#fff">Skip</b> to skip out.
                                                 </div>
                                                 <div>
-                                                    <button class="btn btn-danger btn-block btn-lg pb-3"><i
-                                                                        class="os-icon os-icon-refresh-ccw"></i><span>Promote Student</span></button>
+                                                    <form method="POST" action="">
+                                                        {{ promote.hidden_tag() }}
+                                                        {{promote.submit(class="btn btn-danger btn-block btn-lg pb-3")}}
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
