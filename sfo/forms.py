@@ -4,7 +4,7 @@ from flask_login import current_user
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, SelectField, \
     RadioField
 from wtforms.validators import DataRequired, Length, EqualTo, ValidationError
-from sfo.models import Admin, Student
+from sfo.models import Admin, Student, Exam
 
 
 class RegistrationForm(FlaskForm):

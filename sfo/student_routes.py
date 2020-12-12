@@ -64,7 +64,7 @@ def student_details(student_id):
     form = AddExamForm()
     form.subject.choices = [(subject.id,f'{subject.subject}({subject.standard})') for subject in subjects
                             if subject.standard == student.standard]
-    a = form.subject.choices
+
     if student.admin != current_user:
         flash("Sorry you can't view this student",'danger')
         return redirect(url_for('all_students'))
