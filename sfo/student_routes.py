@@ -1,6 +1,6 @@
 from flask import render_template, url_for, flash, redirect, request
 from sfo import app, db
-from sfo.forms import AddStudentForm,UpdateStudentForm,AddExamForm
+from sfo.forms import AddStudentForm, UpdateStudentForm, AddExamForm
 from sfo.models import Admin, Student, History, Subject, Exam
 from flask_login import current_user, login_required
 from sfo.routes import save_picture
@@ -51,8 +51,8 @@ def add_student():
             db.session.commit()
             flash('Student added successfully', 'success')
             return redirect(url_for('all_students'))
-    return render_template('add-student.html',title=f'{current_user.fname} {current_user.lname} account',
-                           st1='Student', st2='Add Student', form=form,historys=historys)
+    return render_template('add-student.html', title=f'{current_user.fname} {current_user.lname} account',
+                           st1='Student', st2='Add Student', form=form, historys=historys)
 
 
 @app.route("/student-details/<int:student_id>", methods=['GET', 'POST'])
@@ -60,35 +60,40 @@ def add_student():
 def student_details(student_id):
     student = Student.query.get_or_404(student_id)
     admin = Admin.query.filter_by(id=current_user.id).first_or_404()
+    exams = Exam.query.filter_by(student=student, standard=student.standard)
     subjects = Subject.query.filter_by(admin=admin).all()
     form = AddExamForm()
-    form.subject.choices = [(subject.id,f'{subject.subject}({subject.standard})') for subject in subjects
+    form.subject.choices = [(subject.id, f'{subject.subject}({subject.standard})') for subject in subjects
                             if subject.standard == student.standard]
 
     if student.admin != current_user:
-        flash("Sorry you can't view this student",'danger')
+        flash("Sorry you can't view this student", 'danger')
         return redirect(url_for('all_students'))
     if form.validate_on_submit():
         sub = Subject.query.get(form.subject.data)
-        exam = Exam(subject=sub,
-                    exam_name=f'{student.standard} Exam',
-                    marks_opt=form.marks_opt.data,
-                    standard=f'{student.standard}',
-                    institution_name=form.institution_name.data,
-                    subjects=[sub],
-                    student=student)
-        history = History(name_of_module=f'Added exam for {student.fname} {student.lname}', activity='add',
-                          admin=current_user)
-        db.session.add(history)
-        db.session.commit()
+        subj = Exam.query.filter_by(student=student, standard=student.standard, subject=sub).first()
+        if subj:
+            flash("Sorry Student already have this subject", 'warning')
+        else:
+            exam = Exam(subject=sub,
+                        exam_name=f'{student.standard} Exam',
+                        marks_opt=form.marks_opt.data,
+                        standard=f'{student.standard}',
+                        institution_name=form.institution_name.data,
+                        subjects=[sub],
+                        student=student)
+            history = History(name_of_module=f'Added exam for {student.fname} {student.lname}', activity='add',
+                              admin=current_user)
+            db.session.add(history)
+            db.session.commit()
 
-        db.session.add(exam)
-        db.session.commit()
-        flash('Student Exam added successfully', 'success')
-        return redirect(url_for('exam_view', student_id=student.id))
+            db.session.add(exam)
+            db.session.commit()
+            flash('Student Exam added successfully', 'success')
+            return redirect(url_for('exam_view', student_id=student.id))
     return render_template('account-info.html', title='account',
-                           st1='Account', st2='Student Account Info',student=student,form=form,
-                           subjects=subjects)
+                           st1='Account', st2='Student Account Info', student=student, form=form,
+                           subjects=subjects, exams=exams)
 
 
 @app.route("/student/<int:student_id>/update", methods=['GET', 'POST'])
@@ -96,7 +101,7 @@ def student_details(student_id):
 def student_update(student_id):
     student = Student.query.get_or_404(student_id)
     if student.admin != current_user:
-        flash("Sorry you can't Update this student",'danger')
+        flash("Sorry you can't Update this student", 'danger')
         return redirect(url_for('all_students'))
     form = UpdateStudentForm()
     if form.validate_on_submit():
@@ -161,8 +166,7 @@ def all_students():
     admin = Admin.query.filter_by(id=current_user.id).first_or_404()
     students = Student.query.filter_by(admin=admin)
     return render_template('all-students.html', title='All Students',
-                           st1='Student', st2='All Student',students=students)
-
+                           st1='Student', st2='All Student', students=students)
 
 # @app.route("/student/<int:student_id>/delete", methods=['GET','POST'])
 # @login_required

@@ -41,7 +41,7 @@ def exam_view(student_id):
         marks.append(int(mark1.marks_opt))
 
     graph.layout = dcc.Graph(
-                id ='samplechart',
+                id='#samplechart',
                 figure={
                     'data': [
                         {'x': subjects, 'y':marks,'type':'line','name':'First Chart'}
@@ -53,6 +53,6 @@ def exam_view(student_id):
             )
 
     return render_template('exam.html',exams=exams,student=student,a=a,t=t,mm=mm,perc=perc,title=f'{student.fname} {student.lname} Exam',
-                           st1=f'{student.fname} {student.lname}', st2=f'{student.standard} Exam', g=graph.layout)
+                           st1=f'{student.fname} {student.lname}', st2=f'{student.standard} Exam')
 
 
