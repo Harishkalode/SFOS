@@ -71,7 +71,7 @@ def student_details(student_id):
     for subject2 in subjects1:
         s.append(subject2.subject)
     s.sort()
-
+    promote = PromoteStudent()
     form = AddExamForm()
     form.subject.choices = [(subject.id, f'{subject.subject}({subject.standard})') for subject in subjects
                             if subject.standard == student.standard]
@@ -81,10 +81,13 @@ def student_details(student_id):
         return redirect(url_for('all_students'))
     if form.validate_on_submit():
         sub = Subject.query.get(form.subject.data)
+        subj1 = Exam.query.filter_by(student=student, standard=student.standard, subject=sub)
         subj = Exam.query.filter_by(student=student, standard=student.standard, subject=sub).first()
         if subj:
             flash("Sorry Student already have this subject, If You need to add new marks delete The subject and retry",
                   'warning')
+        elif int(form.marks_opt.data) > int(sub.max_marks):
+            flash('invalid data','warning')
         else:
             exam = Exam(subject=sub,
                         exam_name=f'{student.standard} Exam',
@@ -102,8 +105,8 @@ def student_details(student_id):
             db.session.commit()
             flash('Student Exam added successfully', 'success')
             return redirect(url_for('exam_view', student_id=student.id))
-    promote = PromoteStudent()
-    if promote.validate_on_submit():
+
+    elif promote.validate_on_submit():
         if student.standard == '1st':
             student.standard = '2nd'
         elif student.standard == '2nd':

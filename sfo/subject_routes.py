@@ -14,21 +14,25 @@ def add_subject():
     historys = History.query.filter_by(admin=admin).order_by(History.date_created.desc()).paginate(page=page,
                                                                                                    per_page=5)
     if form.validate_on_submit():
-        subject = Subject(subject=form.subject.data,
-                          standard=form.standard.data,
-                          min_marks=form.min_marks.data,
-                          max_marks=form.max_marks.data,
-                          institute_subject=form.institute_subject.data,
-                          admin=current_user)
-        history = History(name_of_module=f'Added Subject {form.subject.data}', activity='add',
-                          admin=current_user)
-        db.session.add(history)
-        db.session.commit()
+        sub=Subject.query.filter_by(admin=admin,standard=form.standard.data,subject=form.subject.data).first()
+        if sub:
+            flash('Subject already exist in this Standard','warning')
+        else:
+            subject = Subject(subject=form.subject.data,
+                              standard=form.standard.data,
+                              min_marks=form.min_marks.data,
+                              max_marks=form.max_marks.data,
+                              institute_subject=form.institute_subject.data,
+                              admin=current_user)
+            history = History(name_of_module=f'Added Subject {form.subject.data}', activity='add',
+                              admin=current_user)
+            db.session.add(history)
+            db.session.commit()
 
-        db.session.add(subject)
-        db.session.commit()
-        flash('Subject added successfully', 'success')
-        return redirect(url_for('all_subjects'))
+            db.session.add(subject)
+            db.session.commit()
+            flash('Subject added successfully', 'success')
+            return redirect(url_for('all_subjects'))
     return render_template('add-subject.html', title='Add Subject',
                            st1='Subject', st2='Add subject',form=form,historys=historys)
 
