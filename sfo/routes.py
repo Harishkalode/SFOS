@@ -1,5 +1,6 @@
 import secrets
 import os
+import pygal
 from flask import render_template, url_for, flash, redirect, request
 from sfo import app, db, bcrypt, mail
 from sfo.forms import RegistrationForm, LoginForm, RegistrationForm2, AccountUpdateForm, RequestResetForm,\
@@ -8,7 +9,6 @@ from sfo.models import Admin, Student, Subject, History
 from flask_login import login_user, current_user, logout_user, login_required
 from PIL import Image
 from flask_mail import Message
-
 
 
 @app.route("/")
@@ -80,6 +80,8 @@ def login():
 def dashboard():
     admin = Admin.query.filter_by(id=current_user.id).first_or_404()
     students = Student.query.filter_by(admin=admin)
+    male_students = Student.query.filter_by(admin=admin,gender='Male')
+    female_students = Student.query.filter_by(admin=admin,gender='Female')
     subjects = Subject.query.filter_by(admin=admin)
     institute_subjects = Subject.query.filter_by(admin=admin,institute_subject='YES')
     no_of_student = students.count()
@@ -89,8 +91,15 @@ def dashboard():
     admin = Admin.query.filter_by(id=current_user.id).first_or_404()
     historys = History.query.filter_by(admin=admin).order_by(History.date_created.desc()).paginate(page=page,
                                                                                                    per_page=5)
+    # male-female counts graph
+    pie_chart = pygal.Pie(inner_radius=.6)
+
+    pie_chart.add('Male', male_students.count())
+    pie_chart.add('Female', female_students.count())
+    barchart_data=pie_chart.render_data_uri()
     return render_template('dashboard.html',title='Dashboard', st1='Dashboard',no_of_student=no_of_student,
-                           no_of_subject=no_of_subject,historys=historys,no_of_subject_inst=no_of_subject_inst)
+                           no_of_subject=no_of_subject,historys=historys,no_of_subject_inst=no_of_subject_inst,
+                           barchart_data=barchart_data)
 
 
 @app.route("/history")

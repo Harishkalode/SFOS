@@ -6,23 +6,6 @@
         <div class="row pt-4">
             <div class="col-sm-12">
                 <div class="element-wrapper">
-                    <div class="element-actions">
-                        <form class="form-inline justify-content-sm-end" method="POST" action="">
-                            {{form.standard.label(class="form-control-label")}}
-                            {% if form.standard.errors %}
-                                {{ form.standard(class="form-control is-invalid") }}
-                                <div class="invalid-feedback">
-                                    {% for error in form.standard.errors %}
-                                        <span>{{ error }}</span>
-                                    {% endfor %}
-                                </div>
-                            {% else %}
-                                {{ form.standard(class="form-control") }}
-                            {% endif %}
-                            &nbsp; &nbsp;
-                            {{form.submit(class="btn btn-primary btn-sm", style="border-radius:15px" )}}
-                        </form>
-                    </div>
                     <h6 class="element-header">Current Semester Exam Details</h6>
                     <div class="element-content">
                         <div class="tablo-with-chart">
@@ -71,20 +54,27 @@
                                         <div class="row">
                                             <div class="col-sm-12"><a
                                                     class="element-box el-tablo centered trend-in-corner bold-label">
+                                                <div class="label">Total Marks <h1>{{t}}/{{mm}}</h1>
+                                                    </div>
+                                                </a></div>
+                                            <div class="col-sm-12"><a
+                                                    class="element-box el-tablo centered trend-in-corner bold-label">
                                                     <div class="label">Total Marks {%if exams.count() -a == 0%}<h2 style="color: #24b314;">Pass : {{perc}}%</h2>{%else%}<h2 style="color: #e65252;">Fail</h2>{%endif%}
                                                     </div>
                                                 </a></div>
+
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-7 col-xxl-8">
                                     <div class="element-box pl-xxl-5 pr-xxl-5">
                                         <div class="el-tablo bigger highlight bold-label">
-                                            <div class="value">{{t}}/{{mm}}</div>
-                                            <div class="label">Total Marks</div>
+<!--                                            <div class="value">{{t}}/{{mm}}</div>-->
+                                            <div class="label"><h5>Total Marks Graph</h5></div>
                                         </div>
-                                            <div class="el-chart-w"><canvas height="150px" id="lineChart"
-                                            width="600px"></canvas></div>
+                                            <div class="el-chart-w">
+                                                <embed type="image/svg+xml" src= {{ barchart_data|safe }} style="width:100%" />
+                                            </div>
                                     </div>
                                 </div>
                             </div>
@@ -93,164 +83,11 @@
                 </div>
             </div>
         </div>
-<!--        <div class="row">-->
-<!--            <div class="col-sm-7 col-xxl-6">-->
-<!--                <div class="element-wrapper">-->
-<!--                    <div class="element-actions">-->
-<!--                        <form class="form-inline justify-content-sm-end"><select-->
-<!--                                class="form-control form-control-sm rounded">-->
-<!--                                <option value="Pending">Today</option>-->
-<!--                                <option value="Active">Last Week </option>-->
-<!--                                <option value="Cancelled">Last 30 Days</option>-->
-<!--                            </select></form>-->
-<!--                    </div>-->
-<!--                    <h6 class="element-header">Customers with most tickets</h6>-->
-<!--                    <div class="element-box">-->
-<!--                        <div class="table-responsive">-->
-<!--                            <table class="table table-lightborder">-->
-<!--                                <thead>-->
-<!--                                    <tr>-->
-<!--                                        <th>Customer Name</th>-->
-<!--                                        <th>Tickets</th>-->
-<!--                                        <th>Location</th>-->
-<!--                                        <th class="text-center">Status</th>-->
-<!--                                        <th class="text-right">Last Reply</th>-->
-<!--                                    </tr>-->
-<!--                                </thead>-->
-<!--                                <tbody>-->
-<!--                                    <tr>-->
-<!--                                        <td>-->
-<!--                                            <div class="user-with-avatar"><img alt=""-->
-<!--                                                    src="img/avatar1.jpg"><span-->
-<!--                                                    class="d-none d-xl-inline-block">John Mayers</span>-->
-<!--                                            </div>-->
-<!--                                        </td>-->
-<!--                                        <td class="text-center"> 15</td>-->
-<!--                                        <td class="text-center"><img alt="" src="img/flags-icons/us.png"-->
-<!--                                                width="25px"></td>-->
-<!--                                        <td class="text-center">-->
-<!--                                            <div class="status-pill green" data-title="Complete"-->
-<!--                                                data-toggle="tooltip"></div>-->
-<!--                                        </td>-->
-<!--                                        <td class="text-right"><span>Today </span><span-->
-<!--                                                class="smaller lighter">1:52pm</span></td>-->
-<!--                                    </tr>-->
-<!--                                    <tr>-->
-<!--                                        <td>-->
-<!--                                            <div class="user-with-avatar"><img alt=""-->
-<!--                                                    src="img/avatar2.jpg"><span-->
-<!--                                                    class="d-none d-xl-inline-block">Kelly Brans</span>-->
-<!--                                            </div>-->
-<!--                                        </td>-->
-<!--                                        <td class="text-center"> 12</td>-->
-<!--                                        <td class="text-center"><img alt="" src="img/flags-icons/ca.png"-->
-<!--                                                width="25px"></td>-->
-<!--                                        <td class="text-center">-->
-<!--                                            <div class="status-pill red" data-title="Cancelled"-->
-<!--                                                data-toggle="tooltip"></div>-->
-<!--                                        </td>-->
-<!--                                        <td class="text-right"><span>Yesterday </span><span-->
-<!--                                                class="smaller lighter">5:34pm</span></td>-->
-<!--                                    </tr>-->
-<!--                                    <tr>-->
-<!--                                        <td>-->
-<!--                                            <div class="user-with-avatar"><img alt=""-->
-<!--                                                    src="img/avatar3.jpg"><span-->
-<!--                                                    class="d-none d-xl-inline-block">Tim Howard</span>-->
-<!--                                            </div>-->
-<!--                                        </td>-->
-<!--                                        <td class="text-center"> 8</td>-->
-<!--                                        <td class="text-center"><img alt="" src="img/flags-icons/uk.png"-->
-<!--                                                width="25px"></td>-->
-<!--                                        <td class="text-center">-->
-<!--                                            <div class="status-pill green" data-title="Complete"-->
-<!--                                                data-toggle="tooltip"></div>-->
-<!--                                        </td>-->
-<!--                                        <td class="text-right"><span>Jan 15th </span><span-->
-<!--                                                class="smaller lighter">3:14pm</span></td>-->
-<!--                                    </tr>-->
-<!--                                </tbody>-->
-<!--                            </table>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="col-sm-5 col-xxl-6">-->
-<!--                <div class="element-wrapper">-->
-<!--                    <div class="element-actions">-->
-<!--                        <form class="form-inline justify-content-sm-end"><select-->
-<!--                                class="form-control form-control-sm rounded">-->
-<!--                                <option value="Pending">Today</option>-->
-<!--                                <option value="Active">Last Week </option>-->
-<!--                                <option value="Cancelled">Last 30 Days</option>-->
-<!--                            </select></form>-->
-<!--                    </div>-->
-<!--                    <h6 class="element-header">Questions per Product</h6>-->
-<!--                    <div class="element-box">-->
-<!--                        <div class="mb">-->
-<!--                            <span class="status-pill smaller bar-level-1"></span>&nbsp;  Total Marks-->
-<!--                            <span class="status-pill smaller " style="background-color: #65affd;"></span>&nbsp; Minimum Marks-->
-<!--                            <span class="status-pill smaller " style="background-color: #0362c6;"></span>&nbsp; Marks Obtain-->
-<!--                        </div>-->
-<!--                        <hr>-->
-<!--                        <div class="os-progress-bar primary">-->
-<!--                            <div class="bar-labels">-->
-<!--                                <div class="bar-label-left"><span class="bigger">MailGun</span></div>-->
-<!--                                <div class="bar-label-right"><span class="info">25 Tickets / 10-->
-<!--                                        Pending</span></div>-->
-<!--                            </div>-->
-<!--                            <div class="bar-level-1" style="width: 100%">-->
-<!--                                <div class="bar-level-2" style="width: 70%">-->
-<!--                                    <div class="bar-level-3" style="width: 40%"></div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="os-progress-bar primary">-->
-<!--                            <div class="bar-labels">-->
-<!--                                <div class="bar-label-left"><span class="bigger">PhotoBook</span></div>-->
-<!--                                <div class="bar-label-right"><span class="info">18 Tickets / 7-->
-<!--                                        Pending</span></div>-->
-<!--                            </div>-->
-<!--                            <div class="bar-level-1" style="width: 100%">-->
-<!--                                <div class="bar-level-2" style="width: 40%">-->
-<!--                                    <div class="bar-level-3" style="width: 20%"></div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="os-progress-bar primary">-->
-<!--                            <div class="bar-labels">-->
-<!--                                <div class="bar-label-left"><span class="bigger">Transferra</span></div>-->
-<!--                                <div class="bar-label-right"><span class="info">15 Tickets / 12-->
-<!--                                        Pending</span></div>-->
-<!--                            </div>-->
-<!--                            <div class="bar-level-1" style="width: 100%">-->
-<!--                                <div class="bar-level-2" style="width: 60%">-->
-<!--                                    <div class="bar-level-3" style="width: 30%"></div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="os-progress-bar primary">-->
-<!--                            <div class="bar-labels">-->
-<!--                                <div class="bar-label-left"><span class="bigger">Versioner</span></div>-->
-<!--                                <div class="bar-label-right"><span class="info">12 Tickets / 4-->
-<!--                                        Pending</span></div>-->
-<!--                            </div>-->
-<!--                            <div class="bar-level-1" style="width: 100%">-->
-<!--                                <div class="bar-level-2" style="width: 40%">-->
-<!--                                    <div class="bar-level-3" style="width: 20%"></div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
         <div class="row pt-4">
             <div class="col-sm-12">
-                {{student.fname}} {{student.lname}}
-                {% if exams.standard == exams.standard%}
+                {%for exam1 in subj%}
                 <div class="element-wrapper">
-                    <h6 class="element-header">{{exams.exam_name}}</h6>
+                    <h6 class="element-header">{{exam1}}</h6>
                     <div class="element-box-tp">
                         <div class="table-responsive">
                             <table class="table table-padded">
@@ -263,11 +100,14 @@
                                         <th class="text-center">Max Marks</th>
                                         <th>Standard</th>
                                         <th>Institution Name</th>
+                                        {%if exam1[0:3] == student.standard or exam1[0:4] == student.standard%}
                                         <th>Actions</th>
+                                        {%endif%}
                                     </tr>
                                 </thead>
                                 <tbody>
-                                {%for exam in exams%}
+                                {%for exam in exams2%}
+                                    {%if exam.exam_name == exam1%}
                                     <tr>
                                         <td class="text-center"><input class="form-control"
                                                 type="checkbox"></td>
@@ -286,11 +126,12 @@
                                         <td class="text-center">{{exam.subject.max_marks}}</td>
                                         <td class="text-center">{{exam.standard}}</td>
                                         <td class="text-center">{{exam.institution_name}}</td>
+                                        {%if exam.standard == student.standard%}
                                         <td class="row-actions">
                                             <a class="danger" href="#" data-target="#onboardingTextModal{{exam.id}}"
                                         data-toggle="modal"><i class="os-icon os-icon-ui-15"></i></a>
                                         </td>
-
+                                        {%endif%}
                                     </tr>
                                 <div aria-hidden="true" class="onboarding-modal modal fade animated"
                                     id="onboardingTextModal{{exam.id}}" role="dialog" tabindex="-1">
@@ -305,7 +146,7 @@
                                                 <h4 class="onboarding-title">Delete {{exam.standard}} Standard Exam For<br> {{student.fname}} {{student.lname}}</h4>
                                                 <h5>Subject : {{exam.subject.subject}}</h5>
                                                 <h5>Marks obtain : {{exam.marks_opt}}</h5>
-                                                <h5>Maximum Marks : {{exam.subject.max_marks}}</h5>{{exam.id}}
+                                                <h5>Maximum Marks : {{exam.subject.max_marks}}</h5>
                                                 <div>
                                                     <a class="btn btn-danger btn-block btn-lg pb-3" href="{{url_for('delete_exam',exam_id=exam.id)}}" style="color:#fff"><i
                                                                         class="os-icon os-icon-ui-15" style="font-size: 25px;"></i><span>Delete Student</span></a>
@@ -314,135 +155,14 @@
                                         </div>
                                     </div>
                                 </div>
+                                {%endif%}
                                 {%endfor%}
-    <!--                                <tr>-->
-    <!--                                    <td class="text-center"><input class="form-control"-->
-    <!--                                            type="checkbox"></td>-->
-    <!--                                    <td>-->
-    <!--                                        <div class="user-with-avatar"><img alt=""-->
-    <!--                                                src="img/avatar2.jpg"><span>Mike Bishop</span></div>-->
-    <!--                                    </td>-->
-    <!--                                    <td>-->
-    <!--                                        <div class="smaller lighter">Please approve this request so-->
-    <!--                                            we can move...</div>-->
-    <!--                                    </td>-->
-    <!--                                    <td><span>Jan 19th</span><span-->
-    <!--                                            class="smaller lighter">3:22pm</span></td>-->
-    <!--                                    <td class="text-center"><a class="badge badge-danger-inverted"-->
-    <!--                                            href="#">Cafe</a></td>-->
-    <!--                                    <td class="nowrap"><span-->
-    <!--                                            class="status-pill smaller red"></span><span>Closed</span>-->
-    <!--                                    </td>-->
-    <!--                                    <td class="row-actions"><a href="#"><i-->
-    <!--                                                class="os-icon os-icon-grid-10"></i></a><a-->
-    <!--                                            href="#"><i class="os-icon os-icon-ui-44"></i></a><a-->
-    <!--                                            class="danger" href="#"><i-->
-    <!--                                                class="os-icon os-icon-ui-15"></i></a></td>-->
-    <!--                                </tr>-->
-    <!--                                <tr>-->
-    <!--                                    <td class="text-center"><input class="form-control"-->
-    <!--                                            type="checkbox"></td>-->
-    <!--                                    <td>-->
-    <!--                                        <div class="user-with-avatar"><img alt=""-->
-    <!--                                                src="img/avatar3.jpg"><span>Terry Crews</span></div>-->
-    <!--                                    </td>-->
-    <!--                                    <td>-->
-    <!--                                        <div class="smaller lighter">We will need some login-->
-    <!--                                            credentials to make...</div>-->
-    <!--                                    </td>-->
-    <!--                                    <td><span>Yesterday</span><span-->
-    <!--                                            class="smaller lighter">7:45am</span></td>-->
-    <!--                                    <td class="text-center"><a class="badge badge-warning-inverted"-->
-    <!--                                            href="#">Restaurants</a></td>-->
-    <!--                                    <td class="nowrap"><span-->
-    <!--                                            class="status-pill smaller yellow"></span><span>Pending</span>-->
-    <!--                                    </td>-->
-    <!--                                    <td class="row-actions"><a href="#"><i-->
-    <!--                                                class="os-icon os-icon-grid-10"></i></a><a-->
-    <!--                                            href="#"><i class="os-icon os-icon-ui-44"></i></a><a-->
-    <!--                                            class="danger" href="#"><i-->
-    <!--                                                class="os-icon os-icon-ui-15"></i></a></td>-->
-    <!--                                </tr>-->
-    <!--                                <tr>-->
-    <!--                                    <td class="text-center"><input class="form-control"-->
-    <!--                                            type="checkbox"></td>-->
-    <!--                                    <td>-->
-    <!--                                        <div class="user-with-avatar"><img alt=""-->
-    <!--                                                src="img/avatar1.jpg"><span>Phil Collins</span>-->
-    <!--                                        </div>-->
-    <!--                                    </td>-->
-    <!--                                    <td>-->
-    <!--                                        <div class="smaller lighter">I have enabled the software for-->
-    <!--                                            you, you can try now...</div>-->
-    <!--                                    </td>-->
-    <!--                                    <td><span>Jan 23rd</span><span-->
-    <!--                                            class="smaller lighter">2:12pm</span></td>-->
-    <!--                                    <td class="text-center"><a class="badge badge-primary-inverted"-->
-    <!--                                            href="#">Shopping</a></td>-->
-    <!--                                    <td class="nowrap"><span-->
-    <!--                                            class="status-pill smaller yellow"></span><span>Pending</span>-->
-    <!--                                    </td>-->
-    <!--                                    <td class="row-actions"><a href="#"><i-->
-    <!--                                                class="os-icon os-icon-grid-10"></i></a><a-->
-    <!--                                            href="#"><i class="os-icon os-icon-ui-44"></i></a><a-->
-    <!--                                            class="danger" href="#"><i-->
-    <!--                                                class="os-icon os-icon-ui-15"></i></a></td>-->
-    <!--                                </tr>-->
-    <!--                                <tr>-->
-    <!--                                    <td class="text-center"><input class="form-control"-->
-    <!--                                            type="checkbox"></td>-->
-    <!--                                    <td>-->
-    <!--                                        <div class="user-with-avatar"><img alt=""-->
-    <!--                                                src="img/avatar4.jpg"><span>Katy Pilsner</span>-->
-    <!--                                        </div>-->
-    <!--                                    </td>-->
-    <!--                                    <td>-->
-    <!--                                        <div class="smaller lighter">I have tried this solution but-->
-    <!--                                            it does not open...</div>-->
-    <!--                                    </td>-->
-    <!--                                    <td><span>Jan 12th</span><span-->
-    <!--                                            class="smaller lighter">9:51am</span></td>-->
-    <!--                                    <td class="text-center"><a class="badge badge-danger-inverted"-->
-    <!--                                            href="#">Groceries</a></td>-->
-    <!--                                    <td class="nowrap"><span-->
-    <!--                                            class="status-pill smaller green"></span><span>Active</span>-->
-    <!--                                    </td>-->
-    <!--                                    <td class="row-actions"><a href="#"><i-->
-    <!--                                                class="os-icon os-icon-grid-10"></i></a><a-->
-    <!--                                            href="#"><i class="os-icon os-icon-ui-44"></i></a><a-->
-    <!--                                            class="danger" href="#"><i-->
-    <!--                                                class="os-icon os-icon-ui-15"></i></a></td>-->
-    <!--                                </tr>-->
-    <!--                                <tr>-->
-    <!--                                    <td class="text-center"><input class="form-control"-->
-    <!--                                            type="checkbox"></td>-->
-    <!--                                    <td>-->
-    <!--                                        <div class="user-with-avatar"><img alt=""-->
-    <!--                                                src="img/avatar2.jpg"><span>Wes Morgan</span></div>-->
-    <!--                                    </td>-->
-    <!--                                    <td>-->
-    <!--                                        <div class="smaller lighter">I have enabled the software for-->
-    <!--                                            you, you can try now...</div>-->
-    <!--                                    </td>-->
-    <!--                                    <td><span>Jan 9th</span><span-->
-    <!--                                            class="smaller lighter">12:45pm</span></td>-->
-    <!--                                    <td class="text-center"><a class="badge badge-primary-inverted"-->
-    <!--                                            href="#">Business</a></td>-->
-    <!--                                    <td class="nowrap"><span-->
-    <!--                                            class="status-pill smaller yellow"></span><span>Pending</span>-->
-    <!--                                    </td>-->
-    <!--                                    <td class="row-actions"><a href="#"><i-->
-    <!--                                                class="os-icon os-icon-grid-10"></i></a><a-->
-    <!--                                            href="#"><i class="os-icon os-icon-ui-44"></i></a><a-->
-    <!--                                            class="danger" href="#"><i-->
-    <!--                                                class="os-icon os-icon-ui-15"></i></a></td>-->
-    <!--                                </tr>-->
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
-                {%endif%}
+                {%endfor%}
             </div>
         </div>
     </div>
