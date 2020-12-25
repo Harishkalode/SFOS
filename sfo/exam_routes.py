@@ -63,7 +63,7 @@ def exam_view(student_id):
     barchart_data = bar_chart.render_data_uri()
 
     return render_template('exam.html',exams=exams,student=student,a=a,t=t,mm=mm,perc=perc,title=f'{student.fname} {student.lname} Exam',
-                           st1=f'{student.fname} {student.lname}', st2='Exam',exams2=exams2,subj=subj,c=graph.layout,
+                           st1=f'{student.fname} {student.lname}', st2='Exam',exams2=exams2,subj=subj,
                            barchart_data=barchart_data)
 
 
