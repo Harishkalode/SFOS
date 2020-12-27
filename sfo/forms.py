@@ -235,3 +235,8 @@ class PromoteStudent(FlaskForm):
 class StudentExamView(FlaskForm):
     standard = SelectField("Standard", choices=[], validators=[DataRequired()])
     submit = SubmitField('View')
+
+
+class AddStudentCSV(FlaskForm):
+    file = FileField('Add Student CSV', validators=[DataRequired(), FileAllowed(['csv'])])
+    submit = SubmitField('Add and Verify')

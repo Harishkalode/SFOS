@@ -1,0 +1,79 @@
+{% extends "layout.html" %}
+{% block content%}
+
+<div class="content-i">
+    <div class="content-box">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="element-wrapper">
+                    <div class="element-box">
+                        <form method="POST" action="" enctype="multipart/form-data">
+                            {{ form.hidden_tag() }}
+                            <h5 class="form-header">Add Student CSV</h5>
+                            <div class="form-group">
+                                <label>Student Profiles By CSV</label>
+                                <div class="input-group">
+                                  <div class="custom-file">
+                                      {{ form.file.label(class="custom-file-label", for="inputGroupFile02") }}
+                                        {{ form.file( class="custom-file-input", id="inputGroupFile02") }}<br>
+                                        {% if form.file.errors %}
+                                            {% for error in form.file.errors %}
+                                                <span class="text-danger">{{ error }}</span><br>
+                                            {% endfor %}
+                                        {% endif %}
+                                  </div>
+                                </div>
+                            </div>
+                            <div class="form-buttons-w">
+                                {{form.submit(class="btn btn-primary")}}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="element-wrapper">
+                    <div class="element-box">
+                        <h3 style="color:red;">Instruction For CSV Upload</h3><hr>
+                        <ol>
+                            <li>File type should be CSV</li>
+                            <li>There should be labels for every column in header only, no footer labels should be there</li>
+                            <li>Number of column should be 20 only not more than 20 nor less</li>
+                            <li>The sequence of column should be as follows:
+                                <ul>
+                                    <li>Student First name</li>
+                                    <li>Student Father name</li>
+                                    <li>Student Mother name</li>
+                                    <li>Student Last name</li>
+                                    <li>Student Email</li>
+                                    <li>Student Roll No</li>
+                                    <li>Student Father Occupation</li>
+                                    <li>Student Father Income</li>
+                                    <li>Student Father Phone No</li>
+                                    <li>Student Mother Occupation</li>
+                                    <li>Student Mother Income</li>
+                                    <li>Student Mother Phone No</li>
+                                    <li>Student Postal Address</li>
+                                    <li>Student Local Address</li>
+                                    <li>Student Phone No</li>
+                                    <li>Student Date Of Birth(dd-mm-yyyy)</li>
+                                    <li>Student Religion</li>
+                                    <li>Student Category</li>
+                                    <li>Student Gender(Male/Female/Other)</li>
+                                    <li>Student Blood Group</li>
+                                </ul>
+                            </li>
+                            <li>There should not be any missing data in any of the cell</li>
+                            <li>No duplicate data should be with in CSV file or database its self in <b>(Email, Father Phone No, Mother Phone No and Student Phone No)</b></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include "history.html"%}
+
+</div>
+
+{% endblock %}
