@@ -245,43 +245,6 @@ def add_student_csv():
                             missing_data.append('missing data')
                             break
 
-                for dupli in a.duplicated(a.columns[4]):
-                    if dupli:
-                        duplicate_data.append('Duplicate Data')
-                        break
-
-                for dupli in df[df.columns[4]]:
-                    email = Student.query.filter_by(admin=admin, email=dupli).first()
-                    if email:
-                        duplicate_data.append('Duplicate Data')
-
-                for dupli in a.duplicated(a.columns[8]):
-                    if dupli:
-                        duplicate_data.append('Duplicate Data')
-                        break
-                for dupli in df[df.columns[8]]:
-                    father_phone_no = Student.query.filter_by(admin=admin, father_phone_no=dupli).first()
-                    if father_phone_no:
-                        duplicate_data.append('Duplicate Data')
-
-                for dupli in a.duplicated(a.columns[11]):
-                    if dupli:
-                        duplicate_data.append('Duplicate Data')
-                        break
-
-                for dupli in df[df.columns[11]]:
-                    mother_phone_no = Student.query.filter_by(admin=admin, mother_phone_no=dupli).first()
-                    if mother_phone_no:
-                        duplicate_data.append('Duplicate Data')
-
-                for dupli in a.duplicated(a.columns[14]):
-                    if dupli:
-                        duplicate_data.append('Duplicate Data')
-                        break
-                for dupli in df[df.columns[14]]:
-                    phone_no = Student.query.filter_by(admin=admin, phone_no=dupli).first()
-                    if phone_no:
-                        duplicate_data.append('Duplicate Data')
                 if 'missing data' not in missing_data:
 
                     if df.dtypes[0] == object and df.dtypes[1] == object and df.dtypes[2] == object and df.dtypes[3] == object \
@@ -291,7 +254,43 @@ def add_student_csv():
                             and df.dtypes[13] == object and df.dtypes[14] == 'int64' and df.dtypes[15] == object \
                             and df.dtypes[16] == object and df.dtypes[17] == object and df.dtypes[18] == object \
                             and df.dtypes[19] == object:
+                        for dupli in a.duplicated(a.columns[4]):
+                            if dupli:
+                                duplicate_data.append('Duplicate Data')
+                                break
 
+                        for dupli in df[df.columns[4]]:
+                            email = Student.query.filter_by(admin=admin, email=dupli).first()
+                            if email:
+                                duplicate_data.append('Duplicate Data')
+
+                        for dupli in a.duplicated(a.columns[8]):
+                            if dupli:
+                                duplicate_data.append('Duplicate Data')
+                                break
+                        for dupli in df[df.columns[8]]:
+                            father_phone_no = Student.query.filter_by(admin=admin, father_phone_no=dupli).first()
+                            if father_phone_no:
+                                duplicate_data.append('Duplicate Data')
+
+                        for dupli in a.duplicated(a.columns[11]):
+                            if dupli:
+                                duplicate_data.append('Duplicate Data')
+                                break
+
+                        for dupli in df[df.columns[11]]:
+                            mother_phone_no = Student.query.filter_by(admin=admin, mother_phone_no=dupli).first()
+                            if mother_phone_no:
+                                duplicate_data.append('Duplicate Data')
+
+                        for dupli in a.duplicated(a.columns[14]):
+                            if dupli:
+                                duplicate_data.append('Duplicate Data')
+                                break
+                        for dupli in df[df.columns[14]]:
+                            phone_no = Student.query.filter_by(admin=admin, phone_no=dupli).first()
+                            if phone_no:
+                                duplicate_data.append('Duplicate Data')
                         if 'Duplicate Data' not in duplicate_data:
                             while True:
                                 arr = []

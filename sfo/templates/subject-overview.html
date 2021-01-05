@@ -1,0 +1,129 @@
+{% extends "layout.html" %}
+{% block content%}
+
+<div class="content-i">
+    <div class="content-box">
+        <div class="row pt-4">
+            <div class="col-sm-12">
+                <div class="element-wrapper">
+                    <h6 class="element-header">{{subject.standard}} standard {{subject.subject}} subject</h6>
+                    <div class="element-content">
+                        <div class="tablo-with-chart">
+                            <div class="row">
+                                <div class="col-sm-12 col-xxl-12">
+                                    <div class="tablos">
+                                        <div class="row mb-xl-6 mb-xxl-6">
+                                            <div class="col-sm-3"><a
+                                                    class="element-box el-tablo centered trend-in-corner padded bold-label">
+                                                    <div class="value">{{mark}}</div>
+                                                    <div class="label">Total Students Appeared</div>
+<!--                                                    <div class="trending trending-up-basic">-->
+<!--                                                        <span>12%</span><i-->
+<!--                                                            class="os-icon os-icon-arrow-up2"></i></div>-->
+                                                </a></div>
+                                            <div class="col-sm-3"><a
+                                                    class="element-box el-tablo centered trend-in-corner padded bold-label">
+                                                    <div class="value">{{mark-fail}}</div>
+                                                    <div class="label">Passed Student</div>
+<!--                                                    <div class="trending trending-down-basic">-->
+<!--                                                        <span>12%</span><i-->
+<!--                                                            class="os-icon os-icon-arrow-down"></i>-->
+<!--                                                    </div>-->
+                                                </a>
+                                            </div>
+                                            <div class="col-sm-3"><a
+                                                    class="element-box el-tablo centered trend-in-corner padded bold-label">
+                                                    <div class="value">{{fail}}</div>
+                                                    <div class="label">Failed Student</div>
+<!--                                                    <div class="trending trending-down-basic">-->
+<!--                                                        <span>12%</span><i-->
+<!--                                                            class="os-icon os-icon-arrow-down"></i>-->
+<!--                                                    </div>-->
+                                                </a>
+                                            </div>
+                                            <div class="col-sm-3"><a
+                                                    class="element-box el-tablo centered trend-in-corner padded bold-label">
+                                                    <div class="value">{{student.count() - mark}}</div>
+                                                    <div class="label">Student Not Appeared</div>
+<!--                                                    <div class="trending trending-down-basic">-->
+<!--                                                        <span>12%</span><i-->
+<!--                                                            class="os-icon os-icon-arrow-down"></i>-->
+<!--                                                    </div>-->
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-xxl-12">
+                                    <div class="element-box pl-xxl-5 pr-xxl-5">
+                                        <div class="el-tablo bigger highlight bold-label">{{subject.subject}}
+                                            <div class="label"><h5>Total Student Marks Graph</h5></div>
+                                        </div>
+                                            <div class="el-chart-w">
+                                                <embed type="image/svg+xml" src= {{ barchart_data|safe }} style="width:100%;" />
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-4">
+            <div class="col-sm-12">
+                <div class="element-wrapper">
+                    <h6 class="element-header">Student List</h6>
+                    <div class="element-box-tp">
+                        <div class="table-responsive">
+                            <table class="table table-padded">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Name of Student</th>
+                                        <th class="text-center">Marks Obtain</th>
+                                        <th class="text-center">Min marks</th>
+                                        <th class="text-center">Max Marks</th>
+                                        <th>Standard</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {%for exam in exams%}
+                                    {%if exam.student.standard == exam.standard%}
+                                    <tr>
+                                        <td class="text-center"><input class="form-control"
+                                                type="checkbox"></td>
+                                        <td><span>{{exam.student.fname}} {{exam.student.lname}}</span></td>
+                                        {% if exam.marks_opt | int  == exam.subject.min_marks | int %}
+                                        <td class="text-center"><a class="badge badge-warning"
+                                                href="#">{{exam.marks_opt}}</a></td>
+                                        {%elif exam.marks_opt | int > exam.subject.min_marks | int or exam.marks_opt | int == exam.subject.max_marks | int %}
+                                        <td class="text-center"><a class="badge badge-success"
+                                                href="#">{{exam.marks_opt}}</a></td>
+                                        {%else%}
+                                        <td class="text-center"><a class="badge badge-danger"
+                                                href="#">{{exam.marks_opt}}</a></td>
+                                        {%endif%}
+                                        <td class="text-center">{{exam.subject.min_marks}}</td>
+                                        <td class="text-center">{{exam.subject.max_marks}}</td>
+                                        <td class="text-center">{{exam.standard}}</td>
+                                    </tr>
+                                    {%endif%}
+                                {%endfor%}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="content-box">
+
+</div>
+{% endblock %}

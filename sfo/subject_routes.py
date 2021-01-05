@@ -1,7 +1,8 @@
+import pygal
 from flask import render_template, url_for, flash, redirect, request
 from sfo import app, db
 from sfo.forms import AddSubjectForm, UpdateSubjectForm
-from sfo.models import Admin, Subject, History
+from sfo.models import Admin, Subject, History, Student,Exam
 from flask_login import current_user, login_required
 
 
@@ -69,6 +70,7 @@ def inst_subjects():
     return render_template('inst-subject.html', title='Institution Subjects',
                            st1='Subject', st2='Institution Subject',subjects=subjects)
 
+
 @app.route("/subject/<int:subject_id>/update", methods=['GET', 'POST'])
 @login_required
 def subject_update(subject_id):
@@ -120,3 +122,37 @@ def delete_subject(subject_id):
     db.session.commit()
     flash('Your subject successfully Deleted', 'success')
     return redirect(url_for('all_subjects'))
+
+
+@app.route("/subject/<int:subject_id>/overview")
+@login_required
+def subject_overview(subject_id):
+    admin = Admin.query.filter_by(id=current_user.id).first_or_404()
+    subject = Subject.query.get_or_404(subject_id)
+    student=Student.query.filter_by(admin=admin,standard=subject.standard)
+    if subject.admin != current_user:
+        flash("Sorry you can't Delete this subject",'danger')
+        return redirect(url_for('all_subjects'))
+    exams = Exam.query.filter_by(subject=subject)
+    mark=[]
+    for exam in exams:
+        if exam.student.standard == exam.standard:
+            mark.append(int(exam.marks_opt))
+
+    name=[]
+    for exam in exams:
+        if exam.student.standard == exam.standard:
+            name.append(f'{exam.student.fname[0]}{exam.student.lname[0]}')
+
+    fail = []
+    for exam in exams:
+        if exam.student.standard == exam.standard:
+            if exam.marks_opt < exam.subject.min_marks:
+                fail.append(exam.student)
+
+    bar_chart = pygal.Bar()
+
+    bar_chart.x_labels = map(str, name)
+    bar_chart.add('Marks Obtain', mark)
+    barchart_data = bar_chart.render_data_uri()
+    return render_template('subject-overview.html',exams=exams,barchart_data=barchart_data,subject=subject,fail=len(fail),mark=len(mark),student=student)

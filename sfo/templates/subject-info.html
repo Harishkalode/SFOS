@@ -42,7 +42,7 @@
                 </div>
                 <div class="up-controls">
                     <div class="row">
-                        <div class="col-lg-6">
+                        <div class="col-lg-5">
                             <div class="value-pair">
                                 <div class="label">Status:</div>
                                 <div class="value badge badge-pill badge-success">
@@ -54,7 +54,9 @@
                                 <div class="value">{{current_user.date_created.strftime('%Y-%m-%d')}}</div>
                             </div>
                         </div>
-                        <div class="col-lg-6 text-right">
+                        <div class="col-lg-7 text-right">
+                            <a class="btn btn-success btn-sm" href="{{url_for('subject_overview', subject_id=subject.id)}}"><i
+                                    class="os-icon os-icon-edit-1"></i><span>Subject Overview</span></a>
                             <a class="btn btn-primary btn-sm" href="{{url_for('subject_update', subject_id=subject.id)}}"><i
                                     class="os-icon os-icon-edit-1"></i><span>Update Subject</span></a>
                             <a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal" href="{{url_for('subject_update', subject_id=subject.id)}}"><i
