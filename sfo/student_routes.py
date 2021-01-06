@@ -3,8 +3,9 @@ import os
 import secrets
 from flask import render_template, url_for, flash, redirect, request
 from sfo import app, db
-from sfo.forms import AddStudentForm, UpdateStudentForm, AddExamForm, PromoteStudent,AddStudentCSV
-from sfo.models import Admin, Student, History, Subject, Exam
+from sfo.forms import AddStudentForm, UpdateStudentForm, AddExamForm, PromoteStudent,AddStudentCSV,\
+    AddGeneralQuestionForm
+from sfo.models import Admin, Student, History, Subject, Exam,GeneralQuestion
 from flask_login import current_user, login_required
 from sfo.routes import save_picture
 
@@ -70,6 +71,7 @@ def add_student():
 @login_required
 def student_details(student_id):
     student = Student.query.get_or_404(student_id)
+    que=GeneralQuestion.query.filter_by(student=student).first()
     admin = Admin.query.filter_by(id=current_user.id).first_or_404()
     exams = Exam.query.filter_by(student=student, standard=student.standard)
     subjects = Subject.query.filter_by(admin=admin).all()
@@ -145,7 +147,7 @@ def student_details(student_id):
         return redirect(url_for('student_details', student_id=student.id))
     return render_template('account-info.html', title='account',
                            st1='Account', st2='Student Account Info', student=student, form=form,
-                           subjects=subjects, exams=exams,e=e,s=s,promote=promote)
+                           subjects=subjects, exams=exams,e=e,s=s,promote=promote,que=que)
 
 
 @app.route("/student/<int:student_id>/update", methods=['GET', 'POST'])
@@ -186,7 +188,7 @@ def student_update(student_id):
         db.session.add(history)
         db.session.commit()
         flash('Account Updated Successfully', 'success')
-        return redirect(url_for('all_students'))
+        return redirect(url_for('student_details',student_id=student.id))
     elif request.method == 'GET':
         form.fname.data = student.fname
         form.father_name.data = student.father_name
@@ -343,6 +345,106 @@ def add_student_csv():
         return redirect(url_for('all_students'))
     return render_template('add-student-csv.html',title=f'{current_user.fname} {current_user.lname} account',
                            st1='Student', st2='Add Student',form=form, historys=historys)
+
+
+@app.route("/student/<int:student_id>/add_question", methods=['GET', 'POST'])
+@login_required
+def general_question(student_id):
+    student = Student.query.get_or_404(student_id)
+    que = GeneralQuestion.query.filter_by(student=student).first()
+    page = request.args.get('page', 1, type=int)
+    admin = Admin.query.filter_by(id=current_user.id).first_or_404()
+    historys = History.query.filter_by(admin=admin).order_by(History.date_created.desc()).paginate(page=page,
+                                                                                                   per_page=5)
+    if student.admin != current_user:
+        flash("Sorry you can't add questions for this student",'danger')
+        return redirect(url_for('all_subjects'))
+    form = AddGeneralQuestionForm()
+    if que:
+        flash('question Already exist', 'warning')
+        return redirect(url_for('student_details', student_id=student.id))
+    elif form.validate_on_submit():
+        question = GeneralQuestion(no_of_graduate_in_family=form.no_of_graduate_in_family.data,
+                                   no_of_siblings=form.no_of_siblings.data,
+                                   scholarship=form.scholarship.data,
+                                   school_type=form.school_type.data,
+                                   type_of_friend_zone=form.type_of_friend_zone.data,
+                                   memorizing_power=form.memorizing_power.data,
+                                   medical_history=form.medical_history.data,
+                                   maths_knowledge=form.maths_knowledge.data,
+                                   physics_knowledge=form.physics_knowledge.data,
+                                   bio_knowledge=form.bio_knowledge.data,
+                                   creative_knowledge=form.creative_knowledge.data,
+                                   technology_interest=form.technology_interest.data,
+                                   subject_interested=form.subject_interested.data,
+                                   level_of_understanding=form.level_of_understanding.data,
+                                   behaviour_with_others=form.behaviour_with_others.data,
+                                   student=student)
+        db.session.add(question)
+        db.session.commit()
+        history = History(name_of_module=f'Added Questions for {student.fname} {student.lname}', activity='add',
+                          admin=current_user)
+        db.session.add(history)
+        db.session.commit()
+        flash('Subject Updated Successfully', 'success')
+        return redirect(url_for('student_details',student_id=student.id))
+    return render_template('general-question.html', title='Questions',
+                           st1='Student', st2='General Question', form=form,historys=historys)
+
+
+@app.route("/student/<int:question_id>/update-details", methods=['GET', 'POST'])
+@login_required
+def general_question_update(question_id):
+    que = GeneralQuestion.query.get_or_404(question_id)
+    page = request.args.get('page', 1, type=int)
+    admin = Admin.query.filter_by(id=current_user.id).first_or_404()
+    historys = History.query.filter_by(admin=admin).order_by(History.date_created.desc()).paginate(page=page,
+                                                                                                   per_page=5)
+    if que.student.admin != current_user:
+        flash("Sorry you can't Update this student", 'danger')
+        return redirect(url_for('all_students'))
+    form = AddGeneralQuestionForm()
+    if form.validate_on_submit():
+        que.no_of_graduate_in_family = form.no_of_graduate_in_family.data
+        que.no_of_siblings = form.no_of_siblings.data
+        que.scholarship = form.scholarship.data
+        que.school_type = form.school_type.data
+        que.type_of_friend_zone = form.type_of_friend_zone.data
+        que.memorizing_power = form.memorizing_power.data
+        que.medical_history = form.medical_history.data
+        que.maths_knowledge = form.maths_knowledge.data
+        que.physics_knowledge = form.physics_knowledge.data
+        que.bio_knowledge = form.bio_knowledge.data
+        que.creative_knowledge = form.creative_knowledge.data
+        que.technology_interest = form.technology_interest.data
+        que.subject_interested = form.subject_interested.data
+        que.level_of_understanding = form.level_of_understanding.data
+        que.behaviour_with_others = form.behaviour_with_others.data
+        db.session.commit()
+        history = History(name_of_module=f'Updated Student question {que.student.fname} {que.student.lname}', activity='update',
+                          admin=current_user)
+        db.session.add(history)
+        db.session.commit()
+        flash('Account Updated Successfully', 'success')
+        return redirect(url_for('student_details',student_id=que.student.id))
+    elif request.method == 'GET':
+        form.no_of_graduate_in_family.data = que.no_of_graduate_in_family
+        form.no_of_siblings.data = que.no_of_siblings
+        form.scholarship.data = que.scholarship
+        form.school_type.data = que.school_type
+        form.type_of_friend_zone.data = que.type_of_friend_zone
+        form.memorizing_power.data = que.memorizing_power
+        form.medical_history.data = que.medical_history
+        form.maths_knowledge.data = que.maths_knowledge
+        form.physics_knowledge.data = que.physics_knowledge
+        form.bio_knowledge.data = que.bio_knowledge
+        form.creative_knowledge.data = que.creative_knowledge
+        form.technology_interest.data = que.technology_interest
+        form.subject_interested.data = que.subject_interested
+        form.level_of_understanding.data = que.level_of_understanding
+        form.level_of_understanding.data = que.level_of_understanding
+    return render_template('general-question.html', title='Account',
+                           st1='Account', st2='Account Update', form=form,historys=historys)
 
 # @app.route("/student/<int:student_id>/delete", methods=['GET','POST'])
 # @login_required

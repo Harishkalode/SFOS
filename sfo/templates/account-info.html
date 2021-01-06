@@ -54,7 +54,7 @@
                 </div>
                 <div class="up-controls">
                     <div class="row">
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
                             {%if a %}
                             <div class="value-pair">
                                 <div class="label">Status:</div>
@@ -76,11 +76,18 @@
                             {%endif%}
 
                         </div>
-                        <div class="col-lg-6 text-right">
+                        <div class="col-lg-8 text-right">
                             {% if a %}
                             <a class="btn btn-primary btn-sm" href="{{url_for('account_update')}}"><i
                                     class="os-icon os-icon-link-3"></i><span>Update Account</span></a>
                             {%else%}
+                            {%if que%}
+                                <a class="btn btn-secondary btn-sm" href="{{url_for('general_question_update', question_id=que.id)}}"><i
+                                    class="os-icon os-icon-link-3"></i><span>Update Student Details</span></a>
+                            {%else%}
+                                <a class="btn btn-secondary btn-sm" href="{{url_for('general_question', student_id=student.id)}}"><i
+                                    class="os-icon os-icon-link-3"></i><span>Add Student Details</span></a>
+                            {%endif%}
                                 {%if exams.count() != 0%}
                                     <a class="btn btn-success btn-sm" href="{{url_for('exam_view', student_id=student.id)}}"><i
                                             class="os-icon os-icon-edit-32"></i><span>All Exams view</span></a>

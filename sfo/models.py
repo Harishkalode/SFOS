@@ -78,6 +78,7 @@ class Student(db.Model, UserMixin):
     date_created = db.Column(db.DateTime, nullable=False, default=datetime.now())
     admin_id = db.Column(db.Integer, db.ForeignKey('admin.id'), nullable=False)
     exams = db.relationship('Exam', backref='student', lazy=True)
+    general_questions = db.relationship('GeneralQuestion', backref='student', lazy=True)
 
     def __repr__(self):
         return f"Student('{self.email}','{self.fname}','{self.lname}','{self.roll_no}','{self.admin_id}')"
@@ -125,3 +126,24 @@ class Exam(db.Model, UserMixin):
     student_id = db.Column(db.Integer, db.ForeignKey('student.id'), nullable=False)
 
     subjects = db.relationship('Subject', secondary=subject_exam)
+
+
+class GeneralQuestion(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    no_of_graduate_in_family = db.Column(db.String(10), nullable=True)
+    no_of_siblings = db.Column(db.String(10), nullable=True)
+    scholarship = db.Column(db.String(120), nullable=True)
+    school_type = db.Column(db.String(220), nullable=True)
+    type_of_friend_zone = db.Column(db.String(220), nullable=True)
+    memorizing_power = db.Column(db.String(220), nullable=True)
+    medical_history = db.Column(db.String(220), nullable=True)
+    maths_knowledge = db.Column(db.String(220), nullable=True)
+    physics_knowledge = db.Column(db.String(220), nullable=True)
+    bio_knowledge = db.Column(db.String(220), nullable=True)
+    creative_knowledge = db.Column(db.String(220), nullable=True)
+    technology_interest = db.Column(db.String(220), nullable=True)
+    subject_interested = db.Column(db.String(220), nullable=True)
+    level_of_understanding = db.Column(db.String(220), nullable=True)
+    behaviour_with_others = db.Column(db.String(220), nullable=True)
+    date_created = db.Column(db.DateTime, nullable=False, default=datetime.now())
+    student_id = db.Column(db.Integer, db.ForeignKey('student.id'), nullable=False)

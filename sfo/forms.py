@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from flask_login import current_user
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, SelectField, \
-    RadioField
+    RadioField,IntegerField
 from wtforms.validators import DataRequired, Length, EqualTo, ValidationError
 from sfo.models import Admin, Student, Exam
 
@@ -102,7 +102,8 @@ class AddStudentForm(FlaskForm):
     dob = StringField('Date of Birth', validators=[DataRequired()])
     religion = StringField('Religion', validators=[DataRequired()])
     caste = StringField('Caste', validators=[DataRequired()])
-    gender = SelectField('Gender',choices=[('Male', 'Male'),('Female', 'Female'),('Other', 'Other')], validators=[DataRequired()])
+    gender = SelectField('Gender', choices=[('Male', 'Male'), ('Female', 'Female'), ('Other', 'Other')],
+                         validators=[DataRequired()])
     blood_group = StringField('Blood Group', validators=[DataRequired()])
     profile_img = FileField('Student Profile', validators=[DataRequired(), FileAllowed(['jpg', 'jpeg', 'png'])])
     submit = SubmitField('Add Student')
@@ -137,7 +138,7 @@ class UpdateStudentForm(FlaskForm):
     dob = StringField('Date of Birth', validators=[DataRequired()])
     religion = StringField('Religion', validators=[DataRequired()])
     caste = StringField('Caste', validators=[DataRequired()])
-    gender = SelectField('Gender',choices=[('Male', 'Male'),('Female', 'Female'),('Other', 'Other')],
+    gender = SelectField('Gender', choices=[('Male', 'Male'), ('Female', 'Female'), ('Other', 'Other')],
                          validators=[DataRequired()])
     blood_group = StringField('Blood Group', validators=[DataRequired()])
     profile_img = FileField('Student Profile', validators=[FileAllowed(['jpg', 'jpeg', 'png'])])
@@ -240,3 +241,37 @@ class StudentExamView(FlaskForm):
 class AddStudentCSV(FlaskForm):
     file = FileField('Add Student CSV', validators=[DataRequired(), FileAllowed(['csv'])])
     submit = SubmitField('Add and Verify')
+
+
+class AddGeneralQuestionForm(FlaskForm):
+    no_of_graduate_in_family = IntegerField("Graduated Peoples in Family", validators=[DataRequired()])
+    no_of_siblings = IntegerField('Number of Siblings', validators=[DataRequired()])
+    scholarship = IntegerField('Scholarship', validators=[DataRequired()])
+    school_type = SelectField("School Type", choices=[('Private', 'Private'), ('Government', 'Government')],
+                              validators=[DataRequired()])
+    type_of_friend_zone = SelectField("Type of Friend Zone", choices=[('Bad','Bad'),('Average','Average'),('Good','Good')],
+                                      validators=[DataRequired()])
+    behaviour_with_others = SelectField("Behaviour With Others", choices=[('Bad','Bad'),('Average','Average'),('Good','Good')],
+                                        validators=[DataRequired()])
+    memorizing_power = RadioField("Memorizing Power", choices=[('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')],
+                                  validators=[DataRequired()])
+    medical_history = RadioField("Medical History", choices=[('0','0'),('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')],
+                                 validators=[DataRequired()])
+    maths_knowledge = RadioField("Maths Knowledge", choices=[('0','0'),('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')],
+                                 validators=[DataRequired()])
+    physics_knowledge = RadioField("Physics Knowledge", choices=[('0','0'),('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')])
+    bio_knowledge = RadioField("Biology Knowledge", choices=[('0','0'),('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')])
+    creative_knowledge = RadioField("Creative Knowledge", choices=[('0','0'),('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')],
+                                    validators=[DataRequired()])
+    level_of_understanding = RadioField("Level of Understanding",
+                                        choices=[('0', '0'), ('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')],
+                                        validators=[DataRequired()])
+    technology_interest = RadioField("Technology Interest", choices=[('0','0'),('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')],
+                                     validators=[DataRequired()])
+
+    subject_interested = SelectField("Subject Interested", choices=[('English','English'),('Science ','Science '),
+                                                                    ('Hindi','Hindi'),(' Marathi',' Marathi'),
+                                                                    ('History','History'),('Geography','Geography')],
+                                     validators=[DataRequired()])
+    submit = SubmitField('Submit')
+

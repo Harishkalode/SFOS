@@ -1,0 +1,297 @@
+{% extends "layout.html" %}
+{% block content%}
+
+<div class="content-i">
+    <div class="content-box">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="element-wrapper">
+                    <div class="element-box">
+                        <form method="POST" action="">
+                            {{ form.hidden_tag() }}
+                            <h5 class="form-header">Add Student Details</h5>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        {{form.no_of_graduate_in_family.label(class="form-control-label")}}
+                                        {% if form.no_of_graduate_in_family.errors %}
+                                            {{ form.no_of_graduate_in_family(class="form-control is-invalid",type="number") }}
+                                            <div class="invalid-feedback">
+                                                {% for error in form.no_of_graduate_in_family.errors %}
+                                                    <span>{{ error }}</span>
+                                                {% endfor %}
+                                            </div>
+                                        {% else %}
+                                            {{ form.no_of_graduate_in_family(class="form-control",type="number") }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        {{form.no_of_siblings.label(class="form-control-label")}}
+                                        {% if form.no_of_siblings.errors %}
+                                            {{ form.no_of_siblings(class="form-control is-invalid",type="number") }}
+                                            <div class="invalid-feedback">
+                                                {% for error in form.no_of_siblings.errors %}
+                                                    <span>{{ error }}</span>
+                                                {% endfor %}
+                                            </div>
+                                        {% else %}
+                                            {{ form.no_of_siblings(class="form-control",type="number") }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        {{form.behaviour_with_others.label(class="form-control-label")}}
+                                        {% if form.behaviour_with_others.errors %}
+                                            {{ form.behaviour_with_others(class="form-control is-invalid") }}
+                                            <div class="invalid-feedback">
+                                                {% for error in form.behaviour_with_others.errors %}
+                                                    <span>{{ error }}</span>
+                                                {% endfor %}
+                                            </div>
+                                        {% else %}
+                                            {{ form.behaviour_with_others(class="form-control") }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        {{form.school_type.label(class="form-control-label")}}
+                                        {% if form.school_type.errors %}
+                                            {{ form.school_type(class="form-control is-invalid") }}
+                                            <div class="invalid-feedback">
+                                                {% for error in form.school_type.errors %}
+                                                    <span>{{ error }}</span>
+                                                {% endfor %}
+                                            </div>
+                                        {% else %}
+                                            {{ form.school_type(class="form-control") }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        {{form.type_of_friend_zone.label(class="form-control-label")}}
+                                        {% if form.type_of_friend_zone.errors %}
+                                            {{ form.type_of_friend_zone(class="form-control is-invalid") }}
+                                            <div class="invalid-feedback">
+                                                {% for error in form.type_of_friend_zone.errors %}
+                                                    <span>{{ error }}</span>
+                                                {% endfor %}
+                                            </div>
+                                        {% else %}
+                                            {{ form.type_of_friend_zone(class="form-control") }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        {{form.subject_interested.label(class="form-control-label")}}
+                                        {% if form.subject_interested.errors %}
+                                            {{ form.subject_interested(class="form-control is-invalid") }}
+                                            <div class="invalid-feedback">
+                                                {% for error in form.subject_interested.errors %}
+                                                    <span>{{ error }}</span>
+                                                {% endfor %}
+                                            </div>
+                                        {% else %}
+                                            {{ form.subject_interested(class="form-control") }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                {{form.scholarship.label(class="form-control-label")}}
+                                {% if form.scholarship.errors %}
+                                    {{ form.scholarship(class="form-control is-invalid") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.scholarship.errors %}
+                                            <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.scholarship(class="form-control") }}
+                                {% endif %}
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        {{form.memorizing_power.label(class="form-control-label")}}
+                                        <div class="col-sm-8">
+                                            <div class="form-check">
+                                                {% if form.memorizing_power.errors %}
+                                                    {{ form.memorizing_power(class="form-check-input is-invalid") }}
+                                                    <div class="invalid-feedback">
+                                                        {% for error in form.memorizing_power.errors %}
+                                                            <span>{{ error }}</span>
+                                                        {% endfor %}
+                                                    </div>
+                                                {% else %}
+                                                    {{ form.memorizing_power(class="form-check-input",required="") }}
+                                                {% endif %}
+                                            </div><br><br><br><br><br><br><br>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        {{form.medical_history.label(class="form-control-label")}}
+                                        <div class="col-sm-8">
+                                            <div class="form-check">
+                                                {% if form.medical_history.errors %}
+                                                    {{ form.medical_history(class="form-check-input is-invalid") }}
+                                                    <div class="invalid-feedback">
+                                                        {% for error in form.medical_history.errors %}
+                                                            <span>{{ error }}</span>
+                                                        {% endfor %}
+                                                    </div>
+                                                {% else %}
+                                                    {{ form.medical_history(class="form-check-input",required="") }}
+                                                {% endif %}
+                                            </div><br><br><br><br><br><br><br>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        {{form.maths_knowledge.label(class="form-control-label")}}
+                                        <div class="col-sm-8">
+                                            <div class="form-check">
+                                                {% if form.maths_knowledge.errors %}
+                                                    {{ form.maths_knowledge(class="form-check-input is-invalid") }}
+                                                    <div class="invalid-feedback">
+                                                        {% for error in form.maths_knowledge.errors %}
+                                                            <span>{{ error }}</span>
+                                                        {% endfor %}
+                                                    </div>
+                                                {% else %}
+                                                    {{ form.maths_knowledge(class="form-check-input",required="") }}
+                                                {% endif %}
+                                            </div><br><br><br><br><br><br><br>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        {{form.physics_knowledge.label(class="form-control-label")}}
+                                        <div class="col-sm-8">
+                                            <div class="form-check">
+                                                {% if form.physics_knowledge.errors %}
+                                                    {{ form.physics_knowledge(class="form-check-input is-invalid") }}
+                                                    <div class="invalid-feedback">
+                                                        {% for error in form.physics_knowledge.errors %}
+                                                            <span>{{ error }}</span>
+                                                        {% endfor %}
+                                                    </div>
+                                                {% else %}
+                                                    {{ form.physics_knowledge(class="form-check-input",required="") }}
+                                                {% endif %}
+                                            </div><br><br><br><br><br><br><br>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        {{form.bio_knowledge.label(class="form-control-label")}}
+                                        <div class="col-sm-8">
+                                            <div class="form-check">
+                                                {% if form.bio_knowledge.errors %}
+                                                    {{ form.bio_knowledge(class="form-check-input is-invalid") }}
+                                                    <div class="invalid-feedback">
+                                                        {% for error in form.bio_knowledge.errors %}
+                                                            <span>{{ error }}</span>
+                                                        {% endfor %}
+                                                    </div>
+                                                {% else %}
+                                                    {{ form.bio_knowledge(class="form-check-input",required="") }}
+                                                {% endif %}
+                                            </div><br><br><br><br><br><br><br>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        {{form.creative_knowledge.label(class="form-control-label")}}
+                                        <div class="col-sm-8">
+                                            <div class="form-check">
+                                                {% if form.creative_knowledge.errors %}
+                                                    {{ form.creative_knowledge(class="form-check-input is-invalid") }}
+                                                    <div class="invalid-feedback">
+                                                        {% for error in form.creative_knowledge.errors %}
+                                                            <span>{{ error }}</span>
+                                                        {% endfor %}
+                                                    </div>
+                                                {% else %}
+                                                    {{ form.creative_knowledge(class="form-check-input",required="") }}
+                                                {% endif %}
+                                            </div><br><br><br><br><br><br><br>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        {{form.level_of_understanding.label(class="form-control-label")}}
+                                        <div class="col-sm-8">
+                                            <div class="form-check">
+                                                {% if form.level_of_understanding.errors %}
+                                                    {{ form.level_of_understanding(class="form-check-input is-invalid") }}
+                                                    <div class="invalid-feedback">
+                                                        {% for error in form.level_of_understanding.errors %}
+                                                            <span>{{ error }}</span>
+                                                        {% endfor %}
+                                                    </div>
+                                                {% else %}
+                                                    {{ form.level_of_understanding(class="form-check-input",required="") }}
+                                                {% endif %}
+                                            </div><br><br><br><br><br><br><br>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        {{form.technology_interest.label(class="form-control-label")}}
+                                        <div class="col-sm-8">
+                                            <div class="form-check">
+                                                {% if form.technology_interest.errors %}
+                                                    {{ form.technology_interest(class="form-check-input is-invalid") }}
+                                                    <div class="invalid-feedback">
+                                                        {% for error in form.technology_interest.errors %}
+                                                            <span>{{ error }}</span>
+                                                        {% endfor %}
+                                                    </div>
+                                                {% else %}
+                                                    {{ form.technology_interest(class="form-check-input",required="") }}
+                                                {% endif %}
+                                            </div><br><br><br><br><br><br><br>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <br>
+                            <div class="form-buttons-w">
+                                {{form.submit(class="btn btn-primary")}}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include "history.html"%}
+
+</div>
+
+{% endblock %}
