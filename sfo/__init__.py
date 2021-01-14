@@ -8,7 +8,8 @@ from flask_mail import Mail
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'harish7634ydgwid78r3re48ryf78wrc7e8rcdc'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@localhost/sfo'
+DATABASE_URI = 'mysql://root:@localhost/sfo'
+app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URI
 
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
