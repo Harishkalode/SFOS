@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from flask_login import current_user
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, SelectField, \
-    RadioField,IntegerField
+    RadioField,IntegerField, SelectMultipleField
 from wtforms.validators import DataRequired, Length, EqualTo, ValidationError
 from sfo.models import Admin, Student, Exam
 
@@ -253,25 +253,43 @@ class AddGeneralQuestionForm(FlaskForm):
                                       validators=[DataRequired()])
     behaviour_with_others = SelectField("Behaviour With Others", choices=[('Bad','Bad'),('Average','Average'),('Good','Good')],
                                         validators=[DataRequired()])
-    memorizing_power = RadioField("Memorizing Power", choices=[('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')],
+    memorizing_power = RadioField("Memorizing Power", choices=[('1', '1 Average'),
+                                                                     ('2', '2 Good'), ('3', '3 Better'), ('4', '4 Best'),
+                                                                     ('5', '5 Excellent')],
                                   validators=[DataRequired()])
-    medical_history = RadioField("Medical History", choices=[('0','0'),('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')],
+    medical_history = RadioField("Medical History", choices=[('0','0 No interest'),('1', '1 Average'),
+                                                                     ('2', '2 Good'), ('3', '3 Better'), ('4', '4 Best'),
+                                                                     ('5', '5 Excellent')],
                                  validators=[DataRequired()])
-    maths_knowledge = RadioField("Maths Knowledge", choices=[('0','0'),('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')],
+    maths_knowledge = RadioField("Maths Knowledge", choices=[('0','0 No interest'),('1', '1 Average'),
+                                                                     ('2', '2 Good'), ('3', '3 Better'), ('4', '4 Best'),
+                                                                     ('5', '5 Excellent')],
                                  validators=[DataRequired()])
-    physics_knowledge = RadioField("Physics Knowledge", choices=[('0','0'),('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')])
-    bio_knowledge = RadioField("Biology Knowledge", choices=[('0','0'),('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')])
-    creative_knowledge = RadioField("Creative Knowledge", choices=[('0','0'),('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')],
+    physics_knowledge = RadioField("Physics Knowledge", choices=[('0','0 No interest'),('1', '1 Average'),
+                                                                     ('2', '2 Good'), ('3', '3 Better'), ('4', '4 Best'),
+                                                                     ('5', '5 Excellent')])
+    bio_knowledge = RadioField("Biology Knowledge", choices=[('0','0 No interest'),('1', '1 Average'),
+                                                                     ('2', '2 Good'), ('3', '3 Better'), ('4', '4 Best'),
+                                                                     ('5', '5 Excellent')])
+    creative_knowledge = RadioField("Creative Knowledge", choices=[('0','0 No interest'),('1', '1 Average'),
+                                                                     ('2', '2 Good'), ('3', '3 Better'), ('4', '4 Best'),
+                                                                     ('5', '5 Excellent')],
                                     validators=[DataRequired()])
     level_of_understanding = RadioField("Level of Understanding",
-                                        choices=[('0', '0'), ('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')],
+                                        choices=[('0','0 No interest'),('1', '1 Average'),
+                                                                     ('2', '2 Good'), ('3', '3 Better'), ('4', '4 Best'),
+                                                                     ('5', '5 Excellent')],
                                         validators=[DataRequired()])
-    technology_interest = RadioField("Technology Interest", choices=[('0','0'),('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')],
+    technology_interest = RadioField("Technology Interest", choices=[('0','0 No interest'),('1', '1 Average'),
+                                                                     ('2', '2 Good'), ('3', '3 Better'), ('4', '4 Best'),
+                                                                     ('5', '5 Excellent')],
                                      validators=[DataRequired()])
 
     subject_interested = SelectField("Subject Interested", choices=[('English','English'),('Science ','Science '),
                                                                     ('Hindi','Hindi'),(' Marathi',' Marathi'),
-                                                                    ('History','History'),('Geography','Geography')],
+                                                                    ('History','History'),('Geography','Geography'),
+                                                                    ('Poem','Poem'),('Politics','Politics'),
+                                                                    ('Literature','Literature')],
                                      validators=[DataRequired()])
     submit = SubmitField('Submit')
 

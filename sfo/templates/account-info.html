@@ -471,9 +471,31 @@
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
-
+        {%if a %}
+        {%else%}
+        <div class="element-wrapper">
+            <h6 class="element-header">Add Game/Sports Details</h6>
+            <div class="element-box">
+                <h5 class="form-header">Add Your Interest in Game and Sports</h5>
+                <form action="" method="POST" class="form-inline">
+                    <label class="sr-only"> First Name</label>
+                    <input class="form-control mb-2 mr-sm-2 mb-sm-0" placeholder="First Name">
+                    <label class="sr-only"> Last Name</label>
+                    <input class="form-control mb-2 mr-sm-2 mb-sm-0" placeholder="Last Name">
+                    <label class="sr-only"> Username</label>
+                    <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">@</div>
+                        </div><input class="form-control" placeholder="Username">
+                    </div><br>
+                    <button class="btn btn-primary" style="padding: 10px 50px" type="submit"> Submit</button>
+                </form>
+            </div>
+        </div>
+        {%endif%}
     </div>
     {% if a %}
     {% include "history.html"%}
