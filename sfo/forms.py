@@ -297,14 +297,14 @@ class AddGeneralQuestionForm(FlaskForm):
     submit = SubmitField('Submit')
 
 
-class SportsAndGameForm(FlaskForm):
-    name_of_sport = StringField("Name of Sports or Game", validators=[DataRequired()])
-    level = SelectField("Level of Sports or Game", choices=[('Club Level', 'Club Level'),
-                                                            ('District Level', 'District Level'),
-                                                            ('State Level', 'State Level'),
-                                                            ('National Level', 'National Level'),
-                                                            ('International Level', 'International Level'),
-                                                            ('Other', 'Other')],
-                        validators=[DataRequired()])
-    date_of_starting = StringField("Date for Starting Sports or Game", validators=[DataRequired()])
-    submit = SubmitField('Reset Password')
+# class SportsAndGameForm(FlaskForm):
+#     name_of_sport = StringField("Name of Sports or Game", validators=[DataRequired()])
+#     level = SelectField("Level of Sports or Game", choices=[('Club Level', 'Club Level'),
+#                                                             ('District Level', 'District Level'),
+#                                                             ('State Level', 'State Level'),
+#                                                             ('National Level', 'National Level'),
+#                                                             ('International Level', 'International Level'),
+#                                                             ('Other', 'Other')],
+#                         validators=[DataRequired()])
+#     date_of_starting = StringField("Date for Starting Sports or Game", validators=[DataRequired()])
+#     submit = SubmitField('Reset Password')
