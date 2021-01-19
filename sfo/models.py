@@ -147,3 +147,12 @@ class GeneralQuestion(db.Model, UserMixin):
     behaviour_with_others = db.Column(db.String(220), nullable=True)
     date_created = db.Column(db.DateTime, nullable=False, default=datetime.now())
     student_id = db.Column(db.Integer, db.ForeignKey('student.id'), nullable=False)
+
+
+class GameAndSports(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    name_of_sport = db.Column(db.String(100), nullable=True)
+    level = db.Column(db.String(20), nullable=True)
+    date_of_starting = db.Column(db.String(10), nullable=True)
+    date_created = db.Column(db.DateTime, nullable=False, default=datetime.now())
+    student_id = db.Column(db.Integer, db.ForeignKey('student.id'), nullable=False)

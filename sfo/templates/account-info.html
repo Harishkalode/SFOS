@@ -481,10 +481,32 @@
             <div class="element-box">
                 <h5 class="form-header">Add Your Interest in Game and Sports</h5>
                 <form action="" method="POST" class="form-inline">
-                    <label class="sr-only"> First Name</label>
-                    <input class="form-control mb-2 mr-sm-2 mb-sm-0" placeholder="First Name">
-                    <label class="sr-only"> Last Name</label>
-                    <input class="form-control mb-2 mr-sm-2 mb-sm-0" placeholder="Last Name">
+                    <div class="form-group">
+                        {{form.no_of_siblings.label(class="form-control-label")}}
+                        {% if form.no_of_siblings.errors %}
+                            {{ form.no_of_siblings(class="form-control is-invalid",type="number") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.no_of_siblings.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.no_of_siblings(class="form-control",type="number") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {{form.school_type.label(class="form-control-label")}}
+                        {% if form.school_type.errors %}
+                            {{ form.school_type(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.school_type.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.school_type(class="form-control") }}
+                        {% endif %}
+                    </div>
                     <label class="sr-only"> Username</label>
                     <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                         <div class="input-group-prepend">
