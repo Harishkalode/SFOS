@@ -13,16 +13,16 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        {{form.name_of_sport.label(class="form-control-label")}}
-                                        {% if form.name_of_sport.errors %}
-                                            {{ form.name_of_sport(class="form-control is-invalid") }}
+                                        {{form.no_of_graduate_in_family.label(class="form-control-label")}}
+                                        {% if form.no_of_graduate_in_family.errors %}
+                                            {{ form.no_of_graduate_in_family(class="form-control is-invalid") }}
                                             <div class="invalid-feedback">
-                                                {% for error in form.name_of_sport.errors %}
+                                                {% for error in form.no_of_graduate_in_family.errors %}
                                                     <span>{{ error }}</span>
                                                 {% endfor %}
                                             </div>
                                         {% else %}
-                                            {{ form.name_of_sport(class="form-control") }}
+                                            {{ form.no_of_graduate_in_family(class="form-control") }}
                                         {% endif %}
                                     </div>
                                 </div>
