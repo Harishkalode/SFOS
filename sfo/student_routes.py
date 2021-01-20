@@ -3,9 +3,9 @@ import os
 import secrets
 from flask import render_template, url_for, flash, redirect, request
 from sfo import app, db
-from sfo.forms import AddStudentForm, UpdateStudentForm, AddExamForm, PromoteStudent,AddStudentCSV,\
-    AddGeneralQuestionForm
-from sfo.models import Admin, Student, History, Subject, Exam,GeneralQuestion
+from sfo.forms import AddStudentForm, UpdateStudentForm, AddExamForm, PromoteStudent, AddStudentCSV, \
+    AddGeneralQuestionForm,SportsAndGameForm
+from sfo.models import Admin, Student, History, Subject, Exam, GeneralQuestion, GameAndSports
 from flask_login import current_user, login_required
 from sfo.routes import save_picture
 
@@ -71,10 +71,11 @@ def add_student():
 @login_required
 def student_details(student_id):
     student = Student.query.get_or_404(student_id)
-    que=GeneralQuestion.query.filter_by(student=student).first()
+    que = GeneralQuestion.query.filter_by(student=student).first()
     admin = Admin.query.filter_by(id=current_user.id).first_or_404()
     exams = Exam.query.filter_by(student=student, standard=student.standard)
     subjects = Subject.query.filter_by(admin=admin).all()
+    games = GameAndSports.query.filter_by(student=student)
     subjects1 = Subject.query.filter_by(admin=admin, standard=student.standard).all()
     e = []
     for exam in exams:
@@ -86,6 +87,7 @@ def student_details(student_id):
     s.sort()
     promote = PromoteStudent()
     form = AddExamForm()
+    sports = SportsAndGameForm()
     form.subject.choices = [(subject.id, f'{subject.subject}({subject.standard})') for subject in subjects
                             if subject.standard == student.standard]
 
@@ -99,7 +101,7 @@ def student_details(student_id):
             flash("Sorry Student already have this subject, If You need to add new marks delete The subject and retry",
                   'warning')
         elif int(form.marks_opt.data) > int(sub.max_marks):
-            flash('invalid data','warning')
+            flash('invalid data', 'warning')
         else:
             exam = Exam(subject=sub,
                         exam_name=f'{student.standard} Exam',
@@ -143,11 +145,53 @@ def student_details(student_id):
         db.session.add(history)
         db.session.commit()
 
-        flash('Student Exam added successfully', 'success')
+        flash('Student Promoted successfully', 'success')
         return redirect(url_for('student_details', student_id=student.id))
     return render_template('account-info.html', title='account',
                            st1='Account', st2='Student Account Info', student=student, form=form,
-                           subjects=subjects, exams=exams,e=e,s=s,promote=promote,que=que)
+                           subjects=subjects, exams=exams, e=e, s=s, promote=promote, que=que,sports=sports,games=games)
+
+
+@app.route("/student-sports/<int:student_id>/update", methods=['GET', 'POST'])
+@login_required
+def student_game(student_id):
+    student = Student.query.get_or_404(student_id)
+    if student.admin != current_user:
+        flash("Sorry you can't Update this student", 'danger')
+        return redirect(url_for('all_students'))
+    sports = SportsAndGameForm()
+    if sports.validate_on_submit():
+        game_and_sports = GameAndSports(name_of_sport=sports.name_of_sport.data,
+                                        level=sports.level.data,
+                                        date_of_starting=sports.date_of_starting.data,
+                                        student=student)
+        history = History(name_of_module=f'Added Sports and game for {student.fname} {student.lname}', activity='add',
+                          admin=current_user)
+        db.session.add(history)
+        db.session.commit()
+
+        db.session.add(game_and_sports)
+        db.session.commit()
+        flash('Sports and Game added successfully', 'success')
+        return redirect(url_for('student_details', student_id=student.id))
+
+
+@app.route("/student-sports/<int:game_id>/<int:student_id>/delete", methods=['GET','POST'])
+@login_required
+def delete_sport(game_id,student_id):
+    game = GameAndSports.query.get_or_404(game_id)
+    student = Student.query.get_or_404(student_id)
+    if game.student.admin != current_user:
+        flash("Sorry you can't Delete this student",'danger')
+        return redirect(url_for('all_student'))
+    history = History(name_of_module=f'Deleted Game/sport for Student {game.student.fname} {game.student.lname}',
+                      activity='delete', admin=current_user)
+    db.session.add(history)
+    db.session.commit()
+    db.session.delete(game)
+    db.session.commit()
+    flash('Game/Sports successfully Deleted', 'success')
+    return redirect(url_for('student_details', student_id=student.id))
 
 
 @app.route("/student/<int:student_id>/update", methods=['GET', 'POST'])
@@ -188,7 +232,7 @@ def student_update(student_id):
         db.session.add(history)
         db.session.commit()
         flash('Account Updated Successfully', 'success')
-        return redirect(url_for('student_details',student_id=student.id))
+        return redirect(url_for('student_details', student_id=student.id))
     elif request.method == 'GET':
         form.fname.data = student.fname
         form.father_name.data = student.father_name
@@ -232,119 +276,122 @@ def add_student_csv():
                                                                                                    per_page=5)
     if form.validate_on_submit():
         if form.file.data:
-            csv_file=save_csv(form.file.data)
+            csv_file = save_csv(form.file.data)
             df = pd.read_csv(f'sfo/static/csv/{csv_file}')
             a = pd.DataFrame(df)
             length_of_col = len(df.columns)
             length_of_row = len(df)
             missing_data = []
             duplicate_data = []
-
-            if len(df.columns) == 20:
-                for aa in range(0, length_of_col):
-                    for miss in df[df.columns[aa]].isnull():
-                        if miss:
-                            missing_data.append('missing data')
-                            break
-
-                if 'missing data' not in missing_data:
-
-                    if df.dtypes[0] == object and df.dtypes[1] == object and df.dtypes[2] == object and df.dtypes[3] == object \
-                            and df.dtypes[4] == object and df.dtypes[5] == 'int64' and df.dtypes[6] == object \
-                            and df.dtypes[7] == 'int64' and df.dtypes[8] == 'int64' and df.dtypes[9] == object \
-                            and df.dtypes[10] == 'int64' and df.dtypes[11] == 'int64' and df.dtypes[12] == object \
-                            and df.dtypes[13] == object and df.dtypes[14] == 'int64' and df.dtypes[15] == object \
-                            and df.dtypes[16] == object and df.dtypes[17] == object and df.dtypes[18] == object \
-                            and df.dtypes[19] == object:
-                        for dupli in a.duplicated(a.columns[4]):
-                            if dupli:
-                                duplicate_data.append('Duplicate Data')
+            try:
+                if len(df.columns) == 20:
+                    for aa in range(0, length_of_col):
+                        for miss in df[df.columns[aa]].isnull():
+                            if miss:
+                                missing_data.append('missing data')
                                 break
 
-                        for dupli in df[df.columns[4]]:
-                            email = Student.query.filter_by(admin=admin, email=dupli).first()
-                            if email:
-                                duplicate_data.append('Duplicate Data')
+                    if 'missing data' not in missing_data:
 
-                        for dupli in a.duplicated(a.columns[8]):
-                            if dupli:
-                                duplicate_data.append('Duplicate Data')
-                                break
-                        for dupli in df[df.columns[8]]:
-                            father_phone_no = Student.query.filter_by(admin=admin, father_phone_no=dupli).first()
-                            if father_phone_no:
-                                duplicate_data.append('Duplicate Data')
+                        if df.dtypes[0] == object and df.dtypes[1] == object and df.dtypes[2] == object and df.dtypes[
+                            3] == object \
+                                and df.dtypes[4] == object and df.dtypes[5] == 'int64' and df.dtypes[6] == object \
+                                and df.dtypes[7] == 'int64' and df.dtypes[8] == 'int64' and df.dtypes[9] == object \
+                                and df.dtypes[10] == 'int64' and df.dtypes[11] == 'int64' and df.dtypes[12] == object \
+                                and df.dtypes[13] == object and df.dtypes[14] == 'int64' and df.dtypes[15] == object \
+                                and df.dtypes[16] == object and df.dtypes[17] == object and df.dtypes[18] == object \
+                                and df.dtypes[19] == object:
+                            for dupli in a.duplicated(a.columns[4]):
+                                if dupli:
+                                    duplicate_data.append('Duplicate Data')
+                                    break
 
-                        for dupli in a.duplicated(a.columns[11]):
-                            if dupli:
-                                duplicate_data.append('Duplicate Data')
-                                break
+                            for dupli in df[df.columns[4]]:
+                                email = Student.query.filter_by(admin=admin, email=dupli).first()
+                                if email:
+                                    duplicate_data.append('Duplicate Data')
 
-                        for dupli in df[df.columns[11]]:
-                            mother_phone_no = Student.query.filter_by(admin=admin, mother_phone_no=dupli).first()
-                            if mother_phone_no:
-                                duplicate_data.append('Duplicate Data')
+                            for dupli in a.duplicated(a.columns[8]):
+                                if dupli:
+                                    duplicate_data.append('Duplicate Data')
+                                    break
+                            for dupli in df[df.columns[8]]:
+                                father_phone_no = Student.query.filter_by(admin=admin, father_phone_no=dupli).first()
+                                if father_phone_no:
+                                    duplicate_data.append('Duplicate Data')
 
-                        for dupli in a.duplicated(a.columns[14]):
-                            if dupli:
-                                duplicate_data.append('Duplicate Data')
-                                break
-                        for dupli in df[df.columns[14]]:
-                            phone_no = Student.query.filter_by(admin=admin, phone_no=dupli).first()
-                            if phone_no:
-                                duplicate_data.append('Duplicate Data')
-                        if 'Duplicate Data' not in duplicate_data:
-                            while True:
-                                arr = []
-                                for std in range(0, length_of_row):
-                                    for stud in df.iloc[std]:
-                                        arr.append(stud)
+                            for dupli in a.duplicated(a.columns[11]):
+                                if dupli:
+                                    duplicate_data.append('Duplicate Data')
+                                    break
 
-                                    student = Student(fname=arr[0],
-                                                      father_name=arr[1],
-                                                      mother_name=arr[2],
-                                                      lname=arr[3],
-                                                      email=arr[4],
-                                                      roll_no=arr[5],
-                                                      father_occupation=arr[6],
-                                                      father_income=arr[7],
-                                                      father_phone_no=arr[8],
-                                                      mother_occupation=arr[9],
-                                                      mother_income=arr[10],
-                                                      mother_phone_no=arr[11],
-                                                      p_address=arr[12],
-                                                      l_address=arr[13],
-                                                      phone_no=arr[14],
-                                                      dob=arr[15],
-                                                      standard='1st',
-                                                      religion=arr[16],
-                                                      caste=arr[17],
-                                                      gender=arr[18],
-                                                      blood_group=arr[19],
-                                                      profile_img='default.png',
-                                                      admin=current_user)
-                                    db.session.add(student)
-                                    db.session.commit()
-                                    arr.clear()
-                                break
-                            os.unlink(os.path.join(app.root_path, 'static/csv', csv_file))
+                            for dupli in df[df.columns[11]]:
+                                mother_phone_no = Student.query.filter_by(admin=admin, mother_phone_no=dupli).first()
+                                if mother_phone_no:
+                                    duplicate_data.append('Duplicate Data')
+
+                            for dupli in a.duplicated(a.columns[14]):
+                                if dupli:
+                                    duplicate_data.append('Duplicate Data')
+                                    break
+                            for dupli in df[df.columns[14]]:
+                                phone_no = Student.query.filter_by(admin=admin, phone_no=dupli).first()
+                                if phone_no:
+                                    duplicate_data.append('Duplicate Data')
+                            if 'Duplicate Data' not in duplicate_data:
+                                while True:
+                                    arr = []
+                                    for std in range(0, length_of_row):
+                                        for stud in df.iloc[std]:
+                                            arr.append(stud)
+
+                                        student = Student(fname=arr[0],
+                                                          father_name=arr[1],
+                                                          mother_name=arr[2],
+                                                          lname=arr[3],
+                                                          email=arr[4],
+                                                          roll_no=arr[5],
+                                                          father_occupation=arr[6],
+                                                          father_income=arr[7],
+                                                          father_phone_no=arr[8],
+                                                          mother_occupation=arr[9],
+                                                          mother_income=arr[10],
+                                                          mother_phone_no=arr[11],
+                                                          p_address=arr[12],
+                                                          l_address=arr[13],
+                                                          phone_no=arr[14],
+                                                          dob=arr[15],
+                                                          standard='1st',
+                                                          religion=arr[16],
+                                                          caste=arr[17],
+                                                          gender=arr[18],
+                                                          blood_group=arr[19],
+                                                          profile_img='default.png',
+                                                          admin=current_user)
+                                        db.session.add(student)
+                                        db.session.commit()
+                                        arr.clear()
+                                    break
+                                os.unlink(os.path.join(app.root_path, 'static/csv', csv_file))
+                            else:
+                                flash('Duplicate Data', 'warning')
+                                return redirect(url_for('add_student_csv'))
                         else:
-                            flash('Duplicate Data','warning')
+                            os.unlink(os.path.join(app.root_path, 'static/csv', csv_file))
+                            flash('Invalid Data Entry', 'warning')
                             return redirect(url_for('add_student_csv'))
                     else:
-                        os.unlink(os.path.join(app.root_path, 'static/csv', csv_file))
-                        flash('Invalid Data Entry','warning')
+                        flash('Missing Data please Fill Every Information', 'info')
                         return redirect(url_for('add_student_csv'))
                 else:
-                    flash('Missing Data please Fill Every Information','info')
+                    flash('Invalid Column length', 'warning')
                     return redirect(url_for('add_student_csv'))
-            else:
-                flash('Invalid Column length', 'warning')
-                return redirect(url_for('add_student_csv'))
-        flash('Student added successfully','success')
+            except:
+                flash('Sorry, Something went wrong please check the sheet and try again!')
+        flash('Student added successfully', 'success')
         return redirect(url_for('all_students'))
-    return render_template('add-student-csv.html',title=f'{current_user.fname} {current_user.lname} account',
-                           st1='Student', st2='Add Student',form=form, historys=historys)
+    return render_template('add-student-csv.html', title=f'{current_user.fname} {current_user.lname} account',
+                           st1='Student', st2='Add Student', form=form, historys=historys)
 
 
 @app.route("/student/<int:student_id>/add_question", methods=['GET', 'POST'])
@@ -357,7 +404,7 @@ def general_question(student_id):
     historys = History.query.filter_by(admin=admin).order_by(History.date_created.desc()).paginate(page=page,
                                                                                                    per_page=5)
     if student.admin != current_user:
-        flash("Sorry you can't add questions for this student",'danger')
+        flash("Sorry you can't add questions for this student", 'danger')
         return redirect(url_for('all_subjects'))
     form = AddGeneralQuestionForm()
     if que:
@@ -387,9 +434,9 @@ def general_question(student_id):
         db.session.add(history)
         db.session.commit()
         flash('Subject Updated Successfully', 'success')
-        return redirect(url_for('student_details',student_id=student.id))
+        return redirect(url_for('student_details', student_id=student.id))
     return render_template('general-question.html', title='Questions',
-                           st1='Student', st2='General Question', form=form,historys=historys)
+                           st1='Student', st2='General Question', form=form, historys=historys)
 
 
 @app.route("/student/<int:question_id>/update-details", methods=['GET', 'POST'])
@@ -421,12 +468,13 @@ def general_question_update(question_id):
         que.level_of_understanding = form.level_of_understanding.data
         que.behaviour_with_others = form.behaviour_with_others.data
         db.session.commit()
-        history = History(name_of_module=f'Updated Student question {que.student.fname} {que.student.lname}', activity='update',
+        history = History(name_of_module=f'Updated Student question {que.student.fname} {que.student.lname}',
+                          activity='update',
                           admin=current_user)
         db.session.add(history)
         db.session.commit()
         flash('Account Updated Successfully', 'success')
-        return redirect(url_for('student_details',student_id=que.student.id))
+        return redirect(url_for('student_details', student_id=que.student.id))
     elif request.method == 'GET':
         form.no_of_graduate_in_family.data = que.no_of_graduate_in_family
         form.no_of_siblings.data = que.no_of_siblings
@@ -444,7 +492,7 @@ def general_question_update(question_id):
         form.level_of_understanding.data = que.level_of_understanding
         form.level_of_understanding.data = que.level_of_understanding
     return render_template('general-question.html', title='Account',
-                           st1='Account', st2='Account Update', form=form,historys=historys)
+                           st1='Account', st2='Account Update', form=form, historys=historys)
 
 # @app.route("/student/<int:student_id>/delete", methods=['GET','POST'])
 # @login_required

@@ -79,6 +79,7 @@ class Student(db.Model, UserMixin):
     admin_id = db.Column(db.Integer, db.ForeignKey('admin.id'), nullable=False)
     exams = db.relationship('Exam', backref='student', lazy=True)
     general_questions = db.relationship('GeneralQuestion', backref='student', lazy=True)
+    sports_and_game = db.relationship('GameAndSports', backref='student', lazy=True)
 
     def __repr__(self):
         return f"Student('{self.email}','{self.fname}','{self.lname}','{self.roll_no}','{self.admin_id}')"

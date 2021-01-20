@@ -480,18 +480,111 @@
             <h6 class="element-header">Add Game/Sports Details</h6>
             <div class="element-box">
                 <h5 class="form-header">Add Your Interest in Game and Sports</h5>
-                <form action="" method="POST" class="form-inline">
+                <form action="{{url_for('student_game', student_id=student.id)}}" method="POST" class="form-inline">
+                    {{ sports.hidden_tag() }}
+                    <div class="form-group">
+                        {% if sports.name_of_sport.errors %}
+                            {{ sports.name_of_sport(class="form-control is-invalid",placeholder="Name of Game or Sports") }}
+                            <div class="invalid-feedback">
+                                {% for error in sports.name_of_sport.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ sports.name_of_sport(class="form-control",placeholder="Name of Game or Sports") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group ml-2">
+                        {% if sports.level.errors %}
+                            {{ sports.level(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in sports.level.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ sports.level(class="form-control") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group ml-2">
+                        {% if sports.date_of_starting.errors %}
+                            {{ sports.date_of_starting(class="form-control is-invalid",placeholder="Level you played for",type="date") }}
+                            <div class="invalid-feedback">
+                                {% for error in sports.date_of_starting.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ sports.date_of_starting(class="form-control",placeholder="Level you played for",type="date") }}
+                        {% endif %}
+                    </div>
 
-                    <label class="sr-only"> Username</label>
-                    <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">@</div>
-                        </div><input class="form-control" placeholder="Username">
-                    </div><br>
-<!--                    <button class="btn btn-primary" style="padding: 10px 50px" type="submit"> Submit</button>-->
+                    <button class="btn btn-primary ml-2 " style="padding: 10px 50px" type="submit"> Submit</button>
                 </form>
             </div>
         </div>
+        {%if games%}
+        <div class="row pt-4">
+            <div class="col-sm-12">
+                <div class="element-wrapper">
+                    <h6 class="element-header">Games and Sports</h6>
+                    <div class="element-box-tp">
+                        <div class="table-responsive">
+                            <table class="table table-padded">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Name</th>
+                                        <th class="text-center">Level</th>
+                                        <th class="text-center">Date</th>
+                                        <th class="text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {%for game in games%}
+                                    <tr>
+                                        <td class="text-center"><input class="form-control"
+                                                type="checkbox"></td>
+                                        <td><span>{{game.name_of_sport}}</span></td>
+                                        <td><span>{{game.level}}</span></td>
+                                        <td><span>{{game.date_of_starting}}</span></td>
+                                        <td class="row-actions">
+                                            <a class="danger" href="#" data-target="#onboardingTextModal{{game.id}}"
+                                        data-toggle="modal"><i class="os-icon os-icon-ui-15"></i></a>
+                                        </td>
+                                    </tr>
+                                    <div aria-hidden="true" class="onboarding-modal modal fade animated"
+                                        id="onboardingTextModal{{game.id}}" role="dialog" tabindex="-1">
+                                        <div class="modal-dialog modal-centered" role="document">
+                                            <div class="modal-content text-center"><button aria-label="Close"
+                                                    class="close" data-dismiss="modal" type="button"><span
+                                                        class="close-label">Skip</span><span
+                                                        class="os-icon os-icon-close"></span></button>
+                                                <div class="onboarding-media"><img alt="" src="img/bigicon2.png"
+                                                        width="200px"></div>
+                                                <div class="onboarding-content with-gradient">
+                                                    <h4 class="onboarding-title">Delete {{game.name_of_sport}}</h4>
+                                                    <h5>Name : {{game.name_of_sport}}</h5>
+                                                    <h5>Level : {{game.level}}</h5>
+                                                    <h5>Date : {{game.date_of_starting}}</h5>
+                                                    <div>
+                                                        <a class="btn btn-danger btn-block btn-lg pb-3" href="{{url_for('delete_sport', game_id=game.id, student_id=student.id)}}" style="color:#fff"><i
+                                                                            class="os-icon os-icon-ui-15" style="font-size: 25px;"></i><span>Delete Sport/Game</span></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {%endfor%}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {%else%}
+        {%endif%}
         {%endif%}
     </div>
     {% if a %}
