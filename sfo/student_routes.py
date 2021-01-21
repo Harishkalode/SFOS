@@ -152,7 +152,7 @@ def student_details(student_id):
                            subjects=subjects, exams=exams, e=e, s=s, promote=promote, que=que,sports=sports,games=games)
 
 
-@app.route("/student-sports/<int:student_id>/update", methods=['GET', 'POST'])
+@app.route("/student-sports/<int:student_id>/add", methods=['GET', 'POST'])
 @login_required
 def student_game(student_id):
     student = Student.query.get_or_404(student_id)

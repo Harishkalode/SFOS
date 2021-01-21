@@ -523,7 +523,6 @@
                 </form>
             </div>
         </div>
-        {%if games%}
         <div class="row pt-4">
             <div class="col-sm-12">
                 <div class="element-wrapper">
@@ -583,8 +582,6 @@
                 </div>
             </div>
         </div>
-        {%else%}
-        {%endif%}
         {%endif%}
     </div>
     {% if a %}
@@ -678,12 +675,12 @@
                                                 <form>
                                                     <div class="row">
                                                         <div class="col-sm-6">
-                                                            <div class="form-group"><label for="">Current Standard</label><input class="form-control"
+                                                            <div class="form-group"><label>Current Standard</label><input class="form-control"
                                                                     placeholder="{{student.standard}}"
                                                                     value="" disabled></div>
                                                         </div>
                                                         <div class="col-sm-6">
-                                                            <div class="form-group"><label for="">Promote too</label>
+                                                            <div class="form-group"><label>Promote too</label>
                                                                 {%if student.standard == '1st' %}
                                                                     <input class="form-control" placeholder="2nd Standard" value="" disabled>
                                                                 {%elif student.standard == '2nd' %}
