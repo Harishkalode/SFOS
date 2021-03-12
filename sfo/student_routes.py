@@ -5,7 +5,7 @@ from flask import render_template, url_for, flash, redirect, request
 from sfo import app, db
 from sfo.forms import AddStudentForm, UpdateStudentForm, AddExamForm, PromoteStudent, AddStudentCSV, \
     AddGeneralQuestionForm,SportsAndGameForm
-from sfo.models import Admin, Student, History, Subject, Exam, GeneralQuestion, GameAndSports
+from sfo.models import Admin, Student, History, Subject, Exam, GeneralQuestion, GameAndSports, subject_exam
 from flask_login import current_user, login_required
 from sfo.routes import save_picture
 
@@ -91,6 +91,35 @@ def student_details(student_id):
     form.subject.choices = [(subject.id, f'{subject.subject}({subject.standard})') for subject in subjects
                             if subject.standard == student.standard]
 
+    # 6th std future prediction
+
+    exam1 = Exam.query.filter_by(student=student)
+
+    maths=[]
+    english=[]
+    science=[]
+    phy_edu=[]
+    drawing=[]
+    computer=[]
+
+    for m in exam1:
+        if m.subject.subject.lower() == 'maths':
+            maths.append(m.marks_opt)
+
+    for eng in exam1:
+        if eng.subject.subject.lower() == 'english':
+            english.append(eng.marks_opt)
+
+    for sci in exam1:
+        if sci.subject.subject.lower() == 'science':
+            science.append(sci.marks_opt)
+
+    for pe in exam1:
+        if pe.subject.subject.lower() == 'maths':
+            maths.append(m.marks_opt)
+
+    ############################
+
     if student.admin != current_user:
         flash("Sorry you can't view this student", 'danger')
         return redirect(url_for('all_students'))
@@ -149,7 +178,7 @@ def student_details(student_id):
         return redirect(url_for('student_details', student_id=student.id))
     return render_template('account-info.html', title='account',
                            st1='Account', st2='Student Account Info', student=student, form=form,
-                           subjects=subjects, exams=exams, e=e, s=s, promote=promote, que=que,sports=sports,games=games)
+                           subjects=subjects, exams=exams, e=e, s=s, promote=promote, que=que,sports=sports,games=games,maths=maths)
 
 
 @app.route("/student-sports/<int:student_id>/add", methods=['GET', 'POST'])
@@ -493,6 +522,32 @@ def general_question_update(question_id):
         form.level_of_understanding.data = que.level_of_understanding
     return render_template('general-question.html', title='Account',
                            st1='Account', st2='Account Update', form=form, historys=historys)
+
+
+@app.route("/student/batch")
+@login_required
+def student_batch():
+    global std3
+    admin = Admin.query.filter_by(id=current_user.id).first_or_404()
+    standard = Subject.query.filter_by(admin=admin).all()
+    students = Student.query.filter_by(admin=admin)
+    stds=[]
+    for std in standard:
+        if std.standard not in stds:
+            stds.append(std.standard)
+    return render_template('batch.html', title='Account',
+                           st1='Account', st2='Account Update',stds=stds,students=students,admin=admin,Student=Student,Subject=Subject)
+
+
+@app.route("/all-students/<string:batch_std>")
+@login_required
+def all_students_std(batch_std):
+    admin = Admin.query.filter_by(id=current_user.id).first_or_404()
+    students = Student.query.filter_by(admin=admin,standard=batch_std)
+    subjects = Subject.query.filter_by(admin=admin,standard=batch_std)
+    return render_template('batch-student.html', title='All Students',
+                           st1='Student', st2='All Student', students=students,subjects=subjects)
+
 
 # @app.route("/student/<int:student_id>/delete", methods=['GET','POST'])
 # @login_required

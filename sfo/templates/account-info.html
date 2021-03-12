@@ -102,7 +102,52 @@
                     </div>
                 </div>
                 <div class="up-contents">
-                    <h5 class="element-header">Profile Information</h5>
+                    <div class="row">
+                    <div class="col-4">
+                        <h5 class="element-header">Profile Information</h5>
+                    </div>
+                    <div class="col-8 text-right">
+                        {%if a%}
+                        {%elif student.standard == '6th'%}
+                        <button class="mr-2 mb-2 btn btn-primary"
+                                        data-target="#onboardingFeaturesModal" data-toggle="modal" type="button">Current Year Predictions</button>
+                                    <div aria-hidden="true" class="onboarding-modal modal fade animated"
+                                        id="onboardingFeaturesModal" role="dialog" tabindex="-1">
+                                        <div class="modal-dialog modal-centered" role="document">
+                                            <div class="modal-content text-center"><button aria-label="Close"
+                                                    class="close" data-dismiss="modal" type="button"><span
+                                                        class="close-label">Skip Intro</span><span
+                                                        class="os-icon os-icon-close"></span></button>
+                                                <div class="onboarding-media"><img alt="" src="{{url_for('static', filename='img/bigicon6.png')}}"
+                                                        width="200px"></div>
+                                                <div class="onboarding-content with-gradient">
+                                                    <h4 class="onboarding-title">Showcase Your Future</h4>
+                                                    <div class="onboarding-text">According to your past records we analysed that you should also look forward to this list
+                                                        of activates in future for your better performance.</div>
+                                                    <div class="row">
+                                                        <div class="col-sm-6">
+                                                            <ul class="features-list">
+                                                                <li>Programing</li>
+                                                                <li>ICT</li>
+<!--                                                                <li>Incredible Flexibility</li>-->
+                                                            </ul>
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <ul class="features-list">
+                                                                <li>Sports</li>
+                                                                <li>Creative Things</li>
+<!--                                                                <li>Developer Friendly </li>-->
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                        {%endif%}
+                    </div>
+                    </div>
                     <div class="os-tabs-w">
 
                         <div class="tab-content">
@@ -608,6 +653,7 @@
                                 </div>
                             {% else %}
                                 {{ form.subject(class="form-control") }}
+
                             {% endif %}
                         </div>
                     </div>
@@ -778,6 +824,9 @@
                         </tr>
                     </thead>
                     <tbody>
+<!--                    {%for m in maths%}-->
+<!--                        {{m}}-->
+<!--                    {%endfor%}-->
                     {%for exam in exams%}
                         <tr>
                             <td>{{exam.subject.subject}}</td>

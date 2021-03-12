@@ -259,9 +259,9 @@ class AddGeneralQuestionForm(FlaskForm):
                                                                ('2', '2 Good'), ('3', '3 Better'), ('4', '4 Best'),
                                                                ('5', '5 Excellent')],
                                   validators=[DataRequired()])
-    medical_history = RadioField("Medical History", choices=[('0', '0 No interest'), ('1', '1 Average'),
-                                                             ('2', '2 Good'), ('3', '3 Better'), ('4', '4 Best'),
-                                                             ('5', '5 Excellent')],
+    medical_history = RadioField("Medical History", choices=[('1', '1 Serious'),
+                                                             ('2', '2 '), ('3', '3 Average'), ('4', '4'),
+                                                             ('5', '5 No History')],
                                  validators=[DataRequired()])
     maths_knowledge = RadioField("Maths Knowledge", choices=[('0', '0 No interest'), ('1', '1 Average'),
                                                              ('2', '2 Good'), ('3', '3 Better'), ('4', '4 Best'),

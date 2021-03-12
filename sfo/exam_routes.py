@@ -59,7 +59,7 @@ def exam_view(student_id):
 
     bar_chart.x_labels = map(str, subjects)
     bar_chart.add('Marks Obtain', marks)
-    bar_chart.add('Max Marks', graph_marks)
+    bar_chart.add('Remaining Marks', graph_marks)
     barchart_data = bar_chart.render_data_uri()
 
     return render_template('exam.html',exams=exams,student=student,a=a,t=t,mm=mm,perc=perc,title=f'{student.fname} {student.lname} Exam',

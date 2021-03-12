@@ -1,0 +1,186 @@
+{% extends "layout.html" %}
+{% block content%}
+<style>
+    .user-profile .up-main-info .user-avatar-w .user-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 40px;
+    border: 3px solid #fff;
+    overflow: hidden;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.4);
+}
+</style>
+<div class="content-i">
+    <div class="content-box">
+        <div class="row">
+            <div class="col-sm-7">
+                <div class="element-wrapper">
+                    <div class="support-index">
+                        <div class="support-tickets" style="flex: auto; margin-right: 0px;">
+
+                        {% for std in stds %}
+
+                                <div class="support-ticket" onclick="location.href='{{ url_for('all_students_std', batch_std=std) }}'">
+                                    <div class="st-meta">
+                                        <div class="badge badge-success-inverted">Active</div><i
+                                            class="os-icon os-icon-ui-09"></i>
+                                        <div class="status-pill green"></div>
+                                    </div>
+                                    <div class="st-body">
+                                        <div class="avatar"><img alt="" src="{{url_for('static', filename='profile_pics/' + current_user.institution_logo)}}"></div>
+                                        <div class="ticket-content">
+                                            <h6 class="ticket-title">{{std}} Standard</h6>
+                                            <div class="ticket-description">
+                                                {% for student in students%}
+                                                    {%if student.standard == std%}
+                                                        {{student.fname}} {{student.lname}} |
+                                                    {%endif%}
+                                                {%endfor%}
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="st-foot">
+                                        <span class="label">Admin : </span>
+                                        <a class="value with-avatar" href="#">
+                                            <img alt="" src="{{url_for('static', filename='profile_pics/' + current_user.profile_img)}}">
+                                            <span>{{current_user.fname}} {{current_user.lname}}</span>
+                                        </a>
+                                        <span class="label">Class Attendance:</span>
+                                        <span class="value">
+                                            {% set s = Student.query.filter_by(admin=admin,standard=std)%}
+                                            {{s.count()}}
+                                        </span>
+                                        <span class="label">Class Subjects:</span>
+                                        <span class="value">
+                                            {% set a = Subject.query.filter_by(admin=admin,standard=std)%}
+                                            {{a.count()}}
+                                        </span>
+                                    </div>
+                                </div>
+                        {%endfor%}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-5">
+                <div class="user-profile compact">
+                    <div class="up-head-w" style="background-image: url({{url_for('static', filename='profile_pics/' + current_user.institution_logo)}})">
+                        <div class="up-social">
+                            <a href="{{current_user.facebook_link}}"><i class="os-icon picons-social-icon-facebook"></i></a>
+                            <a href="{{current_user.instagram_link}}"><i class="os-icon os-icon-instagram"></i></a>
+                            <a href="{{current_user.linkedin_link}}"><i class="os-icon picons-social-icon-linkedin"></i></a>
+                            <a href="{{current_user.institution_website_link}}"><i class="os-icon os-icon-globe"></i></a>
+                        </div>
+                        <div class="up-main-info">
+                            <div class="user-avatar-w">
+                                <div class="user-avatar">
+                                    <img alt="" src="{{url_for('static', filename='profile_pics/' + current_user.profile_img)}}" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="up-main-info">
+                            <h2 class="up-header">{{current_user.fname}} {{current_user.lname}}</h2>
+                            <h6 class="up-sub-header">
+                                {{current_user.status}}
+                            </h6>
+                        </div>
+                        <svg class="decor" width="842px" height="219px" viewBox="0 0 842 219"
+                            preserveAspectRatio="xMaxYMax meet" version="1.1"
+                            xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink">
+                            <g transform="translate(-381.000000, -362.000000)" fill="#FFFFFF">
+                                <path class="decor-path"
+                                    d="M1223,362 L1223,581 L381,581 C868.912802,575.666667 1149.57947,502.666667 1223,362 Z">
+                                </path>
+                            </g>
+                        </svg>
+                    </div>
+                    <div class="up-controls">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="value-pair">
+                                    <div class="label">Status:</div>
+                                    <div class="value badge badge-pill badge-success">
+                                        Online
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 text-right">
+                                <a class="btn btn-primary btn-sm" href="#"><i
+                                        class="os-icon os-icon-link-3"></i><span>View Profile</span></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="up-contents">
+                        <div class="m-b">
+                            <div class="row m-b">
+                                <div class="col-sm-6 b-r b-b">
+                                    <div class="el-tablo centered padded-v">
+                                        <div class="value">2</div>
+                                        <div class="label">Students</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 b-b">
+                                    <div class="el-tablo centered padded-v">
+                                        <div class="value">3</div>
+                                        <div class="label">Subjects</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="padded">
+                                <div class="os-progress-bar primary">
+                                    <div class="bar-labels">
+                                        <div class="bar-label-left">
+                                            <span>Profile Completion</span><span
+                                                class="positive">+10</span>
+                                        </div>
+                                        <div class="bar-label-right">
+                                            <span class="info">72/100</span>
+                                        </div>
+                                    </div>
+                                    <div class="bar-level-1" style="width: 100%">
+                                        <div class="bar-level-2" style="width: 80%">
+                                            <div class="bar-level-3" style="width: 30%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="os-progress-bar primary">
+                                    <div class="bar-labels">
+                                        <div class="bar-label-left">
+                                            <span>Status Unlocked</span><span class="positive">+5</span>
+                                        </div>
+                                        <div class="bar-label-right">
+                                            <span class="info">45/100</span>
+                                        </div>
+                                    </div>
+                                    <div class="bar-level-1" style="width: 100%">
+                                        <div class="bar-level-2" style="width: 30%">
+                                            <div class="bar-level-3" style="width: 10%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="os-progress-bar primary">
+                                    <div class="bar-labels">
+                                        <div class="bar-label-left">
+                                            <span>Followers</span><span class="negative">-12</span>
+                                        </div>
+                                        <div class="bar-label-right">
+                                            <span class="info">74/100</span>
+                                        </div>
+                                    </div>
+                                    <div class="bar-level-1" style="width: 100%">
+                                        <div class="bar-level-2" style="width: 80%">
+                                            <div class="bar-level-3" style="width: 60%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
