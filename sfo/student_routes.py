@@ -77,6 +77,7 @@ def student_details(student_id):
     subjects = Subject.query.filter_by(admin=admin).all()
     games = GameAndSports.query.filter_by(student=student)
     subjects1 = Subject.query.filter_by(admin=admin, standard=student.standard).all()
+
     e = []
     for exam in exams:
         e.append(exam.subject.subject)
@@ -91,9 +92,14 @@ def student_details(student_id):
     form.subject.choices = [(subject.id, f'{subject.subject}({subject.standard})') for subject in subjects
                             if subject.standard == student.standard]
 
+########################################################################################################################
+
     # 6th std future prediction
 
     exam1 = Exam.query.filter_by(student=student)
+
+    future_list=[]
+    improvement_list=[]
 
     maths=[]
     english=[]
@@ -102,23 +108,110 @@ def student_details(student_id):
     drawing=[]
     computer=[]
 
-    for m in exam1:
-        if m.subject.subject.lower() == 'maths':
-            maths.append(m.marks_opt)
+    if student.standard == '6th':
+        for m in exam1:
+            if m.subject.subject.lower() == 'maths':
+                maths.append(int((int(m.marks_opt) * 100)/int(m.subject.max_marks)))
 
-    for eng in exam1:
-        if eng.subject.subject.lower() == 'english':
-            english.append(eng.marks_opt)
+        for eng in exam1:
+            if eng.subject.subject.lower() == 'english':
+                english.append(int((int(eng.marks_opt) * 100)/int(eng.subject.max_marks)))
 
-    for sci in exam1:
-        if sci.subject.subject.lower() == 'science':
-            science.append(sci.marks_opt)
+        for sci in exam1:
+            if sci.subject.subject.lower() == 'science':
+                science.append(int((int(sci.marks_opt) * 100)/int(sci.subject.max_marks)))
 
-    for pe in exam1:
-        if pe.subject.subject.lower() == 'maths':
-            maths.append(m.marks_opt)
+        for pe in exam1:
+            if pe.subject.subject.lower() == 'physical education':
+                phy_edu.append(int((int(pe.marks_opt) * 100)/int(pe.subject.max_marks)))
 
-    ############################
+        for draw in exam1:
+            if draw.subject.subject.lower() == 'drawing':
+                drawing.append(int((int(draw.marks_opt) * 100)/int(draw.subject.max_marks)))
+
+        for comp in exam1:
+            if comp.subject.subject.lower() == 'computer':
+                computer.append(int((int(comp.marks_opt) * 100)/int(comp.subject.max_marks)))
+
+        maths1=sum(maths)/len(maths)
+        english1=sum(english)/len(english)
+        science1=sum(science)/len(science)
+        phy_edu1=sum(phy_edu)/len(phy_edu)
+        drawing1=sum(drawing)/len(drawing)
+        computer1=sum(computer)/len(computer)
+
+        if int(que.bio_knowledge) <= 3:
+            if maths1 >= 75:
+                if science1 >= 60:
+                    if computer1 >= 70:
+                        future_list.append('ICT')
+                        if int(que.technology_interest) >= 4:
+                            if english1 >= 60:
+                                future_list.append('Programming')
+                            else:
+                                improvement_list.append('Improve English')
+                        else:
+                            improvement_list.append('Need Technology Interest')
+                    else:
+                        improvement_list.append('Improve Computer Knowledge')
+                else:
+                    improvement_list.append('Improve Science')
+            else:
+                improvement_list.append('Improve Mathematics')
+
+        if int(que.bio_knowledge) >= 4:
+            if int(que.level_of_understanding) >= 4:
+                if maths1 <= 60:
+                    if int(que.maths_knowledge) < 3:
+                        if int(que.medical_history) < 4:
+                            if int(que.memorizing_power) < 4:
+                                if science1 >= 80:
+                                    future_list.append('Botany')
+                                else:
+                                    if 'Improve Science' not in improvement_list:
+                                        improvement_list.append('Improve Science')
+                            else:
+                                improvement_list.append('Improve Memorizing Power')
+                        else:
+                            improvement_list.append('Improve Medical History')
+                elif science1 >= 70:
+                    if computer1 >= 70:
+                        future_list.append('ICT')
+                        if int(que.technology_interest) >= 4:
+                            if english1 >= 60:
+                                if 'Programing' not in future_list:
+                                    future_list.append('Programming')
+                            else:
+                                if 'Improve English' not in future_list:
+                                    improvement_list.append('Improve English')
+                        else:
+                            if 'Need Technology Interest' not in future_list:
+                                improvement_list.append('Need Technology Interest')
+                    else:
+                        if 'Improve Computer Knowledge' not in future_list:
+                            improvement_list.append('Improve Computer Knowledge')
+                else:
+                    if 'Improve Science' not in future_list:
+                        improvement_list.append('Improve Science')
+            else:
+                if 'Improve Understanding Level' not in future_list:
+                    improvement_list.append('Improve Understanding Level')
+        else:
+            if 'Programming' not in future_list:
+                improvement_list.append('Biology Interest')
+
+        if int(que.creative_knowledge) >= 3:
+            if int(que.bio_knowledge) <= 4:
+                future_list.append('Artist')
+        else:
+            if "Botany" not in future_list:
+                improvement_list.append('Improve Creativity')
+
+        if drawing1 >= 70:
+            future_list.append('Painting')
+
+
+    ########################################################################################################################
 
     if student.admin != current_user:
         flash("Sorry you can't view this student", 'danger')
@@ -178,7 +271,8 @@ def student_details(student_id):
         return redirect(url_for('student_details', student_id=student.id))
     return render_template('account-info.html', title='account',
                            st1='Account', st2='Student Account Info', student=student, form=form,
-                           subjects=subjects, exams=exams, e=e, s=s, promote=promote, que=que,sports=sports,games=games,maths=maths)
+                           subjects=subjects, exams=exams, e=e, s=s, promote=promote, que=que,sports=sports,games=games,
+                           future_list=future_list,improvement_list=improvement_list)
 
 
 @app.route("/student-sports/<int:student_id>/add", methods=['GET', 'POST'])

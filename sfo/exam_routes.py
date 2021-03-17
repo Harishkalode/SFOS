@@ -80,5 +80,5 @@ def delete_exam(exam_id):
     db.session.commit()
     db.session.delete(exam)
     db.session.commit()
-    flash('Your student successfully Deleted', 'success')
-    return redirect(url_for('all_students'))
+    flash('Your Subject successfully Deleted', 'success')
+    return redirect(url_for('exam_view',student_id=exam.student_id))

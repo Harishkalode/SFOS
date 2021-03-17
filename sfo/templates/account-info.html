@@ -126,16 +126,27 @@
                                                         of activates in future for your better performance.</div>
                                                     <div class="row">
                                                         <div class="col-sm-6">
+                                                            <h4 class="text-left">Improvement List</h4>
                                                             <ul class="features-list">
-                                                                <li>Programing</li>
-                                                                <li>ICT</li>
-<!--                                                                <li>Incredible Flexibility</li>-->
+                                                                {% if improvement_list%}
+                                                                    {% for il in improvement_list%}
+                                                                    <li>{{il}}</li>
+                                                                    {%endfor%}
+                                                                {%else%}
+                                                                    <li>None</li>
+                                                                {%endif%}
                                                             </ul>
                                                         </div>
                                                         <div class="col-sm-6">
+                                                            <h4 class="text-left">Carrier List</h4>
                                                             <ul class="features-list">
-                                                                <li>Sports</li>
-                                                                <li>Creative Things</li>
+                                                                {% if future_list%}
+                                                                    {% for fl in future_list%}
+                                                                    <li>{{fl}}</li>
+                                                                    {%endfor%}
+                                                                {%else%}
+                                                                    <li>None</li>
+                                                                {%endif%}
 <!--                                                                <li>Developer Friendly </li>-->
                                                             </ul>
                                                         </div>
