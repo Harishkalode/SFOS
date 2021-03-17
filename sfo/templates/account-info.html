@@ -130,7 +130,7 @@
                                                             <ul class="features-list">
                                                                 {% if improvement_list%}
                                                                     {% for il in improvement_list%}
-                                                                    <li>{{il}}</li>
+                                                                <li style="color:red;"><b>{{il}}</b></li>
                                                                     {%endfor%}
                                                                 {%else%}
                                                                     <li>None</li>
@@ -142,7 +142,7 @@
                                                             <ul class="features-list">
                                                                 {% if future_list%}
                                                                     {% for fl in future_list%}
-                                                                    <li>{{fl}}</li>
+                                                                <li style="color:green"><b>{{fl}}</b></li>
                                                                     {%endfor%}
                                                                 {%else%}
                                                                     <li>None</li>

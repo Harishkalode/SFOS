@@ -210,8 +210,39 @@ def student_details(student_id):
         if drawing1 >= 70:
             future_list.append('Painting')
 
+        if games:
+            if phy_edu1 >= 65:
+                if (int(student.father_income) + int(student.mother_income)) >= 85000:
+                    for game in games:
+                        future_list.append(game.name_of_sport)
 
-    ########################################################################################################################
+        if english1 >= 65:
+            if que.subject_interested == "English":
+                future_list.append('Writer')
+        else:
+            if 'Improve English' not in improvement_list:
+                improvement_list.append('Improve English')
+
+        if science1 >= 75:
+            if que.subject_interested == "Science":
+                future_list.append('Science')
+        else:
+            if 'Improve Science' not in improvement_list:
+                improvement_list.append('Improve Science')
+
+        if maths1 >= 75:
+            future_list.append('Maths')
+        else:
+            if 'Improve Maths' not in improvement_list:
+                improvement_list.append('Improve Maths')
+
+        if int(que.creative_knowledge) >= 3:
+            if (int(student.father_income) + int(student.mother_income)) >= 85000:
+                future_list.append('Music')
+            if (int(student.father_income) + int(student.mother_income)) >= 100000:
+                future_list.append('Dance')
+
+    ####################################################################################################################
 
     if student.admin != current_user:
         flash("Sorry you can't view this student", 'danger')
