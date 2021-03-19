@@ -21,6 +21,8 @@
                         <a href="{{current_user.instagram_link}}"><i class="os-icon os-icon-instagram"></i></a>
                         <a href="{{current_user.linkedin_link}}"><i class="os-icon picons-social-icon-linkedin"></i></a>
                         <a href="{{current_user.institution_website_link}}"><i class="os-icon os-icon-globe"></i></a>
+                        {%else%}
+                            <h1>5</h1>
                         {% endif%}
                     </div>
                     <div class="up-main-info">
@@ -108,7 +110,8 @@
                     </div>
                     <div class="col-8 text-right">
                         {%if a%}
-                        {%elif student.standard == '6th'%}
+                        {%elif student.standard == '1st'%}
+                        {%else%}
                         <button class="mr-2 mb-2 btn btn-primary"
                                         data-target="#onboardingFeaturesModal" data-toggle="modal" type="button">Current Year Predictions</button>
                                     <div aria-hidden="true" class="onboarding-modal modal fade animated"

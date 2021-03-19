@@ -108,7 +108,9 @@ def student_details(student_id):
     drawing=[]
     computer=[]
 
-    if student.standard == '6th':
+    if student.standard == '1st':
+        pass
+    else:
         for m in exam1:
             if m.subject.subject.lower() == 'maths':
                 maths.append(int((int(m.marks_opt) * 100)/int(m.subject.max_marks)))
@@ -133,12 +135,24 @@ def student_details(student_id):
             if comp.subject.subject.lower() == 'computer':
                 computer.append(int((int(comp.marks_opt) * 100)/int(comp.subject.max_marks)))
 
-        maths1=sum(maths)/len(maths)
-        english1=sum(english)/len(english)
-        science1=sum(science)/len(science)
-        phy_edu1=sum(phy_edu)/len(phy_edu)
-        drawing1=sum(drawing)/len(drawing)
-        computer1=sum(computer)/len(computer)
+        maths1=0
+        english1=0
+        science1=0
+        phy_edu1=0
+        drawing1=0
+        computer1=0
+        if maths:
+            maths1=sum(maths)/len(maths)
+        if english:
+            english1=sum(english)/len(english)
+        if science:
+            science1=sum(science)/len(science)
+        if phy_edu:
+            phy_edu1=sum(phy_edu)/len(phy_edu)
+        if drawing:
+            drawing1=sum(drawing)/len(drawing)
+        if computer:
+            computer1=sum(computer)/len(computer)
 
         if int(que.bio_knowledge) <= 3:
             if maths1 >= 75:
@@ -149,15 +163,19 @@ def student_details(student_id):
                             if english1 >= 60:
                                 future_list.append('Programming')
                             else:
-                                improvement_list.append('Improve English')
+                                if english:
+                                    improvement_list.append('Improve English')
                         else:
                             improvement_list.append('Need Technology Interest')
                     else:
-                        improvement_list.append('Improve Computer Knowledge')
+                        if computer:
+                            improvement_list.append('Improve Computer Knowledge')
                 else:
-                    improvement_list.append('Improve Science')
+                    if science:
+                        improvement_list.append('Improve Science')
             else:
-                improvement_list.append('Improve Mathematics')
+                if maths:
+                    improvement_list.append('Improve Mathematics')
 
         if int(que.bio_knowledge) >= 4:
             if int(que.level_of_understanding) >= 4:
@@ -168,8 +186,9 @@ def student_details(student_id):
                                 if science1 >= 80:
                                     future_list.append('Botany')
                                 else:
-                                    if 'Improve Science' not in improvement_list:
-                                        improvement_list.append('Improve Science')
+                                    if science:
+                                        if 'Improve Science' not in improvement_list:
+                                            improvement_list.append('Improve Science')
                             else:
                                 improvement_list.append('Improve Memorizing Power')
                         else:
@@ -182,17 +201,20 @@ def student_details(student_id):
                                 if 'Programing' not in future_list:
                                     future_list.append('Programming')
                             else:
-                                if 'Improve English' not in future_list:
-                                    improvement_list.append('Improve English')
+                                if english:
+                                    if 'Improve English' not in future_list:
+                                        improvement_list.append('Improve English')
                         else:
                             if 'Need Technology Interest' not in future_list:
                                 improvement_list.append('Need Technology Interest')
                     else:
-                        if 'Improve Computer Knowledge' not in future_list:
-                            improvement_list.append('Improve Computer Knowledge')
+                        if computer:
+                            if 'Improve Computer Knowledge' not in future_list:
+                                improvement_list.append('Improve Computer Knowledge')
                 else:
-                    if 'Improve Science' not in future_list:
-                        improvement_list.append('Improve Science')
+                    if science:
+                        if 'Improve Science' not in future_list:
+                            improvement_list.append('Improve Science')
             else:
                 if 'Improve Understanding Level' not in future_list:
                     improvement_list.append('Improve Understanding Level')
@@ -220,26 +242,28 @@ def student_details(student_id):
             if que.subject_interested == "English":
                 future_list.append('Writer')
         else:
-            if 'Improve English' not in improvement_list:
-                improvement_list.append('Improve English')
+            if english:
+                if 'Improve English' not in improvement_list:
+                    improvement_list.append('Improve English')
 
         if science1 >= 75:
-            if que.subject_interested == "Science":
-                future_list.append('Science')
+            pass
         else:
-            if 'Improve Science' not in improvement_list:
-                improvement_list.append('Improve Science')
+            if science:
+                if 'Improve Science' not in improvement_list:
+                    improvement_list.append('Improve Science')
 
         if maths1 >= 75:
-            future_list.append('Maths')
+            pass
         else:
-            if 'Improve Maths' not in improvement_list:
-                improvement_list.append('Improve Maths')
+            if maths:
+                if 'Improve Mathematics' not in improvement_list:
+                    improvement_list.append('Improve Mathematics')
 
         if int(que.creative_knowledge) >= 3:
-            if (int(student.father_income) + int(student.mother_income)) >= 85000:
-                future_list.append('Music')
             if (int(student.father_income) + int(student.mother_income)) >= 100000:
+                future_list.append('Music')
+            if (int(student.father_income) + int(student.mother_income)) >= 200000:
                 future_list.append('Dance')
 
     ####################################################################################################################
