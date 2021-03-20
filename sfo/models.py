@@ -75,7 +75,7 @@ class Student(db.Model, UserMixin):
     standard = db.Column(db.String(20), nullable=True)
     blood_group = db.Column(db.String(20), nullable=True)
     profile_img = db.Column(db.String(220), nullable=False)
-    credit_score = db.Column(db.String(220), nullable=False, default=0)
+    credit_score = db.Column(db.Integer(220), nullable=False, default=0)
     date_created = db.Column(db.DateTime, nullable=False, default=datetime.now())
     admin_id = db.Column(db.Integer, db.ForeignKey('admin.id'), nullable=False)
     exams = db.relationship('Exam', backref='student', lazy=True)
