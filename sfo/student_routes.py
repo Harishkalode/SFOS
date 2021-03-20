@@ -294,6 +294,9 @@ def student_details(student_id):
 
             db.session.add(exam)
             db.session.commit()
+            cs = ((int(form.marks_opt.data)/int(sub.max_marks))*100)/10
+            student.credit_score += cs
+            db.session.commit()
             flash('Student Exam added successfully', 'success')
             return redirect(url_for('exam_view', student_id=student.id))
 
@@ -350,6 +353,22 @@ def student_game(student_id):
 
         db.session.add(game_and_sports)
         db.session.commit()
+
+        if sports.level.data == 'Other':
+            student.credit_score += 5
+        elif sports.level.data == 'Club Level':
+            student.credit_score += 10
+        elif sports.level.data == 'District Level':
+            student.credit_score += 10
+        elif sports.level.data == 'State Level':
+            student.credit_score += 50
+        elif sports.level.data == 'National Level':
+            student.credit_score += 100
+        elif sports.level.data == 'International Level':
+            student.credit_score += 500
+
+        db.session.commit()
+
         flash('Sports and Game added successfully', 'success')
         return redirect(url_for('student_details', student_id=student.id))
 
@@ -365,6 +384,20 @@ def delete_sport(game_id,student_id):
     history = History(name_of_module=f'Deleted Game/sport for Student {game.student.fname} {game.student.lname}',
                       activity='delete', admin=current_user)
     db.session.add(history)
+    db.session.commit()
+    if game.level == 'Other':
+        student.credit_score -= 5
+    elif game.level == 'Club Level':
+        student.credit_score -= 10
+    elif game.level == 'District Level':
+        student.credit_score -= 10
+    elif game.level == 'State Level':
+        student.credit_score -= 50
+    elif game.level == 'National Level':
+        student.credit_score -= 100
+    elif game.level == 'International Level':
+        student.credit_score -= 500
+
     db.session.commit()
     db.session.delete(game)
     db.session.commit()

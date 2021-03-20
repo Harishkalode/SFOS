@@ -1,6 +1,12 @@
 {% extends "layout.html" %}
 {% block content%}
 <style>
+    .batch{
+    position: absolute;
+    padding: 20px;
+    font-size: 30px;
+    }
+
     .user-profile .up-main-info .user-avatar-w .user-avatar {
     width: 80px;
     height: 80px;
@@ -15,6 +21,26 @@
         <div class="element-wrapper">
             <div class="user-profile">
                 <div class="up-head-w" style="background-image: url({{url_for('static', filename='profile_pics/' + current_user.institution_logo)}})">
+                    <div class="batch">
+                        {%if a%}
+                        {%else%}
+                            {%if student.credit_score >= 500%}
+                                <i style="color:#293145;" class="os-icon os-icon-star-full"></i>
+                            {%endif%}
+                            {%if student.credit_score >= 1500%}
+                               <i style="color:#293145;" class="os-icon os-icon-star-full"></i>
+                            {%endif%}
+                            {%if student.credit_score >= 3000%}
+                                <i style="color:#293145;" class="os-icon os-icon-star-full"></i>
+                            {%endif%}
+                            {%if student.credit_score >= 5000%}
+                                <i style="color:#293145;" class="os-icon os-icon-star-full"></i>
+                            {%endif%}
+                            {%if student.credit_score >= 10000%}
+                                <i style="color:#293145;" class="os-icon os-icon-star-full"></i>
+                            {%endif%}
+                        {%endif%}
+                    </div>
                     <div class="up-social">
                         {% if a %}
                         <a href="{{current_user.facebook_link}}"><i class="os-icon picons-social-icon-facebook"></i></a>
@@ -22,7 +48,10 @@
                         <a href="{{current_user.linkedin_link}}"><i class="os-icon picons-social-icon-linkedin"></i></a>
                         <a href="{{current_user.institution_website_link}}"><i class="os-icon os-icon-globe"></i></a>
                         {%else%}
-                            <h1>5</h1>
+
+                            <h1 style="color: #fff; background-color:#047bf8;border-radius:10px;padding:10px;" class="text-center">
+                                {{student.credit_score}}</h1>
+                            <h6 class="text-center" style="color:#fff">Credit Score</h6>
                         {% endif%}
                     </div>
                     <div class="up-main-info">
@@ -113,7 +142,7 @@
                         {%elif student.standard == '1st'%}
                         {%else%}
                         <button class="mr-2 mb-2 btn btn-primary"
-                                        data-target="#onboardingFeaturesModal" data-toggle="modal" type="button">Current Year Predictions</button>
+                                        data-target="#onboardingFeaturesModal" data-toggle="modal" type="button">Current Year Recommendations</button>
                                     <div aria-hidden="true" class="onboarding-modal modal fade animated"
                                         id="onboardingFeaturesModal" role="dialog" tabindex="-1">
                                         <div class="modal-dialog modal-centered" role="document">

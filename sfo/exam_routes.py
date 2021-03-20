@@ -78,6 +78,9 @@ def delete_exam(exam_id):
                       activity='delete', admin=current_user)
     db.session.add(history)
     db.session.commit()
+    cs = ((int(exam.marks_opt) / int(exam.subject.max_marks)) * 100) / 10
+    exam.student.credit_score -= cs
+    db.session.commit()
     db.session.delete(exam)
     db.session.commit()
     flash('Your Subject successfully Deleted', 'success')
