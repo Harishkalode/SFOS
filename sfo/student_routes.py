@@ -1,3 +1,4 @@
+import pygal
 import pandas as pd
 import os
 import secrets
@@ -726,9 +727,69 @@ def student_batch():
 def all_students_std(batch_std):
     admin = Admin.query.filter_by(id=current_user.id).first_or_404()
     students = Student.query.filter_by(admin=admin,standard=batch_std)
+
+    s = ""
+    if batch_std == '1st':
+        s = '2nd'
+    elif batch_std == '2nd':
+        s= '3rd'
+    elif batch_std == '3rd':
+        s = '4th'
+    elif batch_std == '4th':
+        s = '5th'
+    elif batch_std == '5th':
+        s = '6th'
+    elif batch_std == '6th':
+        s = '7th'
+    elif batch_std == '7th':
+        s = '8th'
+    elif batch_std == '8th':
+        s = '9th'
+    elif batch_std == '9th':
+        s = '10th'
+    elif batch_std == '10th':
+        s = '10th'
     subjects = Subject.query.filter_by(admin=admin,standard=batch_std)
+
+    subj = []
+    current_batch = []
+    last_batch = []
+    fail = 0
+
+    for subject in subjects:
+        subj.append(subject.subject)
+
+    for cb in subjects:
+        mark = []
+        mark1 = []
+        for subject1 in Exam.query.filter_by(subject=cb):
+            if subject1.student.standard == batch_std:
+                mark.append(int(subject1.marks_opt))
+                if subject1.marks_opt < cb.min_marks:
+                    fail += 1
+        avg = sum(mark)/len(mark)
+        percent = (avg*100)/int(cb.max_marks)
+        current_batch.append(percent)
+
+        for exam in Exam.query.filter_by(subject=cb):
+            if exam.student.standard == s:
+                mark1.append(int(exam.marks_opt))
+        avg1 = sum(mark1)/len(mark1)
+        percent1 = (avg1*100)/int(cb.max_marks)
+        last_batch.append(percent1)
+
+    avg_per1 = sum(current_batch)/len(current_batch)
+    avg_per = "{:.2f}".format(avg_per1)
+
+    # batch graph
+    line_chart = pygal.Bar()
+    line_chart.x_labels = map(str, subj)
+    line_chart.add('Current Year', current_batch)
+    line_chart.add('Last Year', last_batch)
+    batch = line_chart.render_data_uri()
     return render_template('batch-student.html', title='All Students',
-                           st1='Student', st2='All Student', students=students,subjects=subjects)
+                           st1='Student', st2='All Student', students=students,subjects=subjects,batch=batch,
+                           batch_std=batch_std,avg_per=avg_per,fail=fail)
 
 
 # @app.route("/student/<int:student_id>/delete", methods=['GET','POST'])
