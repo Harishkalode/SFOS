@@ -1,20 +1,11 @@
 {% extends "layout.html" %}
 {% block content%}
-<style>
-    .batch{
-    position: absolute;
-    padding: 20px;
-    font-size: 30px;
-    }
 
-    .user-profile .up-main-info .user-avatar-w .user-avatar {
-    width: 80px;
-    height: 80px;
-    border-radius: 40px;
-    border: 3px solid #fff;
-    overflow: hidden;
-    box-shadow: 0px 0px 10px rgba(0,0,0,0.4);
-}
+<style>
+
+    .batch{position: absolute;padding: 20px;font-size: 30px;}
+    .user-profile .up-main-info .user-avatar-w .user-avatar {width: 80px;height: 80px;border-radius: 40px;border: 3px solid #fff;overflow: hidden;box-shadow: 0px 0px 10px rgba(0,0,0,0.4);}
+
 </style>
 <div class="content-i">
     <div class="content-box">
@@ -24,19 +15,19 @@
                     <div class="batch">
                         {%if a%}
                         {%else%}
+                            {%if student.credit_score >= 50%}
+                                <i style="color:#293145;" class="os-icon os-icon-star-full"></i>
+                            {%endif%}
+                            {%if student.credit_score >= 200%}
+                               <i style="color:#293145;" class="os-icon os-icon-star-full"></i>
+                            {%endif%}
                             {%if student.credit_score >= 500%}
                                 <i style="color:#293145;" class="os-icon os-icon-star-full"></i>
                             {%endif%}
-                            {%if student.credit_score >= 1500%}
-                               <i style="color:#293145;" class="os-icon os-icon-star-full"></i>
-                            {%endif%}
-                            {%if student.credit_score >= 3000%}
+                            {%if student.credit_score >= 1000%}
                                 <i style="color:#293145;" class="os-icon os-icon-star-full"></i>
                             {%endif%}
-                            {%if student.credit_score >= 5000%}
-                                <i style="color:#293145;" class="os-icon os-icon-star-full"></i>
-                            {%endif%}
-                            {%if student.credit_score >= 10000%}
+                            {%if student.credit_score >= 2000%}
                                 <i style="color:#293145;" class="os-icon os-icon-star-full"></i>
                             {%endif%}
                         {%endif%}
@@ -74,8 +65,7 @@
 
                     </div>
                     <svg class="decor" width="842px" height="219px" viewBox="0 0 842 219"
-                        preserveAspectRatio="xMaxYMax meet" version="1.1"
-                        xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        preserveAspectRatio="xMaxYMax meet" version="1.1">
                         <g transform="translate(-381.000000, -362.000000)" fill="#FFFFFF">
                             <path class="decor-path"
                                 d="M1223,362 L1223,581 L381,581 C868.912802,575.666667 1149.57947,502.666667 1223,362 Z">
@@ -141,52 +131,55 @@
                         {%if a%}
                         {%elif student.standard == '1st'%}
                         {%else%}
+                        {%if student.standard == '10th'%}
+                        <a href="{{url_for('student_future', student_id=student.id)}}" class="mr-2 mb-2 btn btn-success">Student Future Recommendation</a>
+                        {%endif%}
                         <button class="mr-2 mb-2 btn btn-primary"
-                                        data-target="#onboardingFeaturesModal" data-toggle="modal" type="button">Current Year Recommendations</button>
-                                    <div aria-hidden="true" class="onboarding-modal modal fade animated"
-                                        id="onboardingFeaturesModal" role="dialog" tabindex="-1">
-                                        <div class="modal-dialog modal-centered" role="document">
-                                            <div class="modal-content text-center"><button aria-label="Close"
-                                                    class="close" data-dismiss="modal" type="button"><span
-                                                        class="close-label">Skip Intro</span><span
-                                                        class="os-icon os-icon-close"></span></button>
-                                                <div class="onboarding-media"><img alt="" src="{{url_for('static', filename='img/bigicon6.png')}}"
-                                                        width="200px"></div>
-                                                <div class="onboarding-content with-gradient">
-                                                    <h4 class="onboarding-title">Showcase Your Future</h4>
-                                                    <div class="onboarding-text">According to your past records we analysed that you should also look forward to this list
-                                                        of activates in future for your better performance.</div>
-                                                    <div class="row">
-                                                        <div class="col-sm-6">
-                                                            <h4 class="text-left">Improvement List</h4>
-                                                            <ul class="features-list">
-                                                                {% if improvement_list%}
-                                                                    {% for il in improvement_list%}
-                                                                <li style="color:red;"><b>{{il}}</b></li>
-                                                                    {%endfor%}
-                                                                {%else%}
-                                                                    <li>None</li>
-                                                                {%endif%}
-                                                            </ul>
-                                                        </div>
-                                                        <div class="col-sm-6">
-                                                            <h4 class="text-left">Carrier List</h4>
-                                                            <ul class="features-list">
-                                                                {% if future_list%}
-                                                                    {% for fl in future_list%}
-                                                                <li style="color:green"><b>{{fl}}</b></li>
-                                                                    {%endfor%}
-                                                                {%else%}
-                                                                    <li>None</li>
-                                                                {%endif%}
+                                data-target="#onboardingFeaturesModal" data-toggle="modal" type="button">Current Year Recommendations</button>
+                            <div aria-hidden="true" class="onboarding-modal modal fade animated"
+                                id="onboardingFeaturesModal" role="dialog" tabindex="-1">
+                                <div class="modal-dialog modal-centered" role="document">
+                                    <div class="modal-content text-center"><button aria-label="Close"
+                                            class="close" data-dismiss="modal" type="button"><span
+                                                class="close-label">Skip Intro</span><span
+                                                class="os-icon os-icon-close"></span></button>
+                                        <div class="onboarding-media"><img alt="" src="{{url_for('static', filename='img/bigicon6.png')}}"
+                                                width="200px"></div>
+                                        <div class="onboarding-content with-gradient">
+                                            <h4 class="onboarding-title">Showcase Your Future</h4>
+                                            <div class="onboarding-text">According to your past records we analysed that you should also look forward to this list
+                                                of activates in future for your better performance.</div>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <h4 class="text-left">Improvement List</h4>
+                                                    <ul class="features-list">
+                                                        {% if improvement_list%}
+                                                            {% for il in improvement_list%}
+                                                        <li style="color:red;"><b>{{il}}</b></li>
+                                                            {%endfor%}
+                                                        {%else%}
+                                                            <li>None</li>
+                                                        {%endif%}
+                                                    </ul>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <h4 class="text-left">Carrier List</h4>
+                                                    <ul class="features-list">
+                                                        {% if future_list%}
+                                                            {% for fl in future_list%}
+                                                        <li style="color:green"><b>{{fl}}</b></li>
+                                                            {%endfor%}
+                                                        {%else%}
+                                                            <li>None</li>
+                                                        {%endif%}
 <!--                                                                <li>Developer Friendly </li>-->
-                                                            </ul>
-                                                        </div>
-                                                    </div>
+                                                    </ul>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
 
                         {%endif%}
                     </div>

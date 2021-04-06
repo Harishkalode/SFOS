@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+{% block content%}
+<div class="content-i">
+    <div class="content-box">
+        <div class="pipelines-w">
+            <div class="row">
+                {%for pl in priority_list%}
+                <div class="col-lg-4 col-xxl-3 d-none d-xxl-block">
+                    <div class="pipeline white lined-success">
+                        <div class="pipeline-header">
+                            <h5 class="pipeline-name">{{pl}}</h5>
+                            <div class="pipeline-header-numbers">
+                                <div class="pipeline-value">Priority {{priority_list.index(pl)+1}}</div>
+                            </div>
+                        </div>
+
+                        {% set testing = [] %}
+                        {%if pl == "science"%}
+                            {% set testing = science%}
+                        {%elif pl == "arts"%}
+                            {% set testing = arts%}
+                        {%elif pl == "commerce"%}
+                            {% set testing = commerce%}
+                        {%elif pl == "GameAndSports"%}
+                            {% set testing = game%}
+                        {%elif pl == "poly technique"%}
+                            {% set testing = poly%}
+                        {%elif pl == "Non-tech Diploma"%}
+                            {% set testing = non_tech%}
+                        {%endif%}
+                        {%for fl in testing %}
+                        <div class="pipeline-body pb-3">
+                            <div class="pipeline-item">
+                                <div class="pi-controls">
+                                    <div class="status status-green" data-placement="top"
+                                        data-toggle="tooltip" title="Active Status"></div>
+                                </div>
+                                <div class="pi-body">
+                                    <div class="avatar"><img alt="" src="{{url_for('static', filename='profile_pics/' + current_user.institution_logo)}}"></div>
+                                    <div class="pi-info">
+                                        <div class="h6 pi-name">{{fl}}</div>
+                                    </div>
+                                </div>
+                                <div class="pi-foot">
+                                    <div class="tags"></div><a class="extra-info" href="#"><i
+                                            class="os-icon os-icon-mail-12"></i><span>Subject {{testing.index(fl)+1}}</span></a>
+                                </div>
+                            </div>
+                        </div>
+                        {%endfor%}
+                    </div>
+                </div>
+                {%endfor%}
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

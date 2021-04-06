@@ -710,7 +710,6 @@ def general_question_update(question_id):
 @app.route("/student/batch")
 @login_required
 def student_batch():
-    global std3
     admin = Admin.query.filter_by(id=current_user.id).first_or_404()
     standard = Subject.query.filter_by(admin=admin).all()
     students = Student.query.filter_by(admin=admin)
@@ -790,6 +789,188 @@ def all_students_std(batch_std):
     return render_template('batch-student.html', title='All Students',
                            st1='Student', st2='All Student', students=students,subjects=subjects,batch=batch,
                            batch_std=batch_std,avg_per=avg_per,fail=fail)
+
+
+@app.route("/student/<int:student_id>/future")
+@login_required
+def student_future(student_id):
+    student = Student.query.get_or_404(student_id)
+    game_sports = GameAndSports.query.filter_by(student=student)
+    que = GeneralQuestion.query.filter_by(student=student).first()
+    exams = Exam.query.filter_by(student=student,standard=student.standard)
+    exams1 = Exam.query.filter_by(student=student)
+
+    if student.standard != '10th':
+        if student.admin != current_user:
+            flash("Sorry you can't Update this student", 'danger')
+            return redirect(url_for('all_students'))
+
+    total = []
+    for tot in exams:
+        total.append(int(tot.marks_opt))
+    t = sum(total)
+
+    max_marks = []
+    for mark in exams:
+        max_marks.append(int(mark.subject.max_marks))
+    mm = sum(max_marks)
+    percentage = (t / mm) * 100.00
+    perc = "{:.2f}".format(percentage)
+
+    priority_list = []
+    commerce = ['English', "Economic", 'Mathematics & Statistics', 'Book Keeping & Accountancy', 'Secretarial Practice']
+    arts = ['History', 'Geography', 'Psychology', 'Human Rights and Gender Studies']
+    science = ['English','Physics','Chemistry']
+    game1 = []
+    poly = []
+
+    if perc >= "65":
+        priority_list.append('science')
+        priority_list.append('commerce')
+        priority_list.append('arts')
+        priority_list.append('Non-tech Diploma')
+    elif perc >= "55":
+        priority_list.append('commerce')
+        priority_list.append('science')
+        priority_list.append('arts')
+        priority_list.append('Non-tech Diploma')
+    elif perc >= "45":
+        priority_list.append('arts')
+        priority_list.append('commerce')
+        priority_list.append('science')
+        priority_list.append('Non-tech Diploma')
+
+    if game_sports:
+        for game in game_sports:
+            if game.level == 'Club Level' or 'District Level':
+                if 'GameAndSports' not in priority_list[0]:
+                    if 'GameAndSports' not in priority_list:
+                        priority_list.insert(1, 'GameAndSports')
+            elif game.level == 'Other':
+                if 'GameAndSports' not in priority_list[0] or priority_list[1]:
+                    if 'GameAndSports' not in priority_list:
+                        priority_list.insert(-1, 'GameAndSports')
+            else:
+                if 'GameAndSports' not in priority_list:
+                    priority_list.insert(0, 'GameAndSports')
+
+            game1.append(game.name_of_sport)
+    m = False
+    for exam in exams:
+        if exam.subject.subject == 'Maths':
+            if exam.marks_opt >= '65':
+                m = True
+                if que.bio_knowledge <= '2':
+                    science.append('Maths')
+
+    sci = False
+    for exam in exams:
+        if exam.subject.subject == 'Science':
+            if exam.marks_opt >= '65':
+                sci = True
+                if que.bio_knowledge >= '3':
+                    if 'Biology' not in science:
+                        science.append('Biology')
+
+    if perc >= "65":
+        if que.maths_knowledge >= '3':
+            if m:
+                if que.bio_knowledge <= '2':
+                    if que.technology_interest >= '3':
+                        priority_list.insert(2, 'poly technique')
+
+    if que.technology_interest >= '3':
+        science.append('Information Technology')
+    elif que.technology_interest >= '4':
+        science.append('Computer Science')
+
+    if que.bio_knowledge >= '4':
+        if que.maths_knowledge <= '3':
+            science.append('Fishery')
+    elif que.bio_knowledge >= '5':
+        if que.maths_knowledge <= '3':
+            science.append('Biology')
+
+    if que.subject_interested == 'Hindi':
+        science.append('Hindi')
+    elif que.subject_interested == 'marathi':
+        science.append('Marathi')
+
+    if m:
+        if que.maths_knowledge>='4':
+            if 'Maths' not in science:
+                science.append('Maths')
+
+    if sci:
+        if que.technology_interest <= '3':
+            if 'Biology' not in science:
+                science.append('Biology')
+
+    if que.creative_knowledge >= '3':
+        commerce.append('Fine Arts')
+        arts.append('Fine Arts')
+
+    if student.gender == 'Female':
+        if perc <= '40':
+            commerce.append('Home Science')
+    else:
+        if perc <= '70':
+            commerce.append('Legal Studies')
+    phe_edu = []
+
+    for exam1 in exams1:
+        if exam1.subject.subject == 'Physical Education':
+            pe = (int(exam1.marks_opt)*100)/int(exam1.subject.max_marks)
+            phe_edu.append(int(pe))
+
+    ph = 0
+    if phe_edu:
+        ph = sum(phe_edu)/len(phe_edu)
+    if ph >= 65:
+        commerce.append('Physical Education')
+    elif ph >= 55:
+        arts.append('Physical Education')
+
+    if m:
+        arts.append('Economic with Maths')
+    else:
+        arts.append('Economic with Maths')
+
+    if que.physics_knowledge == '5':
+        poly.append('Mechanical')
+        poly.append('Production')
+    elif que.physics_knowledge == '4':
+        poly.append('Civil')
+    elif que.physics_knowledge == '3':
+        poly.append('Electrical')
+        poly.append('Automobile')
+    elif que.medical_history >= '4':
+        poly.append('Chemical')
+
+    if que.technology_interest >= '4':
+        poly.append('Computers')
+    elif que.technology_interest == '5':
+        poly.append('Information Technology')
+    non_tech = []
+    if perc >= '65':
+        if que.maths_knowledge >= '3':
+            non_tech.append('Web Designing')
+    if que.creative_knowledge == '5':
+        non_tech.append('Faction Designing')
+        non_tech.append('Interior Designing')
+    elif que.creative_knowledge == '4':
+        non_tech.append('Animation')
+        non_tech.append('Graphics')
+    if que.creative_knowledge == ' 3':
+        if que.bio_knowledge >= '3':
+            non_tech.append('Medical Lab Technologies')
+            non_tech.append('Beauty & Cosmetology')
+    elif que.creative_knowledge < '3':
+        non_tech.append('Photography')
+    return render_template('future-list.html', title='Student',
+                           st1='future', st2=f'{student.fname} {student.lname}',perc=perc,student=student,
+                           priority_list=priority_list,commerce=commerce,arts=arts,science=science,game=game1,poly=poly,
+                           non_tech=non_tech)
 
 
 # @app.route("/student/<int:student_id>/delete", methods=['GET','POST'])
