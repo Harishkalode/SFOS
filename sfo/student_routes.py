@@ -836,23 +836,23 @@ def student_future(student_id):
         priority_list.append('Non-tech Diploma')
     elif perc >= "45":
         priority_list.append('arts')
+        priority_list.append('Non-tech Diploma')
         priority_list.append('commerce')
         priority_list.append('science')
-        priority_list.append('Non-tech Diploma')
 
     if game_sports:
         for game in game_sports:
             if game.level == 'Club Level' or 'District Level':
-                if 'GameAndSports' not in priority_list[0]:
-                    if 'GameAndSports' not in priority_list:
-                        priority_list.insert(1, 'GameAndSports')
+                if 'Game & Sports' not in priority_list[0]:
+                    if 'Game & Sports' not in priority_list:
+                        priority_list.insert(1, 'Game & Sports')
             elif game.level == 'Other':
-                if 'GameAndSports' not in priority_list[0] or priority_list[1]:
-                    if 'GameAndSports' not in priority_list:
-                        priority_list.insert(-1, 'GameAndSports')
+                if 'Game & Sports' not in priority_list[0] or priority_list[1]:
+                    if 'Game & Sports' not in priority_list:
+                        priority_list.insert(-1, 'Game & Sports')
             else:
-                if 'GameAndSports' not in priority_list:
-                    priority_list.insert(0, 'GameAndSports')
+                if 'Game & Sports' not in priority_list:
+                    priority_list.insert(0, 'Game & Sports')
 
             game1.append(game.name_of_sport)
     m = False
@@ -967,10 +967,21 @@ def student_future(student_id):
             non_tech.append('Beauty & Cosmetology')
     elif que.creative_knowledge < '3':
         non_tech.append('Photography')
+    iti = []
+    if perc <= '45':
+        priority_list.insert(2, 'ITI')
+        iti.append('Wireman')
+        iti.append('Computer')
+        iti.append('Draughstman')
+        iti.append('Plumber')
+        iti.append('Carpenter')
+        iti.append('Fitter')
+        iti.append('Turner')
+        iti.append('Paint Technology')
     return render_template('future-list.html', title='Student',
                            st1='future', st2=f'{student.fname} {student.lname}',perc=perc,student=student,
                            priority_list=priority_list,commerce=commerce,arts=arts,science=science,game=game1,poly=poly,
-                           non_tech=non_tech)
+                           non_tech=non_tech,iti=iti)
 
 
 # @app.route("/student/<int:student_id>/delete", methods=['GET','POST'])

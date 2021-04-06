@@ -21,12 +21,14 @@
                             {% set testing = arts%}
                         {%elif pl == "commerce"%}
                             {% set testing = commerce%}
-                        {%elif pl == "GameAndSports"%}
+                        {%elif pl == 'Game & Sports'%}
                             {% set testing = game%}
                         {%elif pl == "poly technique"%}
                             {% set testing = poly%}
                         {%elif pl == "Non-tech Diploma"%}
                             {% set testing = non_tech%}
+                        {%elif pl == "ITI"%}
+                            {% set testing = iti%}
                         {%endif%}
                         {%for fl in testing %}
                         <div class="pipeline-body pb-3">
